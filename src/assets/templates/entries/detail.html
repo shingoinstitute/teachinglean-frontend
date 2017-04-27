@@ -1,0 +1,4 @@
+<md-content ng-controller="EntryDetailController as vm">
+    <question ng-show="vm.question" entry="vm.question" owner="mc.user.uuid" flex></question>
+    <answer id="answer-{{answer.id}}" entry="answer" ng-repeat="answer in vm.question.answers"></answer>
+</md-content>

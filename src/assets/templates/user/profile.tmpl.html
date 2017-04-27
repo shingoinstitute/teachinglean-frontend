@@ -1,0 +1,58 @@
+<md-card class="md-whiteframe-9dp profile-frame">
+  <form name="profileForm">
+    <md-card-title>
+      <md-card-avatar>
+        <!--<div ng-click="()" id="photoUpload" ng-show="vm.isEditing">-->
+        <div id="photoUpload" ng-show="vm.isEditing">
+          <md-icon md-menu-align-target>
+            <input type="file" onchange="angular.element(this).scope().vm.uploadPhoto(this)" accept="image/*" />
+            <i class="material-icons md-light small">file_upload</i>
+          </md-icon>
+          <p>Upload Photo</p>
+        </div>
+        <img class="md-user-avatar" ng-src="{{user.pictureUrl||'http://res.cloudinary.com/shingo/image/upload/v1414874243/silhouette_vzugec.png'}}"/>
+      </md-card-avatar>
+      <span flex="5"><!-- Spacer --></span>
+      <md-card-title-text>
+        <span ng-show="vm.isEditing"><i>Editing</i><hr></span>
+        <!-- Profile Name -->
+        <span ng-show="!vm.isEditing" class="md-headline">{{user.firstname}} {{user.lastname}}</span>
+        <div layout="row">
+          <md-input-container md-no-float ng-show="vm.isEditing" class="small-container">
+            <label>First Name</label>
+            <input type="text" ng-model="user.firstname" required aria-label="First Name" />
+          </md-input-container>
+          <md-input-container md-no-float ng-show="vm.isEditing" class="small-container">
+            <label>Last Name</label>
+            <input type="text" ng-model="user.lastname" required aria-label="Last Name" />
+          </md-input-container>
+        </div>
+        <!-- Profile Email -->
+        <span ng-show="!vm.isEditing" class="md-subhead">{{user.email}}</span>
+        <md-input-container md-no-float ng-show="vm.isEditing" class="small-container">
+          <label>Email</label>
+          <input type="email" ng-model="user.email" required aria-label="Email" />
+        </md-input-container>
+        <span class="md-subhead"><b>Reputation</b>: {{user.reputation}}</span>
+      </md-card-title-text>
+    </md-card-title>
+    <md-card-content>
+      <h3>Biography</h3>
+      <md-content ng-show="!vm.isEditing" class="profile-content">
+        <div class="trix-content" ng-bind-html="user.bio"></div>
+      </md-content>
+      <md-input-container ng-show="vm.isEditing" md-no-float>
+        <summernote md-no-resize ng-model="user.bio"></summernote>
+      </md-input-container>
+      <md-button ng-href="/reset" class="md-accent" ng-show="vm.isEditing">reset password</md-button>
+    </md-card-content>
+    <md-card-actions layout-align="center center" layout-padding>
+      <md-card-icon-actions>
+        <md-button class="md-raised md-primary" ng-show="!vm.isEditing" ng-click="vm.isEditing = true">Edit</md-button>
+        <md-button ng-disabled="profileForm.$invalid || profileForm.$pristine" class="md-raised md-primary" ng-show="vm.isEditing"
+          ng-click="vm.save()">Save</md-button>
+          <md-button class="md-raised md-accent" ng-show="vm.isEditing" ng-click="vm.isEditing = false">Cancel</md-button>
+      </md-card-icon-actions>
+    </md-card-actions>
+  </form>
+</md-card>

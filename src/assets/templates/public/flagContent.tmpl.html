@@ -1,0 +1,39 @@
+<md-dialog>
+    <form name="flagForm" ng-cloak>
+        <md-input-container flex>
+           <label>Reason</label>
+           <md-select required name="reason" ng-model="vm.reason">
+               <md-option value="Offensive">
+                   Offensive
+               </md-option>
+               <md-option value="Rude">
+                   Rude
+               </md-option>
+               <md-option value="FowlLanguage">
+                   Fowl Language
+               </md-option>
+               <md-option value="Racist">
+                   Racist
+               </md-option>
+               <md-option value="Vulgar">
+                   Vulgar
+               </md-option>
+               <md-option value="Other">
+                   Other
+               </md-option>
+           </md-select>
+           <div ng-messages="flagForm.resone.$error">
+               <div ng-message="required">A reason is required.</div>
+           </div>
+        </md-input-container>
+        <md-input-container ng-show="vm.reason == 'Other'" flex>
+           <label>Description</label>
+           <input name="description" ng-model="vm.description" type="text" placeholder="Description..." required />
+           <div ng-messages="flagForm.description.$error">
+              <div ng-message="required">A description is required if "other" is selected.</div>
+           </div>
+        </md-input-container>
+        <md-button class="md-raised md-primary" ng-click="vm.submit()" ng-disabled="flagForm.$invalid">Submit</md-button>
+        <md-button class="md-raised md-secondary" ng-click="vm.cancel()">Cancel</md-button>
+    </form>
+</md-dialog>

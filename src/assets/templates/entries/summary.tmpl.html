@@ -1,0 +1,7 @@
+<md-card layout-padding layout-fill ng-click="go()" class="entry-summary">
+  <md-card-title-text layout="column">
+    <span class="md-title"><span ng-show="entry.parent && entry.markedCorrect" style="color:green">&check;</span>{{entry.title}}</span>
+    <span class="md-subhead trix-content" ng-bind-html="entry.content | limitTo: 50">{{entry.content.length > 50 ? '...' : ''}}</span>
+    <span class="summary-small">Posted by {{entry.owner.name}} on {{entry.createdAt | amDateFormat: 'MMM Do, YYYY hh:mm a'}}</span>
+  </md-card-title-text>
+</md-card>

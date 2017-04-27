@@ -1,0 +1,50 @@
+<md-card class="question">
+  <form name="questionDetailForm" ng-cloak>
+    <md-card-content>
+      <div ng-show="!isEditing">
+        <div layout="row">
+          <h2>{{entry.title}}</h2>
+          <span flex><!-- spacer --></span>
+          <flag content="entry" type="'Question'"></flag>
+        </div>
+        <hr>
+        <div flex ng-bind-html="entry.content" class="q-content trix-content"></div>
+      </div>
+      <div ng-show="isEditing">
+        <md-input-container md-no-float>
+          <input class="md-title" name="title" type="text" ng-model="entry.title" required aria-label="Title" flex>
+          <div ng-messages="questionDetailForm.title">
+            <div ng-message="required">
+              A title is required
+            </div>
+          </div>
+        </md-input-container>
+        <summernote ng-model="entry.content" height="300"></summernote>
+      </div>
+    </md-card-content>
+    <span flex><!-- filler --></span>
+    <div layout="row">
+      <div class="up-down-votes" layout="column">
+        <md-button ng-click="upVote()" class="md-fab md-mini md-primary" style="font-size: 150%;">&#8593;</md-button>
+        <md-button class="md-fab md-mini" ng-disabled="true">{{entry.votes}}</md-button>
+        <md-button ng-click="downVote()" class="md-fab md-mini md-primary" style="font-size: 150%;">&#8595;</md-button>
+      </div>
+      <span flex><!-- filler --></span>
+      <div layout="column" layout-padding>
+        <span class="summary-small">Posted by {{entry.owner.name}} on {{entry.createdAt | amDateFormat: 'MMM Do, YYYY hh:mm a'}}</span>
+        <span ng-show="entry.createdAt != entry.updatedAt" class="summary-small">Edited on {{entry.updatedAt | amDateFormat: 'MMM Do, YYYY hh:mm a'}}</span>
+        <span flex><!-- filler --></span>
+        <md-card-actions>
+          <md-button ng-show="!isEditing" ng-if="entry.canEdit" class="md-raised md-primary" ng-click="isEditing = true">Edit</md-button>
+          <md-button ng-show="isEditing" ng-disabled="questionDetailForm.$invalid || questionDetailForm.$pristine" ng-click="save()" class="md-raised md-primary">Save</md-button>
+          <md-button ng-show="isEditing" ng-click="isEditing = false" class="md-raised md-accent">Cancel</md-button>
+          <md-button ng-show="!isEditing" class="md-raised md-primary" ng-click="comment()">Comment</md-button>
+          <md-button ng-show="!isEditing" class="md-raised md-primary" ng-click="answer()">Answer</md-button>
+        </md-card-actions>
+      </div>
+    </div>
+  </form>
+</md-card>
+<div class="comments-container">
+  <comment comm="comment" ng-repeat="comment in entry.comments"></comment>
+</div>

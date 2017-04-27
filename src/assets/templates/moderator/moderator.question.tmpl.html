@@ -1,0 +1,44 @@
+<div layout="column">
+	<div layout>
+		<span flex></span>
+		<md-button class="md-warn md-raised" ng-click="deleteActiveEntries(questions)">delete</md-button>
+	</div>
+	<div layout>
+		<table layout-fill>
+			<tr class="row-header">
+				<th>ID</th>
+				<th>Owner Name</th>
+				<th>Content</th>
+				<th></th>
+				<th><md-checkbox class="centered checkbox" aria-label="check all" ng-click="selectAll=!selectAll"></md-checkbox></th>
+			</tr>
+			<tr ng-repeat="question in questions track by $index">
+				<td class="id-row">
+					{{question.id}}
+				</td>
+				<td>
+					<strong>{{formatName(question)}}</strong>
+				</td>
+				<td class="table-row" ng-hide="isEditing">
+					<md-content ng-bind-html="question.content"></md-content>
+				</td>
+				<td ng-show="isEditing">
+					<div layout>
+						<md-button class="md-primary" ng-click="saveActiveEntries(question);isEditing=false">save</md-button>
+						<md-button ng-click="isEditing=false">cancel</md-button>
+						<span flex></span>
+						<md-button class="md-warn" ng-click="deleteActiveEntries(question);isEditing=false">delete</md-button>
+					</div>
+					<summernote ng-model="question.content" height="300"></summernote>
+				</td>
+				<td layout>
+					<md-button class="md-success" ng-click="isEditing=!isEditing" ng-disabled="!question.id">edit</md-button>
+					<md-button class="md-primary" ng-href="/entries/{{question.id}}">Go to Question</md-button>
+				</td>
+				<td>
+					<md-checkbox class="centered checkbox" aria-label="Checkbox" ng-disabled="!question.id" ng-click="questions[$index].$isActive=!questions[$index].$isActive" ng-checked="questions[$index].$isActive"></md-checkbox>
+				</td>
+			</tr>
+		</table>
+	</div>
+</div>

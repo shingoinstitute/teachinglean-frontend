@@ -1,0 +1,34 @@
+<md-toolbar class="md-primary md-hue-2">
+  <div class="md-toolbar-tools">
+    <span flex-gt-sm></span>
+    <md-button class="md-accent" aria-label="Sign Up" ng-href="/createAccount" ng-hide="mc.user">
+      Sign Up
+    </md-button>
+    <md-button class="md-raised" aria-label="Login" ng-href="/login" ng-hide="mc.user">
+      Login
+    </md-button>
+    <span flex-xs flex-sm></span>
+    <md-menu md-offset="50" ng-show="mc.user">
+      <md-button class="md-icon-button" aria-label="Profile" ng-click="$mdMenu.open($event)">
+        <md-icon md-menu-align-target md-svg-icon="assets/images/icons/ic_account_circle_white_36px.svg"></md-icon>
+      </md-button>
+      <md-menu-content layout="column">
+        <md-menu-item>
+          <div>
+            <md-icon md-svg-icon="assets/images/icons/view-dashboard.svg"></md-icon>
+            <md-button class="md-primary" ng-href="/dashboard">Dashboard</md-button>
+          </div>
+        </md-menu-item>
+        <md-menu-item>
+          <div>
+            <md-icon md-menu-align-target md-svg-icon="assets/images/icons/logout.svg"></md-icon>
+            <md-button ng-click="vm.logout()">Logout</md-button>
+          </div>
+        </md-menu-item>
+      </md-menu-content>
+    </md-menu>
+    <md-button class="md-icon-button" aria-label="Menu" ng-click="toggleSidenav()" hide-gt-sm>
+      <md-icon md-menu-align-target md-svg-icon="assets/images/icons/menu.svg"></md-icon>
+    </md-button>
+  </div>
+</md-toolbar>
