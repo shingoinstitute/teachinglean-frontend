@@ -6,6 +6,9 @@
 	AdminController.$inject = ['$scope', '$document', '$rootScope', '$http', '$mdDialog', '$mdToast', '_userService', 'BROADCAST', '_'];
 
 	function AdminController($scope, $document, $rootScope, $http, $mdDialog, $mdToast, _userService, BROADCAST, _) {
+
+		var backendUri = 'http://localhost:8080/backend/';
+
 		var vm = this;
 		vm.users = [];
 		vm.progressCircleEnabled = false;
@@ -14,7 +17,7 @@
 		$scope.userSearchQuery = '';
 
 		vm.findAll = function () {
-			$http.get('/user?limit=20')
+			$http.get(backendUri + '/user?limit=20')
 			.then(function (response) {
 				if (response.data) vm.users = response.data;
 			})
@@ -198,7 +201,7 @@
 
 		$scope.performUserQuery = function(query) {
 			var params = {or: [{firstname: {contains: query}},{lastname: {contains: query}}]}
-			$http.get('/user?where=' + JSON.stringify(params))
+			$http.get(backendUri + '/user?where=' + JSON.stringify(params))
 			.then(function(response) {
 				vm.users = response.data;
 			})

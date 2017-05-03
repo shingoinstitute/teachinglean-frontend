@@ -8,7 +8,7 @@
 				users: "="
 			},
 			transclude: true,
-			templateUrl: 'templates/moderator/moderator.tmpl.html',
+			templateUrl: 'assets/templates/moderator/moderator.tmpl.html',
 			controller: 'ModeratorController',
 			controllerAs: 'vm'
 		}
@@ -20,7 +20,7 @@
 				user: "="
 			},
 			transclude: true,
-			templateUrl: 'templates/moderator/moderator.user.tmpl.html',
+			templateUrl: 'assets/templates/moderator/moderator.user.tmpl.html',
 			controller: 'ModeratorController'
 		}
 	})
@@ -31,7 +31,7 @@
 				answer: "="
 			},
 			transclude: true,
-			templateUrl: 'templates/moderator/moderator.answer.tmpl.html',
+			templateUrl: 'assets/templates/moderator/moderator.answer.tmpl.html',
 			controller: 'ModeratorController'
 		}
 	})
@@ -39,7 +39,7 @@
 		return {
 			restrict: 'E',
 			transclude: true,
-			templateUrl: 'templates/moderator/moderator.question.tmpl.html',
+			templateUrl: 'assets/templates/moderator/moderator.question.tmpl.html',
 			controller: 'ModeratorController'
 		}
 	})
@@ -50,7 +50,7 @@
 				comment: "="
 			},
 			transclude: true,
-			templateUrl: 'templates/moderator/moderator.comment.tmpl.html',
+			templateUrl: 'assets/templates/moderator/moderator.comment.tmpl.html',
 			controller: 'ModeratorController'
 		}
 	});

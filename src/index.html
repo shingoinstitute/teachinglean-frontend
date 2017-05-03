@@ -5,16 +5,38 @@
   <title>LeanApp</title>
   <base href="/">
 
+  <!--JQUERY IMPORT-->
+  <script
+  src="https://code.jquery.com/jquery-3.2.1.min.js"
+  integrity="sha256-hwg4gsxgFZhOsEEamdOYGBf13FyQuiTwlAQgxVSNgt4="
+  crossorigin="anonymous"></script>
+
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <!--<link rel="icon" type="image/x-icon" href="favicon.ico">-->
     <link rel="stylesheet" href="assets/css/materialize.css">
 
 </head>
-<body>
+<body ng-controller="MainController as mc" ng-cloak layout="column" layout-gt-sm="row" layout-wrap>
+
     <app-root>loading...</app-root>
-    
+
     <tool-bar flex-gt-sm="100"></tool-bar>
-    <div ng-view flex></div>
+
+    <side-nav></side-nav>
+
+    <ng-view flex-gt-sm></ng-view>
+
+    <footer flex-gt-sm="100" layout-padding class="blue-grey darken-2">
+    <ul flex-gt-sm class="container">
+      <li><a ng-href="/about" class="white-text">About</a></li>
+
+      <li><a ng-href="/contact" class="white-text">Contact Us</a></li>
+
+      <li><a class="white-text" href="mailto:shingo.it@usu.edu">Technical Support</a></li>
+
+      <li><a ng-href="/feedback" class="white-text">Send us your feedback</a></li>
+    </ul>
+  </footer>
 
 </body>
 </html>

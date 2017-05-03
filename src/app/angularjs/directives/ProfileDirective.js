@@ -9,7 +9,7 @@
                 user: '='
             },
             transclude: true,
-            templateUrl: 'templates/user/profile.tmpl.html',
+            templateUrl: 'assets/templates/user/profile.tmpl.html',
             controller: 'ProfileController as vm'
         }
     });

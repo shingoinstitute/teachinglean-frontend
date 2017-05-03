@@ -6,6 +6,8 @@
 
   _flagService.$inject = ['$http']
 
+  var backendUri = 'http://localhost:8080/backend/';
+
   function _flagService($http) {
     return {
       flag: (user, contentId, options) => {
@@ -19,7 +21,7 @@
         return $http({
             method: 'post',
             dataType: 'json',
-            url: '/flag',
+            url: backendUri + '/flag',
             data: f
         });
       }

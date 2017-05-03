@@ -8,12 +8,12 @@
 			<tr>
 				<th class="table-actions">
 					<div flex class="flex-align-center">
-						<md-button aria-label="email icon" class="md-primary" ng-disabled="!hasSelection"><md-icon md-menu-align-target md-svg-icon="/images/icons/email-outline.svg"></md-icon></md-button>
+						<md-button aria-label="email icon" class="md-primary" ng-disabled="!hasSelection"><md-icon md-menu-align-target md-svg-icon="assets/images/icons/email-outline.svg"></md-icon></md-button>
 					</div>
 				</th>
 				<th colspan="5">
 					<input flex class="md-input" ng-model="userQuery" type="text" placeholder="Search...">
-					<md-button aria-label="search button" class="md-fab md-fab-flat"><md-icon md-svg-src="images/icons/ic_search_black_24px.svg"></md-icon></md-button>
+					<md-button aria-label="search button" class="md-fab md-fab-flat"><md-icon md-svg-src="assets/images/icons/ic_search_black_24px.svg"></md-icon></md-button>
 				</th>
 			</tr>
 			<tr>
@@ -40,7 +40,7 @@
 				<td class="md-body-1">
 					<md-menu>
 						<md-button class="transform-none margin-none" ng-click="$mdMenu.open()">{{parseRole(user.role)}}
-							<md-icon md-menu-align-target md-svg-icon="/images/icons/menu-down.svg"></md-icon>
+							<md-icon md-menu-align-target md-svg-icon="assets/images/icons/menu-down.svg"></md-icon>
 						</md-button>
 						<md-menu-content>
 							<md-menu-item ng-if="user.role != 'System Admin'">

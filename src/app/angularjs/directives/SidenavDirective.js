@@ -7,7 +7,7 @@
         return {
             restrict: 'E',
             transclude: true,
-            templateUrl: 'templates/public/sidenav.tmpl.html',
+            templateUrl: 'assets/templates/public/sidenav.tmpl.html',
             controller: 'NavController'
         }
     });

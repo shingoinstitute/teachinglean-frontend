@@ -10,7 +10,7 @@
                 owner: '='
             },
             transclude: true,
-            templateUrl: 'templates/entries/question.tmpl.html',
+            templateUrl: 'assets/templates/entries/question.tmpl.html',
             controller: 'QuestionController'
         }
     });

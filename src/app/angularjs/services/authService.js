@@ -7,7 +7,10 @@
 	_authService.$inject = ['$http', '$cookies', '$window', '$location', '$rootScope', 'BROADCAST', 'JWT_TOKEN']
 
 	function _authService($http, $cookies, $window, $location, $rootScope, BROADCAST, JWT_TOKEN) {
-		let service = {
+
+		var backendUri = 'http://localhost:8080/backend/';
+
+		var service = {
 			authenticateLocal: authenticateLocal,
 			authenticateLinkedin: authenticateLinkedin,
 			createAccount: createAccount,
@@ -20,7 +23,7 @@
 		* @param {string} password - the user's password
 		*/
 		function authenticateLocal(username, password, next) {
-			$http.post('/auth/local', {
+			$http.post('http://teachinglean.org:8080/backend/auth/local', {
 				username: username,
 				password: password
 			})
@@ -34,7 +37,8 @@
 				var token = response.data && response.data.token ? response.data.token : null;
 				if (!token) { return next(new Error('Error: JWT token not found.'), false); }
 
-				$cookies.put(JWT_TOKEN, token);
+				// $cookies.put(JWT_TOKEN, token);
+				$cookies.put('XSRF-TOKEN', token);
 
 				return next(null, user);
 			})
@@ -48,7 +52,7 @@
 		* @description :: Login using LinkedIn OAuth 2.0 authentication strategy
 		* @see {file} :: {appRoot}/config/passport.js
 		*/
-		function authenticateLinkedin() { $window.location.href = "/auth/linkedin"; }
+		function authenticateLinkedin() { $window.location.href = backendUri + "auth/linkedin"; }
 
 		/**
 		 * @description {function} createAccount :: POSTs to server to create a new user who can be authenticated via a local strategy
@@ -60,7 +64,7 @@
 					return next(new Error('Error: Missing required fields.'), false);
 				}
 
-				$http.post('/user', {
+				$http.post(backendUri + 'user', {
 					firstname: user.firstname,
 					lastname: user.lastname,
 					email: user.email,
@@ -92,7 +96,7 @@
 		* @description :: Logout user; removes JWT token from cookies; redirects client to home page
 		*/
 		function logout() {
-			$http.get('/auth/logout')
+			$http.get(backendUri + 'auth/logout')
 				.then(function (data) {
 					$cookies.remove(JWT_TOKEN);
 					$rootScope.$broadcast(BROADCAST.userLogout);

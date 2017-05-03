@@ -7,10 +7,12 @@
 
 	function ModeratorController($scope, $rootScope, $http, $mdDialog, $mdToast, _userService, _entryService, users) {
 
+		var backendUri = 'http://localhost:8080/backend/';
+
 		loadData();
 
 		function loadData() {
-			$http.get('/user')
+			$http.get(backendUri + '/user')
 			.then(function(response) {
 				$scope.users = response.data;
 				return _entryService.getQuestions();

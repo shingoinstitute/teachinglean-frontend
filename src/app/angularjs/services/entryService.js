@@ -7,13 +7,15 @@
 
   _entryService.$inject = ['$http', '$q']
 
+  var backendUri = 'http://localhost:8080/backend/';
+
   function _entryService($http, $q) {
     return {
       getUserQuestions: (uuid) => {
         return $http({
           method: 'get',
           dataType: 'json',
-          url: '/entry?where={"owner": "' + uuid + '","parent":null}&populate=owner'
+          url: backendUri + '/entry?where={"owner": "' + uuid + '","parent":null}&populate=owner'
         });
       },
 
@@ -21,7 +23,7 @@
         return $http({
           method: 'get',
           dataType: 'json',
-          url: '/entry?where={"owner":"' + uuid + '","parent": {"!":null}}&populate=owner'
+          url: backendUri + '/entry?where={"owner":"' + uuid + '","parent": {"!":null}}&populate=owner'
         });
       },
 
@@ -29,20 +31,20 @@
         return $http({
           method: 'get',
           dataType: 'json',
-          url: '/comment?where={"owner":"' + uuid + '"}&populate=owner,parent'
+          url: backendUri + '/comment?where={"owner":"' + uuid + '"}&populate=owner,parent'
         });
       },
 
       getQuestions: () => {
-        return $http.get('/entry?where={"parent":null}&populate=owner,parent');
+        return $http.get(backendUri + '/entry?where={"parent":null}&populate=owner,parent');
       },
 
       getAnswers: () => {
-        return $http.get('/entry?where={"parent": {"!":null}}&populate=owner,parent');
+        return $http.get(backendUri + '/entry?where={"parent": {"!":null}}&populate=owner,parent');
       },
 
       getComments: () => {
-        return $http.get('/comment?populate=owner,parent');
+        return $http.get(backendUri + '/comment?populate=owner,parent');
       },
 
       getRecent: (limit, userId) => {
@@ -55,7 +57,7 @@
           parent: null,
           owner: userId,
         }
-        var url = '/entry?where=' + JSON.stringify(params) + (limit ? '&limit=' + limit : '');
+        var url = backendUri + '/entry?where=' + JSON.stringify(params) + (limit ? '&limit=' + limit : '');
         return $http({
           method: 'get',
           dataType: 'json',
@@ -67,7 +69,7 @@
         return $http({
           method: 'get',
           dataType: 'json',
-          url: '/entry/' + id + '?populate=answers,owner,comments,parent,users_did_upvote,users_did_downvote'
+          url: backendUri + '/entry/' + id + '?populate=answers,owner,comments,parent,users_did_upvote,users_did_downvote'
         });
       },
 
@@ -75,7 +77,7 @@
         return $http({
           method: 'get',
           dataType: 'json',
-          url: '/comment/' + id + '?populate=owner,parent'
+          url: backendUri + '/comment/' + id + '?populate=owner,parent'
         });
       },
 
@@ -83,7 +85,7 @@
         return $http({
           method: 'post',
           dataType: 'json',
-          url: '/entry',
+          url: backendUri + '/entry',
           data: entry
         });
       },
@@ -92,7 +94,7 @@
         return $http({
           method: 'delete',
           dataType: 'json',
-          url: '/entry',
+          url: backendUri + '/entry',
           data: entry
         });
       },
@@ -101,7 +103,7 @@
         return $http({
           method: 'delete',
           dataType: 'json',
-          url: '/comment',
+          url: backendUri + '/comment',
           data: comm
         });
       },
@@ -110,7 +112,7 @@
         return $http({
           method: 'post',
           dataType: 'json',
-          url: '/comment',
+          url: backendUri + '/comment',
           data: comment
         });
       },
@@ -119,7 +121,7 @@
         return $http({
           method: 'put',
           dataType: 'json',
-          url: '/entry/' + entry.id,
+          url: backendUri + '/entry/' + entry.id,
           data: entry
         });
       },
@@ -128,17 +130,17 @@
         return $http({
           method: 'put',
           dataType: 'json',
-          url: '/comment/' + comment.id,
+          url: backendUri + '/comment/' + comment.id,
           data: comment
         });
       },
 
       upvoteEntry: (entry) => {
-        return $http.put('/entry/upvote/' + entry.id);
+        return $http.put(backendUri + '/entry/upvote/' + entry.id);
       },
 
       downvoteEntry: (entry) => {
-        return $http.put('/entry/downvote/' + entry.id);
+        return $http.put(backendUri + '/entry/downvote/' + entry.id);
       },
 
       query: (queryString) => {
@@ -155,7 +157,7 @@
           }
           ]
         };
-        var url = '/entry?where=' + JSON.stringify(query) + '&populate=owner';
+        var url = backendUri + '/entry?where=' + JSON.stringify(query) + '&populate=owner';
         return $http({
           method: 'get',
           dataType: 'json',

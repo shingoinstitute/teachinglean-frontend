@@ -10,7 +10,7 @@
                 owner: '='
             },
             transclude: true,
-            templateUrl: 'templates/entries/comment.tmpl.html',
+            templateUrl: 'assets/templates/entries/comment.tmpl.html',
             controller: 'CommentController'
         }
     });

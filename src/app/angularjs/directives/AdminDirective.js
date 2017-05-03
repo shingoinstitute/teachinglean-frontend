@@ -3,7 +3,7 @@
 	angular.module('leansite')
 	.directive('admin', function() {
 		return {
-			templateUrl: 'templates/admin/admin.tmpl.html',
+			templateUrl: 'assets/templates/admin/admin.tmpl.html',
 			controller: 'AdminController',
 			transclude: true,
 			controllerAs: 'vm'
@@ -18,7 +18,7 @@
 				ctrl: "="
 			},
 			transclude: true,
-			templateUrl: 'templates/admin/adminUserCard.tmpl.html',
+			templateUrl: 'assets/templates/admin/adminUserCard.tmpl.html',
 			controller: 'AdminController',
 			controllerAs: 'vm'
 		}

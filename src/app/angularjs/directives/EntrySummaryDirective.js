@@ -9,7 +9,7 @@
           entry: '='
         },
         transclude: true,
-        templateUrl: 'templates/entries/summary.tmpl.html',
+        templateUrl: 'assets/templates/entries/summary.tmpl.html',
         controller: ['$scope', '$location', function ($scope, $location) {
           $scope.go = function () {
             if ($scope.entry.parent) {

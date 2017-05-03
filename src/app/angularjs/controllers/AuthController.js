@@ -22,7 +22,7 @@
 		 * @see {file} authService.js
 		 */
 		vm.authenticateLinkedIn = function () {
-      authService.authenticateLinkedin();
+			authService.authenticateLinkedin();
 		};
 
 		/**
@@ -32,7 +32,7 @@
 		 */
 		vm.authenticateLocal = function (username, password) {
 			vm.progressCircleEnabled = true;
-      authService.authenticateLocal(username, password, function (err, user) {
+			authService.authenticateLocal(username, password, function (err, user) {
 				vm.progressCircleEnabled = false;
 				if (err) { vm.loginError = err.message || err.error || err; }
 				if (user) { $location.path('/dashboard'); }
@@ -42,13 +42,13 @@
 		/**
 		 * @description {function} logout :: logs user out using authService
 		 */
-		vm.logout = function() {
-      authService.logout();
+		vm.logout = function () {
+			authService.logout();
 		};
 
-		vm.createAccount = function(user) {
+		vm.createAccount = function (user) {
 			delete user.confirmPassword;
-      authService.createAccount(user, function(err, user) {
+			authService.createAccount(user, function (err, user) {
 				if (err) {
 					vm.error = err;
 					return;
@@ -60,11 +60,11 @@
 				}
 
 				userService.getUser()
-					.then(function(response) {
+					.then(function (response) {
 						if (response.data.error) return console.error('Error: ', err);
 						$location.path('/dashboard');
 					})
-					.catch(function(err) {
+					.catch(function (err) {
 						if (BROADCAST.loggingLevel === "DEBUG") {
 							console.error('Error: ', err);
 						}
@@ -72,12 +72,12 @@
 			});
 		};
 
-		$scope.$watch(function() {
+		$scope.$watch(function () {
 			return typeof vm.user.firstname != 'undefined'
-			&& typeof vm.user.lastname != 'undefined'
-			&& typeof vm.user.email != 'undefined'
-			&& vm.user.password && (vm.user.password == vm.user.confirmPassword);
-		}, function(shouldEnable) {
+				&& typeof vm.user.lastname != 'undefined'
+				&& typeof vm.user.email != 'undefined'
+				&& vm.user.password && (vm.user.password == vm.user.confirmPassword);
+		}, function (shouldEnable) {
 			vm.createButonEnabled = shouldEnable;
 		});
 
