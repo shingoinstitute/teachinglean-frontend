@@ -2,18 +2,6 @@
 * `app.ts`
 */
 
-// (function() {
-// 	angular.module('leansite', [])
-// 	.controller('MainController', MainController);
-
-// 	MainController.$inject = ['$scope'];
-
-// 	function MainController($scope) {
-// 		$scope.title = "Main Controller title";
-// 	}
-
-// })();
-
 (function() {
 	angular.module('leansite', ['ngRoute', 'ngMaterial', 'ngCookies', 'ngMessages', 'ngSanitize', 'angularMoment', 'summernote'])
 	.config(Config);
@@ -22,9 +10,6 @@
 
 	function Config($locationProvider, $routeProvider, $mdThemingProvider, $mdIconProvider, $httpProvider) {
 		$routeProvider
-		.when('/', {
-			templateUrl: 'assets/templates/public/homepage.html',
-		})
 		.when('/dashboard', {
 			templateUrl: 'assets/templates/user/dashboard.html',
 		})
@@ -62,7 +47,7 @@
 			templateUrl: 'assets/templates/user/emailVerification.html'
 		})
 		.otherwise({
-			templateUrl: 'assets/templates/public/404.html'
+			template: ''
 		});
 		
 		$locationProvider.html5Mode(true);
