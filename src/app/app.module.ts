@@ -16,7 +16,7 @@ import { AppComponent } from './app.component';
 import { HomeComponent } from './home/home.component';
 import { AboutComponent } from './about/about.component';
 import { DashboardComponent } from './dashboard/dashboard.component';
-import { SidenavComponent } from './sidenav/sidenav.component';
+import { SidenavService } from './sidenav/sidenav.service';
 
 @NgModule({
   imports: [
@@ -33,11 +33,11 @@ import { SidenavComponent } from './sidenav/sidenav.component';
     AppComponent,
     HomeComponent,
     AboutComponent,
-    DashboardComponent,
-    SidenavComponent
+    DashboardComponent
   ],
   providers: [
-    UserService
+    UserService,
+    SidenavService
   ],
   bootstrap: [AppComponent]
 })
