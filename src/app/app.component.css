@@ -1,0 +1,15 @@
+
+.sidenav-container {
+    width: 250px;
+    overflow: visible;
+    width: 250px; }
+
+.sidenav-container md-sidenav {
+    width: 250px;
+    display: flex;
+    overflow: visible;
+    border-right: 1px solid rgba(0, 0, 0, 0.2); }
+
+md-nav-list, img {
+    width: 100%;
+    padding: 4px; }

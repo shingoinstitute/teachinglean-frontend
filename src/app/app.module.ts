@@ -6,18 +6,19 @@ import { HttpModule } from '@angular/http';
 import { UpgradeModule } from '@angular/upgrade/static';
 import 'hammerjs';
 
-import { AngularMaterialModule } from './angular-material.module';
+import { AngularMaterialModule } from './config/angular-material.module';
 import { MaterialModule } from '@angular/material';
 
-import { AppRoutingModule } from './app-routing.module';
+import { UserService } from './user/user.service';
+
+import { AppRoutingModule } from './config/app-routing.module';
 import { AppComponent } from './app.component';
 import { HomeComponent } from './home/home.component';
+import { AboutComponent } from './about/about.component';
+import { DashboardComponent } from './dashboard/dashboard.component';
+import { SidenavComponent } from './sidenav/sidenav.component';
 
 @NgModule({
-  declarations: [
-    AppComponent,
-    HomeComponent
-  ],
   imports: [
     BrowserModule,
     BrowserAnimationsModule,
@@ -28,7 +29,16 @@ import { HomeComponent } from './home/home.component';
     UpgradeModule,
     AppRoutingModule
   ],
-  providers: [],
+  declarations: [
+    AppComponent,
+    HomeComponent,
+    AboutComponent,
+    DashboardComponent,
+    SidenavComponent
+  ],
+  providers: [
+    UserService
+  ],
   bootstrap: [AppComponent]
 })
 export class AppModule {

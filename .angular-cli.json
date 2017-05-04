@@ -18,20 +18,21 @@
       "tsconfig": "tsconfig.app.json",
       "testTsconfig": "tsconfig.spec.json",
       "prefix": "app",
+      "_styles": [
+      ],
       "styles": [
         "../node_modules/summernote/dist/summernote.css",
         "../node_modules/angular-material/angular-material.min.css",
+        "lean-app-theme.css",
         "styles.css"
       ],
       "scripts": [
         "../node_modules/jquery/dist/jquery.js",
         "../node_modules/materialize-css/bin/materialize.js",
-        
         "../node_modules/moment/moment.js",
         "../node_modules/trix/dist/trix.js",
         "../node_modules/lodash/lodash.min.js",
         "../node_modules/summernote/dist/summernote.min.js",
-
         "../node_modules/angular/angular.js",
         "../node_modules/angular-route/angular-route.js",
         "../node_modules/angular-aria/angular-aria.js",
@@ -43,7 +44,6 @@
         "../node_modules/angular-trix/dist/angular-trix.js",
         "../node_modules/angular-moment/angular-moment.js",
         "../node_modules/angular-summernote/dist/angular-summernote.min.js",
-
         "app/angularjs/app.js",
         "app/angularjs/controllers/MainController.js",
         "app/angularjs/controllers/AddCommentController.js",
@@ -62,7 +62,6 @@
         "app/angularjs/controllers/QuestionController.js",
         "app/angularjs/controllers/ResetController.js",
         "app/angularjs/controllers/SettingsController.js",
-
         "app/angularjs/directives/AdminDirective.js",
         "app/angularjs/directives/AnswerDirective.js",
         "app/angularjs/directives/CommentDirective.js",
@@ -74,7 +73,6 @@
         "app/angularjs/directives/QuestionDirective.js",
         "app/angularjs/directives/SidenavDirective.js",
         "app/angularjs/directives/ToolbarDirective.js",
-        
         "app/angularjs/services/authService.js",
         "app/angularjs/services/entryService.js",
         "app/angularjs/services/flagService.js",
@@ -109,7 +107,8 @@
     }
   },
   "defaults": {
-    "styleExt": "css",
-    "component": {}
+    "styleExt": "sass",
+    "component": {
+    }
   }
 }
