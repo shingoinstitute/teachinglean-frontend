@@ -5,27 +5,24 @@
   <title>LeanApp</title>
   <base href="/">
 
-  <!--JQUERY IMPORT-->
-  <script
-  src="https://code.jquery.com/jquery-3.2.1.min.js"
-  integrity="sha256-hwg4gsxgFZhOsEEamdOYGBf13FyQuiTwlAQgxVSNgt4="
-  crossorigin="anonymous"></script>
+  <!--<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/angular-material/1.1.4/angular-material.min.css">-->
+  <link rel="stylesheet" href="assets/css/materialize-font.css">
 
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <!--<link rel="icon" type="image/x-icon" href="favicon.ico">-->
-    <link rel="stylesheet" href="assets/css/materialize.css">
+    <!--<link rel="stylesheet" href="assets/css/materialize.css">-->
 
 </head>
-<body ng-controller="MainController as mc" layout="column">
+<body ng-app="leansite" layout="column">
 
 
     <tool-bar></tool-bar>
 
-    <app-root layout="row">loading...</app-root>
+    <app-root fxLayout="column">loading...</app-root>
 
 
 
-    <footer flex-gt-sm="100" layout-padding class="blue-grey darken-2">
+    <footer class="mat-primary darken-2">
     <ul flex-gt-sm class="container">
       <li><a ng-href="/about" class="white-text">About</a></li>
 
@@ -36,6 +33,42 @@
       <li><a ng-href="/feedback" class="white-text">Send us your feedback</a></li>
     </ul>
   </footer>
+
+
+
+  <!--JQUERY-->
+  <script
+  src="https://code.jquery.com/jquery-3.2.1.min.js"
+  integrity="sha256-hwg4gsxgFZhOsEEamdOYGBf13FyQuiTwlAQgxVSNgt4="
+  crossorigin="anonymous"></script>
+
+  <!--<script src="https://cdnjs.cloudflare.com/ajax/libs/angular.js/1.6.1/angular.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/angular.js/1.6.1/angular-animate.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/angular.js/1.6.1/angular-aria.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/angular.js/1.6.1/angular-messages.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/angular-material/1.1.4/angular-material.min.js"></script>
+
+  <script>
+
+    (function() {
+      angular.module('leansite', ['ngMaterial'])
+      .config(['$mdThemingProvider', function($mdThemingProvider) {
+        $mdThemingProvider.alwaysWatchTheme(true);
+        
+        $mdThemingProvider.theme('default')
+        .primaryPalette('blue-grey')
+        .accentPalette('orange');
+        
+        $mdThemingProvider.theme('darkTheme')
+        .primaryPalette('blue-grey')
+        .accentPalette('orange')
+        .dark();
+      }]);
+        
+        
+    })();
+
+  </script>-->
 
 </body>
 </html>

@@ -1,29 +1,36 @@
+<app-toolbar></app-toolbar>
+<div fxLayout="row">
 
-<md-sidenav-container class="sidenav-container">
-  <md-sidenav #sidenav mode="side" opened="(showLogin)">
-    <md-nav-list>
-        <img src="/assets/images/logos/LEAN-logo-md.png" alt="Teaching LEAN">
-        <md-divider></md-divider>
-        <a md-list-item routerLink="/" (click)="toggleSidenav()">Home</a>
-        <md-divider></md-divider>
-        <a md-list-item routerLink="/entries" (click)="toggleSidenav()">Q&amp;A Forum</a>
-        <md-divider></md-divider>
-        <a md-list-item routerLink="/teaching" (click)="toggleSidenav()">Teaching And Curriculum</a>
-        <md-divider></md-divider>
-        <a md-list-item routerLink="/about" (click)="toggleSidenav()">About Us</a>
-        <hr>
-        <a md-list-item routerLink="/dashboard" (click)="toggleSidenav()" *ngIf="showDashboard">
-            Dashboard
-            <md-icon svgIcon="dashboard"></md-icon>
-        </a>
-        <a md-list-item routerLink="/login" (click)="toggleSidenav()" *ngIf="showLogin">
-            Login
-            <md-icon svgIcon="login"></md-icon>
-        </a>
-    </md-nav-list>
-  </md-sidenav>
-</md-sidenav-container>
+    <md-sidenav-container class="sidenav-container">
+        <md-sidenav #sidenav mode="side" opened="(showLogin)">
+            <md-nav-list>
+                <img src="/assets/images/logos/LEAN-logo-md.png" alt="Teaching LEAN">
+                <md-divider></md-divider>
+                <a md-list-item routerLink="/" (click)="toggleSidenav()">Home</a>
+                <md-divider></md-divider>
+                <a md-list-item routerLink="/entries" (click)="toggleSidenav()">Q&amp;A Forum</a>
+                <md-divider></md-divider>
+                <a md-list-item routerLink="/teaching" (click)="toggleSidenav()">Teaching And Curriculum</a>
+                <md-divider></md-divider>
+                <a md-list-item routerLink="/about" (click)="toggleSidenav()">About Us</a>
+                <hr>
+                <a md-list-item routerLink="/dashboard" (click)="toggleSidenav()" *ngIf="showDashboard">
+                    Dashboard
+                    <md-icon svgIcon="dashboard"></md-icon>
+                </a>
+                <a md-list-item routerLink="/login" (click)="toggleSidenav()" *ngIf="showLogin">
+                    Login
+                    <md-icon svgIcon="login"></md-icon>
+                </a>
+            </md-nav-list>
+        </md-sidenav>
+    </md-sidenav-container>
+
+    <router-outlet></router-outlet>
+
+</div>
 
 
+    
 
-<router-outlet></router-outlet>
+

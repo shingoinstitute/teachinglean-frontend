@@ -6,6 +6,7 @@ import { HttpModule } from '@angular/http';
 import 'hammerjs';
 
 import { AngularMaterialModule } from './config/angular-material.module';
+import { FlexLayoutModule } from '@angular/flex-layout';
 import { MaterialModule } from '@angular/material';
 
 import { UserService } from './user/user.service';
@@ -18,11 +19,13 @@ import { DashboardComponent } from './dashboard/dashboard.component';
 import { SidenavService } from './sidenav/sidenav.service';
 import { LoginComponent } from './login/login.component';
 import { TeachingComponent } from './teaching/teaching.component';
+import { ToolbarComponent } from './toolbar/toolbar.component';
 
 @NgModule({
   imports: [
     BrowserModule,
     BrowserAnimationsModule,
+    FlexLayoutModule,
     MaterialModule.forRoot(),
     AngularMaterialModule,
     FormsModule,
@@ -35,7 +38,8 @@ import { TeachingComponent } from './teaching/teaching.component';
     AboutComponent,
     DashboardComponent,
     LoginComponent,
-    TeachingComponent
+    TeachingComponent,
+    ToolbarComponent
   ],
   providers: [
     UserService,
