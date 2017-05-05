@@ -3,7 +3,6 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { NgModule } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { HttpModule } from '@angular/http';
-import { UpgradeModule } from '@angular/upgrade/static';
 import 'hammerjs';
 
 import { AngularMaterialModule } from './config/angular-material.module';
@@ -28,7 +27,6 @@ import { TeachingComponent } from './teaching/teaching.component';
     AngularMaterialModule,
     FormsModule,
     HttpModule,
-    UpgradeModule,
     AppRoutingModule
   ],
   declarations: [
@@ -45,9 +43,7 @@ import { TeachingComponent } from './teaching/teaching.component';
   ],
   bootstrap: [AppComponent]
 })
-export class AppModule {
-  ngDoBootstrap() {}
-}
+export class AppModule { }
 
 
 
