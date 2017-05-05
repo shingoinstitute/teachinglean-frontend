@@ -32,7 +32,6 @@ export class UserService {
         } else {
             err = error.message ? error.message : error.toString();
         }
-        console.error(err);
         return Observable.throw(err);
     }
 

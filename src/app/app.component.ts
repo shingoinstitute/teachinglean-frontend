@@ -1,4 +1,4 @@
-import { Component, Input, OnInit, ViewChild, HostListener, AfterViewInit } from '@angular/core';
+import { Component, Input, OnInit, ViewChild, HostListener, AfterViewInit, EventEmitter, Output } from '@angular/core';
 import { Http } from '@angular/http';
 import { MdIconRegistry } from '@angular/material';
 import { DomSanitizer } from '@angular/platform-browser';
@@ -13,13 +13,13 @@ import { SidenavService } from './sidenav/sidenav.service';
   templateUrl: './app.component.html',
   styleUrls: ['./app.component.css'],
 })
-export class AppComponent implements OnInit, AfterViewInit {
+export class AppComponent implements OnInit {
 
   user: User = new User();
   @ViewChild('sidenav') sideNav: MdSidenav;
   private sidenavService: SidenavService;
   showDashboard = false;
-  showLogin = false;
+  showLogin = true;
 
   constructor(private userService: UserService,
   iconRegistry: MdIconRegistry,
@@ -28,25 +28,26 @@ export class AppComponent implements OnInit, AfterViewInit {
     iconRegistry.addSvgIcon('dashboard', sanitizer.bypassSecurityTrustResourceUrl('assets/images/icons/view-dashboard.svg'));
   }
 
+  ngOnInit() {
+    this.getUser();
+    this.sidenavService = new SidenavService(this.sideNav);
+  }
+
+  sidenavState(): boolean {
+    return this.sidenavService.getState();
+  }
+
   @HostListener('window:resize', ['$event'])
   onResize(event) {
-    this.sidenavService.setState();
+    if (window.innerWidth < 960 && this.sideNav.opened) {
+      this.sideNav.close();
+    } else if (window.innerWidth >= 961 && !this.sideNav.opened) {
+      this.sideNav.open();
+    }
   }
 
   toggleSidenav() {
     this.sidenavService.toggle();
-  }
-
-  openSidenav() {
-    this.sidenavService.open();
-  }
-
-  ngAfterViewInit() {
-    this.sidenavService = new SidenavService(this.sideNav);
-  }
-
-  ngOnInit() {
-    this.getUser();
   }
 
   getUser() {
@@ -55,9 +56,10 @@ export class AppComponent implements OnInit, AfterViewInit {
       user => {
         this.user = user;
         this.showDashboard = true;
+        this.showLogin = false;
       },
       error => {
-        console.error(error);
+        this.showDashboard = false;
         this.showLogin = true;
       }
     );

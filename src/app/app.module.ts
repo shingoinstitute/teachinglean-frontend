@@ -17,6 +17,7 @@ import { HomeComponent } from './home/home.component';
 import { AboutComponent } from './about/about.component';
 import { DashboardComponent } from './dashboard/dashboard.component';
 import { SidenavService } from './sidenav/sidenav.service';
+import { LoginComponent } from './login/login.component';
 
 @NgModule({
   imports: [
@@ -33,7 +34,8 @@ import { SidenavService } from './sidenav/sidenav.service';
     AppComponent,
     HomeComponent,
     AboutComponent,
-    DashboardComponent
+    DashboardComponent,
+    LoginComponent
   ],
   providers: [
     UserService,

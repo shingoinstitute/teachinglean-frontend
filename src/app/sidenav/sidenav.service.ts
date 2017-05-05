@@ -1,6 +1,7 @@
 import { Injectable, Output } from '@angular/core';
 import { MdSidenav } from '@angular/material';
 import { Observable } from 'rxjs/Observable';
+import { Observer } from 'rxjs/Observer';
 
 @Injectable()
 export class SidenavService {
@@ -10,16 +11,23 @@ export class SidenavService {
 
     constructor(sidenav: MdSidenav) {
         this._sidenav = sidenav;
-        this.setState();
+
+        const observable = new Observable<boolean>(observer => {
+            return observer.next(window.innerWidth < this._maxScreenWidth);
+        });
+
+        observable.subscribe(
+            shouldOpen => this._setState(shouldOpen)
+        )
+        .unsubscribe();
     }
 
-    setState() {
-        // if (window.innerWidth < this._maxScreenWidth && this._sidenav.opened) {
-        //     this._sidenav.close();
-        // } else if (window.innerWidth < this._maxScreenWidth) {
-        //     this._sidenav.close();
-        // }
-        window.innerWidth < this._maxScreenWidth ? this._sidenav.close() : this._sidenav.open();
+    private _setState(open: boolean) {
+        open ? this._sidenav.open() : this._sidenav.close();
+    }
+
+    getState(): boolean {
+        return window.innerWidth < this._maxScreenWidth;
     }
 
     toggle() {
@@ -28,16 +36,42 @@ export class SidenavService {
         }
     }
 
-    open() {
+    open(): boolean {
         if (window.innerWidth >= this._maxScreenWidth) {
-            this._sidenav.open();
+            this._sidenav.open()
+            .then(() => {
+                return true;
+            })
+            .catch(reason => {
+                this._handleError(reason);
+                return false;
+            });
+        } else {
+            return false;
         }
     }
 
-    close() {
+    close(): boolean {
         if (window.innerWidth < this._maxScreenWidth) {
-            this._sidenav.close();
+            this._sidenav.close()
+            .then(() => {
+                return true;
+            })
+            .catch(reason => {
+                this._handleError(reason);
+                return false;
+            });
+        } else {
+            return false;
         }
+    }
+
+    private _handleError(reason) {
+        let err = reason;
+        if (err instanceof Error) {
+            err = reason.message || reason.toString();
+        }
+        console.error(err);
     }
 
 }
