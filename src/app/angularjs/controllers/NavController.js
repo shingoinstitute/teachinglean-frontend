@@ -18,7 +18,7 @@
 		 */
 		vm.showDashboard = function () {
 			$rootScope.$broadcast('$MainControllerListener');
-		}
+		};
 
 		/**
 		 * @description {function} :: listens for broadcast from MainController then directs user to '/dashboard' or '/login' depending on whether or not a user is logged in.
@@ -36,7 +36,7 @@
 		 */
 		vm.logout = function () {
 			_authService.logout();
-		}
+		};
 
   }
 })();

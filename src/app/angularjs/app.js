@@ -20,7 +20,7 @@
 			templateUrl: 'assets/templates/public/about.html',
 		})
 		.when('/login', {
-			templateUrl: 'assets/templates/public/login.html',
+			templateUrl: 'assets/templates/login.html',
 		})
 		.when('/auth/linkedin/callback*', {
 			template: '<p ng-init=\"linkedinCallback()\">redirecting...</p>',
@@ -78,4 +78,4 @@
 	})
 	.constant('JWT_TOKEN', 'JWT')
 	.constant('_', _);
-})();
+});

@@ -6,7 +6,7 @@
         return {
             restrict: 'E',
             transclude: true,
-            templateUrl: 'assets/templates/public/toolbar.tmpl.html',
+            templateUrl: 'assets/templates/toolbar.tmpl.html',
             controller: 'NavController',
             controllerAs: 'vm'
         };
