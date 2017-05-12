@@ -9,17 +9,18 @@ import { AngularMaterialModule } from './config/angular-material.module';
 import { FlexLayoutModule } from '@angular/flex-layout';
 import { MaterialModule } from '@angular/material';
 
-import { UserService } from './user/user.service';
+import { UserService } from './services/user.service';
 
 import { AppRoutingModule } from './config/app-routing.module';
 import { AppComponent } from './app.component';
 import { HomeComponent } from './home/home.component';
 import { AboutComponent } from './about/about.component';
 import { DashboardComponent } from './dashboard/dashboard.component';
-import { SidenavService } from './sidenav/sidenav.service';
 import { LoginComponent } from './login/login.component';
 import { TeachingComponent } from './teaching/teaching.component';
 import { ToolbarComponent } from './toolbar/toolbar.component';
+import { ForumComponent } from './forum/forum.component';
+import { ForumDetailDirective } from './directives/forum-detail.directive';
 
 @NgModule({
   imports: [
@@ -39,11 +40,12 @@ import { ToolbarComponent } from './toolbar/toolbar.component';
     DashboardComponent,
     LoginComponent,
     TeachingComponent,
-    ToolbarComponent
+    ToolbarComponent,
+    ForumComponent,
+    ForumDetailDirective
   ],
   providers: [
-    UserService,
-    SidenavService
+    UserService
   ],
   bootstrap: [AppComponent]
 })

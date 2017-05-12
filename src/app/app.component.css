@@ -4,29 +4,36 @@ $break-small: 960px;
 $break-xsmall: 600px;*/
 
 @media screen and (max-width: 1280px) {
-    .sidenav-container {
-        max-width: 250px;
+    .sidenav-container,
+    md-sidenav {
+        max-width: 300px;
     }
 }
 
 @media screen and (min-width: 1280px) {
-    .sidenav-container {
-        width: 250px;
+    .sidenav-container,
+    md-sidenav {
+        width: 300px;
     }
 }
 
 .sidenav-container,
 .sidenav-container md-sidenav {
     overflow: visible;
+    display: flex;
 }
 
-.sidenav-container md-sidenav {
-    width: 250px;
-    display: flex;
-    box-shadow: 3px 0 6px rgba(0,0,0,.24);
+.sidenav-container,
+md-sidenav {
+    box-shadow: 1px 0 3px rgba(0,0,0,.24);
 }
 
 md-nav-list, img {
     width: 100%;
     padding: 4px; 
+}
+
+.mat-line {
+    font-size: 11pt;
+    color: #2f2f2f;
 }

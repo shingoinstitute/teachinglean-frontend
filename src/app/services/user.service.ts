@@ -4,17 +4,20 @@ import { Observable } from 'rxjs/Observable';
 import 'rxjs/add/operator/catch';
 import 'rxjs/add/operator/map';
 
-import { User } from './user';
+import { User } from '../user/user';
+import { Globals } from '../globals';
 
 @Injectable()
 export class UserService {
 
-    private baseUri = 'http://localhost:8080/backend';
+    baseApiUrl: string;
 
-    constructor(private http: Http) { }
+    constructor(private http: Http) {
+      this.baseApiUrl = Globals.baseApiUrl;
+    }
 
     getUser(): Observable<User> {
-        return this.http.get(this.baseUri + '/me')
+        return this.http.get(this.baseApiUrl + '/me')
             .map(this.extractData)
             .catch(this.handleError);
     }

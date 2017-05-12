@@ -1,12 +1,10 @@
-import { Component, Input, OnInit, ViewChild, HostListener, AfterViewInit, EventEmitter, Output } from '@angular/core';
-import { Http } from '@angular/http';
+import { Component, OnInit, ViewChild } from '@angular/core';
 import { MdIconRegistry } from '@angular/material';
 import { DomSanitizer } from '@angular/platform-browser';
 import { MdSidenav } from '@angular/material';
 
-import { UserService } from './user/user.service';
+import { UserService } from './services/user.service';
 import { User } from './user/user';
-import { SidenavService } from './sidenav/sidenav.service';
 
 @Component({
   selector: 'app-root',
@@ -17,9 +15,15 @@ export class AppComponent implements OnInit {
 
   user: User = new User();
   @ViewChild('sidenav') sideNav: MdSidenav;
-  private sidenavService: SidenavService;
   showDashboard = false;
   showLogin = true;
+
+  links = [
+    {name: "Home", path: "/"},
+    {name: "Q&A Forum", path: "/forum"},
+    {name: "Teaching And Curriculum", path: "/teaching"},
+    {name: "About Us", path: "/about"}
+  ];
 
   constructor(private userService: UserService,
   iconRegistry: MdIconRegistry,
@@ -30,24 +34,14 @@ export class AppComponent implements OnInit {
 
   ngOnInit() {
     this.getUser();
-    this.sidenavService = new SidenavService(this.sideNav);
   }
 
-  sidenavState(): boolean {
-    return this.sidenavService.getState();
-  }
-
-  @HostListener('window:resize', ['$event'])
-  onResize(event) {
-    if (window.innerWidth < 960 && this.sideNav.opened) {
-      this.sideNav.close();
-    } else if (window.innerWidth >= 961 && !this.sideNav.opened) {
-      this.sideNav.open();
-    }
+  screenWidthGtSm(): boolean {
+    return !(window.innerWidth < 960);
   }
 
   toggleSidenav() {
-    this.sidenavService.toggle();
+    this.sideNav.toggle();
   }
 
   getUser() {
@@ -58,7 +52,7 @@ export class AppComponent implements OnInit {
         this.showDashboard = true;
         this.showLogin = false;
       },
-      error => {
+      () => {
         this.showDashboard = false;
         this.showLogin = true;
       }

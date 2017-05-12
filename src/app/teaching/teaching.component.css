@@ -108,3 +108,6 @@ md-checkbox.centered {
   margin: 0 auto;
   width: 20px;
 }
+md-icon {
+  color: grey;
+}

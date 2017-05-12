@@ -1,55 +1,52 @@
-<div class="" flex layout-padding layout="column">
-  <h2 class="orange-text text-darken-2 text-bold md-margin-left show-gt-md">LEAN EDUCATORS ACADEMIC NETWORK</h2>
-  <h3 class="orange-text text-darken-2 md-margin-left show-gt-sm hide-gt-md">LEAN EDUCATORS ACADEMIC NETWORK</h3>
+<div class="container" fxLayout="column">
+  <h2 fxHide.sm fxHide.xs class="orange-text text-darken-2">LEAN EDUCATORS ACADEMIC NETWORK</h2>
 
-  <div layout layout-align="center" hide-gt-sm>
-    <div>
-      <img src="assets/images/logos/LEAN-logo-lg.png" class="no-overflow" />
-    </div>
+  <div fxLayoutAlign="center" fxHide.gt-sm class="md-margin">
+    <img src="assets/images/logos/LEAN-logo-lg.png" class="responsive-img" />
   </div>
 
-  <div layout="column" layout-gt-sm layout-padding layout-margin>
+  <div fxLayout.gt-sm="row" fxLayout="column" fxLayoutGap="16px">
 
-    <md-card flex class="blue-grey darken-1">
-      <h4 class="white-text md-margin-left">Community Forum</h4>
-      <p class="flow-text white-text md-margin-left">Ask questions and receive feedback from experts in our<a ng-href="/entries" class="orange-text"> Q&amp;A Forum</a>.</p>
+    <md-card fxFlex class="mat-primary darken-1">
+      <h4 class="white-text">Community Forum</h4>
+      <p class="flow-text white-text">Ask questions and receive feedback from experts in our<a ng-href="/entries" class="orange-text"> Q&amp;A Forum</a>.</p>
     </md-card>
 
-    <md-card flex-gt-sm>
+    <md-card fxFlex>
       <h4 class="md-margin-left">Stay Informed</h4>
-      <p class="flow-text md-margin-left">Maximize customer value and minimize waste through Lean education. Join the <a href="https://teachinglean.org/about">Lean Education Academic Network</a>.</p>
+      <p class="flow-text">Maximize customer value and minimize waste through Lean education. Join the <a href="https://teachinglean.org/about">Lean Education Academic Network</a>.</p>
       <md-card-actions>
-        <button md-button class="md-raised md-accent" ng-href="/createAccount">create a free account</button>
+        <button md-raised-button class="mat-accent" ng-href="/createAccount">CREATE A FREE ACCOUNT</button>
       </md-card-actions>
     </md-card>
 
-    <md-card flex class="blue-grey darken-1">
+    <md-card fxFlex class="mat-primary darken-1">
       <h4 class="white-text md-margin-left">Are you an educator?</h4>
       <p class="flow-text white-text md-margin-left">Use our online <a href="/teachingCurriculum" class="orange-text">teaching resources</a> to put together a presentation
         using current, up-to-date teaching material.</p>
     </md-card>
 
-
   </div>
 
+  <div class="vspacer"></div>
   <md-divider></md-divider>
 
+  <div fxLayout="column" class="mb-2">
+    <div>
+      <h4 class="bold-text"><a href="https://pomsmeetings.org/conf-2017">ANNUAL POMS 2017 CONFERENCE</a></h4>
 
-  <div layout="column" class="callout-wrapper" layout-margin>
+      <p>May 5th - 8th, 2017 | Seattle, Washington</p>
+    </div>
 
-
-    <h4 class="margin-top-none blue-grey-text text-darken-2 text-bold">ANNUAL <a href="http://www.poms.org/">POMS</a> 2017 CONFERENCE</h4>
-    <p>May 5th - 8th, 2017 | Seattle, Washington</p>
-
-    <div layout="column" layout-gt-md>
+    <div fxLayout="column" fxLayout.gt-md class="mb-2">
       <div>
-        <img src="assets/images/Space_Needle002.png" class="no-overflow" />
+        <img src="assets/images/Space_Needle002.png" [ngStyle.lt-sm]="{'max-width': '100%'}" />
       </div>
 
-      <div flex layout="column" class="md-margin-left">
-        <h5 class="text-bold margin-top-none">OUR NEXT MEETING</h5>
+      <div class="ml-1">
+        <h5 class="bold-text mt-0">OUR NEXT MEETING</h5>
 
-        <p flex class="font-size-14pt" style="">
+        <p class="fs-14pt">
           A spirited group of researchers, teachers, and practitioners are getting together to start up the <em>College of Operational Excellence (COE)</em> as a sub-group of the <em>Production and Operations Management Society (POMS)</em>. This meeting will also serve as a restart
           for <b><a href="https://teachinglean.org/about">Lean Education Academic Network (LEAN)</a> </b> as we envision
           the way forward for teaching and research in higher education.
@@ -58,35 +55,32 @@
         <p class="flow-text"> Join us May 4th, 2017 from 1:00 pm - 7:30 pm at this Mini-Conference and Reception that serves as a prelude to the
           annual <a href="https://pomsmeetings.org/conf-2017/">POMS Conference</a>.</p>
       </div>
+
     </div>
 
     <md-divider></md-divider>
 
-    <div layout="column" layout-gt-sm layout-padding>
+    <div fxLayout.gt-sm fxLayout="column" class="md-padding md-margin">
 
-      <div flex>
-        <div flex layout="column" class="content-wrapper">
-          <p class="flow-text center-align orange-text text-darken-4"><strong>GET IN ON THE GROUND FLOOR</strong></p>
-          <a md-raised-button class="mat-accent mat-button" href="https://pomsmeetings.org/conf-2017/">Register for Conference</a>
-        </div>
-        <p flex class="flow-text">If you are interested in getting in on the ground floor and providing input and direction, we would like to see you
-          there. Just register at the POMS website.</p>
-
+      <div fxLayout="column" [ngStyle.gt-sm]="{'width': '50%'}">
+        <p class="flow-text center-align orange-text text-darken-3"><strong>GET IN ON THE GROUND FLOOR</strong></p>
+        <a md-raised-button class="mat-accent mat-button" href="https://pomsmeetings.org/conf-2017/">REGISTER FOR CONFERENCE</a>
+        <p class="flow-text">If you are interested in getting in on the ground floor and providing input and direction, we would like to see you there. Just register at the POMS website.</p>
       </div>
 
-      <div flex-gt-sm class="beige md-padding">
-        <p class="font-size-14pt">The primary objective of the <strong>COE</strong> is to build a community focused on operational excellence to</p>
-        <ul class="disc  blue-grey-text text-darken-2">
-          <li class="font-size-12pt text-bold">Foster creation and dissemination of scholarly knowledge.</li>
-          <li class="font-size-12pt text-bold">Share teaching and pedagogical material.</li>
-          <li class="font-size-12pt text-bold">Exchange information about undergraduate, graduate and other specialized educational programs.</li>
-          <li class="font-size-12pt text-bold">Interact with leading practitioners to enrich research and teaching.</li>
+      <div class="beige md-margin md-padding" [ngStyle.gt-sm]="{'width': '50%'}">
+        <p class="fs-16pt">The primary objective of the <strong>COE</strong> is to build a community focused on operational excellence to</p>
+        <ul class="disc aside blue-grey-text text-darken-2">
+          <li class="fs-14pt bold-text">Foster creation and dissemination of scholarly knowledge.</li>
+          <li class="fs-14pt bold-text">Share teaching and pedagogical material.</li>
+          <li class="fs-14pt bold-text">Exchange information about undergraduate, graduate and other specialized educational programs.</li>
+          <li class="fs-14pt bold-text">Interact with leading practitioners to enrich research and teaching.</li>
         </ul>
       </div>
 
     </div>
 
-    <p class="font-size-14pt md-padding">
+    <p class="fs-14pt md-padding">
       <span class="flow-text">Questions?</span> Contact <a href="mailto:eolsen@calpoly.edu">Eric Olsen</a>, <a href="mailto:shahx024@umn.edu">Rachna Shah</a>,
       or <a href="mailto:ward.1@osu.edu">Peter Ward</a>
     </p>
