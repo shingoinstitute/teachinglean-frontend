@@ -1,6 +1,6 @@
-<div flex layout>
+<div fxFlex fxLayout>
 	<md-card class="login-form-container">
-		<div layout="column">
+		<div fxLayout="column">
 
 			<button md-button class="md-icon" aria-label="linkedin signup" ng-click="vm.authenticateLinkedIn()">
 				<img ng-src="assets/images/logos/lkin-login-form-btn.png" class="md-card-image">
@@ -8,41 +8,41 @@
 
 			<h5 class="text-center">Sign Into Your Account</h5>
 
-			<!--<span class="md-subhead text-warn">{{vm.loginError}}</span>-->
 
-			<div layout="row" layout-align="space-around" *ngIf="spinnerEnabled">
+			<div fxLayout="row" fxLayoutAlign="space-around" *ngIf="spinnerEnabled">
 				<md-spinner></md-spinner>
 			</div>
 
 
       <form>
-			<!--<md-input-container>
-				<input mdInput required ng-model="username" type="email" placeholder="Email">
-        <input mdInput required type="email" placeholder="Email">
-			</md-input-container>
 
-			<md-input-container>
-				<input mdInput required ng-model="password" type="password" placeholder="Password">
-        <input mdInput required type="password" placeholder="Password">
-			</md-input-container>-->
-      
-      <table class="example-full-width" cellspacing="0"><tr>
-        <td>
-          <md-input-container class="example-full-width">
-            <input mdInput placeholder="City">
-          </md-input-container>
-        </td>
-        <td>
-          <md-input-container class="example-full-width">
-            <input mdInput placeholder="State">
-          </md-input-container>
-        </td>
-        <td><md-input-container class="example-full-width">
-          <input mdInput #postalCode maxlength="5" placeholder="Postal Code" value="94043">
-          <md-hint align="end">{{postalCode.value.length}} / 5</md-hint>
-        </md-input-container></td>
-        </tr>
-      </table>
+        <!--<md-input-container>
+          <input mdInput required ng-model="username" type="email" placeholder="Email">
+          <input mdInput required type="email" placeholder="Email">
+        </md-input-container>
+
+        <md-input-container>
+          <input mdInput required ng-model="password" type="password" placeholder="Password">
+          <input mdInput required type="password" placeholder="Password">
+        </md-input-container>-->
+
+        <table class="example-full-width" cellspacing="0"><tr>
+          <td>
+            <md-input-container class="example-full-width">
+              <input mdInput placeholder="City">
+            </md-input-container>
+          </td>
+          <td>
+            <md-input-container class="example-full-width">
+              <input mdInput placeholder="State">
+            </md-input-container>
+          </td>
+          <td><md-input-container class="example-full-width">
+            <input mdInput #postalCode maxlength="5" placeholder="Postal Code" value="94043">
+            <md-hint align="end">{{postalCode.value.length}} / 5</md-hint>
+          </md-input-container></td>
+          </tr>
+        </table>
       </form>
 
 

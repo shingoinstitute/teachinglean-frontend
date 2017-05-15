@@ -3,24 +3,8 @@ $break-medium: 1280px;
 $break-small: 960px;
 $break-xsmall: 600px;*/
 
-@media screen and (max-width: 1280px) {
-    .sidenav-container,
-    md-sidenav {
-        max-width: 300px;
-    }
-}
-
-@media screen and (min-width: 1280px) {
-    .sidenav-container,
-    md-sidenav {
-        width: 300px;
-    }
-}
-
-.sidenav-container,
-.sidenav-container md-sidenav {
-    overflow: visible;
-    display: flex;
+md-sidenav-container {
+  height: 100%;
 }
 
 .sidenav-container,
@@ -30,7 +14,7 @@ md-sidenav {
 
 md-nav-list, img {
     width: 100%;
-    padding: 4px; 
+    padding: 4px;
 }
 
 .mat-line {

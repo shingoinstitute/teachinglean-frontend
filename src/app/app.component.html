@@ -1,51 +1,51 @@
-<div fxLayout="column">
-    <app-toolbar></app-toolbar>
-    <div fxLayout="row">
+<!--<div fxLayout="column">-->
 
-        <md-sidenav-container class="sidenav-container">
-            <md-sidenav #sidenav mode="side" [opened]="screenWidthGtSm()">
-                <md-nav-list>
-                    <img src="/assets/images/logos/LEAN-logo-md.png" alt="Teaching LEAN">
-                    <md-list-item *ngFor="let link of links">
-                        <a md-line routerLink="{{link.path}}">{{link.name}}</a>
-                    </md-list-item>
-                    <hr>
-                    <md-list-item *ngIf="showDashboard">
-                        <a md-line routerLink="/dashboard" (click)="toggleSidenav()">Dashboard</a>
-                        <button md-icon-buton>
-                            <md-icon svgIcon="dashboard"></md-icon>
-                        </button>
-                    </md-list-item>
-                    <md-list-item *ngIf="showLogin">
-                        <a md-line routerLink="/login" (click)="toggleSidenav()">Login</a>
-                        <button md-icon-button>
-                            <md-icon svgIcon="login"></md-icon>
-                        </button>
-                    </md-list-item>
-                </md-nav-list>
-            </md-sidenav>
-        </md-sidenav-container>
+    <!--<div>-->
+<app-toolbar></app-toolbar>
+<md-sidenav-container class="sidenav-container">
 
-        <router-outlet></router-outlet>
+    <md-sidenav #sidenav mode="side" [opened]="screenWidthGtSm()">
+        <md-nav-list>
+            <img src="/assets/images/logos/LEAN-logo-sm.png" alt="Teaching LEAN">
+            <md-list-item *ngFor="let link of links">
+                <a md-line routerLink="{{link.path}}" (click)="toggleSidenav()">{{link.name}}</a>
+            </md-list-item>
+            <hr>
+            <md-list-item *ngIf="showDashboard">
+                <a md-line routerLink="/dashboard" (click)="toggleSidenav()">Dashboard</a>
+                <button md-icon-buton>
+                    <md-icon svgIcon="dashboard"></md-icon>
+                </button>
+            </md-list-item>
+            <md-list-item *ngIf="showLogin">
+                <a md-line routerLink="/login" (click)="toggleSidenav()">Login</a>
+                <button md-icon-button>
+                    <md-icon svgIcon="login"></md-icon>
+                </button>
+            </md-list-item>
+        </md-nav-list>
+    </md-sidenav>
 
+  <router-outlet></router-outlet>
+
+</md-sidenav-container>
+
+<footer class="mat-primary darken-2">
+  <div class="container" fxLayout="column" fxLayout.gt-sm>
+    <ul fxFlex>
+      <li><a ng-href="/about" class="white-text">About</a></li>
+
+      <li><a ng-href="/contact" class="white-text">Contact Us</a></li>
+
+      <li><a class="white-text" href="mailto:shingo.it@usu.edu">Technical Support</a></li>
+
+      <li><a ng-href="/feedback" class="white-text">Send us your feedback</a></li>
+    </ul>
+    <div fxFlex>
+      <p class="white-text">This website was produced and developed at the <span class="md-body-2"><a href="shingo.org">Shingo Institute, Utah State University</a></span>.</p>
     </div>
-    <footer class="mat-primary darken-2">
-        <div class="container" fxLayout="column" fxLayout.gt-sm>
-            <ul fxFlex>
-                <li><a ng-href="/about" class="white-text">About</a></li>
-
-                <li><a ng-href="/contact" class="white-text">Contact Us</a></li>
-
-                <li><a class="white-text" href="mailto:shingo.it@usu.edu">Technical Support</a></li>
-
-                <li><a ng-href="/feedback" class="white-text">Send us your feedback</a></li>
-            </ul>
-            <div fxFlex>
-                <p class="white-text">This website was produced and developed at the <span class="md-body-2"><a href="shingo.org">Shingo Institute, Utah State University</a></span>.</p>
-            </div>
-        </div>
-    </footer>
-</div>
+  </div>
+</footer>
 
 
 

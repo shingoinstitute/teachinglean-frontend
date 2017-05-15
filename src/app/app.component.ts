@@ -41,7 +41,11 @@ export class AppComponent implements OnInit {
   }
 
   toggleSidenav() {
-    this.sideNav.toggle();
+    if (window.innerWidth < 960) {
+      this.sideNav.toggle();
+    } else {
+      this.sideNav.open();
+    }
   }
 
   getUser() {
