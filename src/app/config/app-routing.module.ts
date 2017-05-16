@@ -7,6 +7,7 @@ import { DashboardComponent } from '../dashboard/dashboard.component';
 import { LoginComponent } from '../login/login.component';
 import { TeachingComponent } from '../teaching/teaching.component';
 import {ForumComponent} from "../forum/forum.component";
+import {AskQuestionComponent} from "../ask-question/ask-question.component";
 
 const appRoutes: Routes = [
     { path: '', component: HomeComponent },

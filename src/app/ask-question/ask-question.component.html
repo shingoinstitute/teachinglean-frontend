@@ -1,0 +1,33 @@
+
+<div fxLayout class="container">
+
+  <form fxLayout="column" id="ask-question-form" class="input-container">
+
+    <div fxLayout class="input-wrapper">
+      <p>Title</p>
+      <input fxFlex class="input-title" type="text" placeholder="What is your question?">
+    </div>
+
+    <textarea class="input-question"
+              id="question-textarea-id"
+              (onEditorKeyup)="onEditorKeyupHandler($event)"
+              [ngModel]="content"
+              required
+              form="ask-question-form"
+              maxlength="500"
+              name="Question text">
+      </textarea>
+
+    <span style="margin-top: 50px;"></span>
+
+    <div>
+      <button md-raised-button class="mat-primary">Post Question</button>
+    </div>
+
+    <span style="margin-bottom: 100px;"></span>
+
+  </form>
+
+  <p>{{content}}</p>
+
+</div>

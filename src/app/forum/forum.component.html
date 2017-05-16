@@ -1,9 +1,9 @@
 
 
-<div fxLayout class="container">
+<div fxLayout="column" fxLayout.gt-sm class="container" >
 
 
-  <div fxLayout="column" class="search-wrapper">
+  <div fxFlexOrder.lt-md="2" fxLayout="column" class="search-wrapper">
 
     <i class="material-icons">search</i>
     <md-input-container>
@@ -21,34 +21,14 @@
 
   </div>
 
-  <div fxLayout="column">
-
-    <div class="container">
+  <div fxFlexOrder.lt-md="1" fxLayout="column" class="md-margin">
+    <div>
       <button md-raised-button class="mat-accent" (click)="onClickAskQuestion()">Ask Question</button>
-
-      <form fxLayout="column" id="ask-question-form" class="input-container" *ngIf="isEditing">
-        <md-input-container>
-          <input mdInput placeholder="Question Title" required>
-        </md-input-container>
+    </div>
 
 
-        <textarea class="input-question"
-                  required
-                  form="ask-question-form"
-                  maxlength="500"
-                  name="Question text">
-        </textarea>
-
-        <span style="margin-top: 50px;"></span>
-
-        <div>
-          <button md-raised-button>Post Question</button>
-        </div>
-
-        <span style="margin-top: 50px;"></span>
-
-      </form>
-
+    <div [@shrinkGrow]="questionDialogState" >
+      <ask-question (onEditorKeyup)="onEditorKeyupHandler($event)" [content]="questionContent"></ask-question>
     </div>
 
 
