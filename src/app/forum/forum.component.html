@@ -1,0 +1,59 @@
+
+
+<div fxLayout class="container">
+
+
+  <div fxLayout="column" class="search-wrapper">
+
+    <i class="material-icons">search</i>
+    <md-input-container>
+      <input mdInput placeholder="Search...">
+    </md-input-container>
+
+    <p>Top Questions</p>
+    <md-divider></md-divider>
+
+    <ul>
+      <li *ngFor="let result of topResults">
+        {{result.question}}
+      </li>
+    </ul>
+
+  </div>
+
+  <div fxLayout="column">
+
+    <div class="container">
+      <button md-raised-button class="mat-accent" (click)="onClickAskQuestion()">Ask Question</button>
+
+      <form fxLayout="column" id="ask-question-form" class="input-container" *ngIf="isEditing">
+        <md-input-container>
+          <input mdInput placeholder="Question Title" required>
+        </md-input-container>
+
+
+        <textarea class="input-question"
+                  required
+                  form="ask-question-form"
+                  maxlength="500"
+                  name="Question text">
+        </textarea>
+
+        <span style="margin-top: 50px;"></span>
+
+        <div>
+          <button md-raised-button>Post Question</button>
+        </div>
+
+        <span style="margin-top: 50px;"></span>
+
+      </form>
+
+    </div>
+
+
+  </div>
+
+
+
+</div>

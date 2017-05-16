@@ -1,0 +1,26 @@
+@media screen and (min-width: 960px) {
+  .search-wrapper {
+    width: 500px;
+  }
+}
+
+@media screen and (max-width: 960px) {
+  .search-wrapper {
+    margin: 12px 24px 12px 12px;
+    width: 100%;
+  }
+}
+
+md-input-container {
+  width: 100%;
+}
+
+.input-container {
+  min-width: 500px;
+}
+
+.input-question {
+  background: ghostwhite;
+  margin-bottom: 24px;
+  border: none
+}

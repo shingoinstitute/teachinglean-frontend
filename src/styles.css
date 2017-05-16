@@ -1,17 +1,11 @@
-body,
-* {
-  margin: 0;
+html {
+  position: relative;
+  min-height: 100%;
   font-family: 'Roboto', sans-serif;
 }
 
-html {
-  height: 100%;
-}
-
 body {
-  min-height: 100%;
-  display: flex;
-  flex-direction: column;
+  margin: 0 0 150px; /* bottom = footer height */
 }
 
 .site-content {
@@ -54,6 +48,11 @@ h3.mat-headline {
 }
 
 footer {
+  position: absolute;
+  left: 0;
+  bottom: 0;
+  height: 150px;
+  width: 100%;
   padding-top: 24px;
   padding-bottom: 24px;
 }

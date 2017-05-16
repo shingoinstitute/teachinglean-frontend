@@ -5,8 +5,11 @@
   <title>LeanApp</title>
   <base href="/">
 
-  <!--<link rel="stylesheet" href="assets/css/bootstrap.css">-->
-  <!--<link rel="stylesheet" href="assets/css/materialize-font.css">-->
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="icon" type="image/x-icon" href="assets/favicon/favicon.ico?v=1.2">
+
+  <link href="https://fonts.googleapis.com/icon?family=Material+Icons"
+        rel="stylesheet">
 
   <!--JQUERY-->
   <script
@@ -14,16 +17,33 @@
   integrity="sha256-hwg4gsxgFZhOsEEamdOYGBf13FyQuiTwlAQgxVSNgt4="
   crossorigin="anonymous"></script>
 
-  <link rel="stylesheet" href="assets/css/materialize.css">
+  <!--<link rel="stylesheet" href="assets/css/bootstrap.css">-->
+  <!--<link rel="stylesheet" href="assets/css/materialize-font.css">-->
+  <link rel="stylesheet" href="/assets/css/material-lean.css">
+  <!--<link rel="stylesheet" href="assets/css/materialize.css">-->
   <link href="https://fonts.googleapis.com/css?family=Roboto" rel="stylesheet">
 
-  <meta name="viewport" content="width=device-width, initial-scale=1">
-  <link rel="icon" type="image/x-icon" href="assets/favicon/favicon.ico?v=1.2">
+
+  <script src="https://cloud.tinymce.com/stable/tinymce.min.js"></script>
+  <script src="https://cloud.tinymce.com/stable/plugins.min.js?apiKey=5srgynn2ct4pt5srlrlgnblr4vcwkor5x89yffdb6rp9bdss"></script>
+  <script>tinymce.init({
+    selector: 'textarea',
+    height: 500,
+    menubar: false,
+    plugins: [
+      'advlist autolink lists link image charmap print preview anchor',
+      'searchreplace visualblocks code fullscreen',
+      'insertdatetime media table contextmenu paste code'
+    ],
+    toolbar: 'undo redo | insert | styleselect | bold italic | alignleft aligncenter alignright alignjustify | bullist numlist outdent indent | link image'
+  });</script>
 
 </head>
 <body ng-app="leansite">
 
     <app-root class="site-content">loading...</app-root>
+
+
 
 </body>
 </html>

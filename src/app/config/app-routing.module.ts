@@ -6,14 +6,15 @@ import { AboutComponent } from '../about/about.component';
 import { DashboardComponent } from '../dashboard/dashboard.component';
 import { LoginComponent } from '../login/login.component';
 import { TeachingComponent } from '../teaching/teaching.component';
+import {ForumComponent} from "../forum/forum.component";
 
 const appRoutes: Routes = [
     { path: '', component: HomeComponent },
     { path: 'dashboard', component: DashboardComponent },
     { path: 'about', component: AboutComponent },
     { path: 'login', component: LoginComponent },
-    { path: 'teaching', component: TeachingComponent }
-
+    { path: 'teaching', component: TeachingComponent },
+    { path: 'forum', component: ForumComponent }
 ];
 
 @NgModule({

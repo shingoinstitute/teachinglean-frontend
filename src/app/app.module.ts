@@ -2,7 +2,7 @@ import { BrowserModule } from '@angular/platform-browser';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { NgModule } from '@angular/core';
 import { FormsModule } from '@angular/forms';
-import { HttpModule } from '@angular/http';
+import { HttpModule, JsonpModule } from '@angular/http';
 import 'hammerjs';
 
 import { AngularMaterialModule } from './config/angular-material.module';
@@ -21,6 +21,7 @@ import { TeachingComponent } from './teaching/teaching.component';
 import { ToolbarComponent } from './toolbar/toolbar.component';
 import { ForumComponent } from './forum/forum.component';
 import { ForumDetailDirective } from './directives/forum-detail.directive';
+import { ForumListItemComponent } from './forum-list-item/forum-list-item.component';
 
 @NgModule({
   imports: [
@@ -31,6 +32,7 @@ import { ForumDetailDirective } from './directives/forum-detail.directive';
     AngularMaterialModule,
     FormsModule,
     HttpModule,
+    JsonpModule,
     AppRoutingModule
   ],
   declarations: [
@@ -42,7 +44,8 @@ import { ForumDetailDirective } from './directives/forum-detail.directive';
     TeachingComponent,
     ToolbarComponent,
     ForumComponent,
-    ForumDetailDirective
+    ForumDetailDirective,
+    ForumListItemComponent
   ],
   providers: [
     UserService

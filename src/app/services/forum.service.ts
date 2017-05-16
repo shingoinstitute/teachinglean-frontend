@@ -1,20 +1,20 @@
 import { Injectable } from '@angular/core';
-import {Http, Response, ResponseContentType} from '@angular/http';
-import {Observable} from "rxjs/Observable";
+import { Http, Response, ResponseContentType } from '@angular/http';
+import { Observable } from "rxjs/Observable";
 import 'rxjs/add/operator/catch';
 import 'rxjs/add/operator/map';
 
 import { Globals } from '../globals';
-
-class Entry {
-  owner: string;
-  uuid: string;
-}
+import { Entry } from '../forum/entry';
 
 @Injectable()
 export class ForumService {
 
-  constructor(private http: Http, private baseUrl: string) {
+  private baseUrl;
+
+  entry: any;
+
+  constructor(private http: Http) {
     this.baseUrl = Globals.baseApiUrl;
   }
 
@@ -61,21 +61,25 @@ export class ForumService {
   }
 
   getRecent(limit, userId) {
-    // let now = Date.now();
-    // let recent = now.subtract(10, 'days');
-    // let params = {
-    //   createdAt: {
-    //     ">": recent.toJSON()
-    //   },
-    //   parent: null,
-    //   owner: userId,
-    // }
-    // let url = '/entry?where=' + JSON.stringify(params) + (limit ? '&limit=' + limit : '');
-    // return $http({
-    //   method: 'get',
-    //   dataType: 'json',
-    //   url: url
-    // });
+    let withinTenDays = Date.now() - (10 * 24 * 60 * 60 * 1000);
+
+    let params = {
+      createdAt: {
+        ">": new Date(withinTenDays)
+      },
+      parent: null,
+      owner: userId,
+    };
+
+    let url = this.baseUrl + '/entry?where=' + JSON.stringify(params) + (limit ? '&limit=' + limit : '');
+
+    return this.http.get(url, {
+      responseType: ResponseContentType.Json
+    })
+    .map(response => {
+      return response.json();
+    })
+    .catch(this.handleError);
   }
 
   readEntry(id) {
@@ -94,13 +98,14 @@ export class ForumService {
     // });
   }
 
-  createEntry(entry) {
-    // return $http({
-    //   method: 'post',
-    //   dataType: 'json',
-    //   url: '/entry',
-    //   data: entry
-    // });
+  createEntry(entry: Entry) {
+    return this.http.post(this.baseUrl + '/entry', entry.toObject(), {
+      responseType: ResponseContentType.Json
+    })
+      .map(response => {
+        return response.json();
+      })
+      .catch(this.handleError);
   }
 
   destroyEntry(entry) {
