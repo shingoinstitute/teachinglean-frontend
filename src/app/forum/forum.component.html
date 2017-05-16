@@ -28,7 +28,7 @@
 
 
     <div [@shrinkGrow]="questionDialogState" >
-      <ask-question (onEditorKeyup)="onEditorKeyupHandler($event)" [content]="questionContent"></ask-question>
+      <ask-question (onEditorKeyup)="onEditorKeyupHandler($event)" (onClickPostQuestion)="onClickPostQuestionHandler($event)" [content]="questionContent"></ask-question>
     </div>
 
 

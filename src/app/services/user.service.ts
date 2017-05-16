@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { Http, Response } from '@angular/http';
+import {Http, Response, ResponseContentType} from '@angular/http';
 import { Observable } from 'rxjs/Observable';
 import 'rxjs/add/operator/catch';
 import 'rxjs/add/operator/map';
@@ -20,6 +20,32 @@ export class UserService {
         return this.http.get(this.baseApiUrl + '/me')
             .map(this.extractData)
             .catch(this.handleError);
+    }
+
+    localLogin(username, password): Observable<any> {
+      return this.http.post(this.baseApiUrl + '/auth/local', {
+        username: username,
+        password: password
+      })
+        .map(result => {
+          return result.json();
+        })
+        .catch(this.handleError);
+    }
+
+    signUp(user: User, password: string): Observable<any> {
+      return this.http.post(this.baseApiUrl + '/user', {
+        email: user.email,
+        password: password,
+        firstname: user.firstname,
+        lastname: user.lastname
+      }, {
+        responseType: ResponseContentType.Json
+      })
+        .map(response => {
+          return response.json();
+        })
+        .catch(this.handleError);
     }
 
     private extractData(res: Response) {

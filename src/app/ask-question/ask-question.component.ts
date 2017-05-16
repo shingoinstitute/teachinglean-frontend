@@ -18,6 +18,7 @@ export class AskQuestionComponent implements OnInit, AfterViewInit, OnDestroy {
 
   @Input() content;
   @Output() onEditorKeyup = new EventEmitter<any>();
+  @Output() onClickPostQuestion = new EventEmitter<any>();
 
   editor;
 
@@ -53,6 +54,8 @@ export class AskQuestionComponent implements OnInit, AfterViewInit, OnDestroy {
     tinymce.remove(this.editor);
   }
 
-
+  onSubmitQuestion() {
+    this.onClickPostQuestion.emit(this.editor.getContent());
+  }
 
 }

@@ -64,10 +64,11 @@ export class ForumComponent implements OnInit {
     this.questionDialogState = this.isEditing ? "active" : "inactive";
   }
 
-  postQuestion() {
+  onClickPostQuestionHandler(event) {
     this.isEditing = false;
-    this.forumService.createEntry(new Entry())
-      .subscribe(entry => console.log(entry));
+    console.log(event);
+    // this.forumService.createEntry(new Entry())
+    //   .subscribe(entry => console.log(entry));
   }
 
   onEditorKeyupHandler(event) {

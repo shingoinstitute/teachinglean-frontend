@@ -23,6 +23,7 @@ import { ForumComponent } from './forum/forum.component';
 import { ForumDetailDirective } from './directives/forum-detail.directive';
 import { ForumListItemComponent } from './forum-list-item/forum-list-item.component';
 import { AskQuestionComponent } from './ask-question/ask-question.component';
+import { CreateAccountComponent } from './create-account/create-account.component';
 
 @NgModule({
   imports: [
@@ -47,7 +48,8 @@ import { AskQuestionComponent } from './ask-question/ask-question.component';
     ForumComponent,
     ForumDetailDirective,
     ForumListItemComponent,
-    AskQuestionComponent
+    AskQuestionComponent,
+    CreateAccountComponent
   ],
   providers: [
     UserService

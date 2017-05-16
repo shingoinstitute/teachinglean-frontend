@@ -1,6 +1,6 @@
 <div fxLayout>
 
-	<md-card>
+	<md-card *ngIf="!showCreateAccount">
 
 		<div fxFlex fxLayout="column">
 
@@ -19,13 +19,13 @@
       <div fxLayout="column">
 
         <md-input-container>
-          <input mdInput required ng-model="username" type="email" placeholder="Email">
+          <input mdInput required (change)="username=$event.target.value" type="email" placeholder="Email">
         </md-input-container>
 
         <span fxFlex style="margin-top: 16px;"></span>
 
         <md-input-container>
-          <input mdInput required ng-model="password" type="password" placeholder="Password">
+          <input mdInput required (change)="password=$event.target.value" type="password" placeholder="Password">
         </md-input-container>
 
         <span fxFlex style="margin-top: 24px;"></span>
@@ -35,14 +35,19 @@
 
 			<!--<div><button md-raised-button class="md-primary" ng-click="vm.authenticateLocal(username, password)">Login</button></div>-->
       <div>
-        <button md-raised-button class="mat-primary">LOGIN</button>
+        <button md-raised-button class="mat-primary" (click)="onClickLogin()">LOGIN</button>
       </div>
 
 			<p><a href="/reset">forgot password?</a></p>
 
 			<md-divider style="margin-top: 16px;"></md-divider>
 
-			<p class="flow-text">Don't have an account? <a routerLink="/createAccount">Sign Up</a></p>
+			<p class="flow-text">Don't have an account? <a (click)="showCreateAccount=!showCreateAccount;">Sign Up</a></p>
+
+
 		</div>
 	</md-card>
+
+  <app-create-account *ngIf="showCreateAccount" (onClickLoginHandler)="showCreateAccount=false;"></app-create-account>
+
 </div>
