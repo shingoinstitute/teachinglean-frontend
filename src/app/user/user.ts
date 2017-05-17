@@ -8,7 +8,6 @@ export class User implements UserInterface {
     role;
     reputation;
     accountIsActive;
-    xsrfToken;
     createdAt;
     updatedAt;
     lastLogin;
@@ -26,33 +25,30 @@ export class User implements UserInterface {
       this.firstname = '';
       this.lastname = '';
       this.email = '';
-      this.xsrfToken = '';
       this.role = '';
       this.pictureUrl = '';
       this.reputation = 0;
       this.accountIsActive = false;
     }
 
-    initFromObject(obj: any) {
-      let data = obj.user;
+    static initFromObject(obj: any) {
+      let data = obj.user ? obj.user : obj;
 
-      if (!data) {
-        throw new Error('Could not parse user from object; obj.user is undefined');
-      }
+      let user = new User();
 
-      this.xsrfToken = obj.token;
+      user.uuid = data.uuid;
+      user.firstname = data.firstname;
+      user.lastname = data.lastname;
+      user.email = data.email;
+      user.role = data.role;
+      user.pictureUrl = data.pictureUrl;
+      user.reputation = data.reputation;
+      user.accountIsActive = data.accountStatus;
+      user.createdAt = Date.parse(data.createdAt);
+      user.updatedAt = Date.parse(data.updatedAt);
+      user.lastLogin = Date.parse(data.lastLogin);
 
-      this.uuid = data.uuid;
-      this.firstname = data.firstname;
-      this.lastname = data.lastname;
-      this.email = data.email;
-      this.role = data.role;
-      this.pictureUrl = data.pictureUrl;
-      this.reputation = data.reputation;
-      this.accountIsActive = data.accountStatus;
-      this.createdAt = Date.parse(data.createdAt);
-      this.updatedAt = Date.parse(data.updatedAt);
-      this.lastLogin = Date.parse(data.lastLogin);
+      return user;
     }
 
 }
@@ -67,7 +63,6 @@ interface UserInterface {
   role: string;
   reputation: number;
   accountIsActive: boolean;
-  xsrfToken: string;
   createdAt?: Date;
   updatedAt?: Date;
   lastLogin?: Date;

@@ -10,8 +10,6 @@ import { AngularMaterialModule } from './config/angular-material.module';
 import { FlexLayoutModule } from '@angular/flex-layout';
 import { MaterialModule } from '@angular/material';
 
-import { UserService } from './services/user.service';
-
 import { AppRoutingModule } from './config/app-routing.module';
 import { AppComponent } from './app.component';
 import { HomeComponent } from './home/home.component';
@@ -53,7 +51,6 @@ import { CreateAccountComponent } from './create-account/create-account.componen
     CreateAccountComponent
   ],
   providers: [
-    UserService,
     CookieService
   ],
   bootstrap: [AppComponent]

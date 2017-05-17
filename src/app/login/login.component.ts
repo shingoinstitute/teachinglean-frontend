@@ -31,14 +31,8 @@ export class LoginComponent implements OnInit {
     this.userService.localLogin(this.username, this.password)
       .subscribe(
         result => {
-
-          let user = new User();
-          user.initFromObject(result);
-
-          this.userService.setUser(user);
-
+          this.userService.user = User.initFromObject(result);
           this.router.navigate(['/dashboard']);
-
         },
         error => console.error(error)
       );

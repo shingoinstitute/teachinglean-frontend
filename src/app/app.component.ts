@@ -2,6 +2,7 @@ import {Component, EventEmitter, OnInit, Output, ViewChild} from '@angular/core'
 import { MdIconRegistry } from '@angular/material';
 import { DomSanitizer } from '@angular/platform-browser';
 import { MdSidenav } from '@angular/material';
+import { Observable } from 'rxjs/Observable';
 
 import { UserService } from './services/user.service';
 import { User } from './user/user';
@@ -10,11 +11,13 @@ import { User } from './user/user';
   selector: 'app-root',
   templateUrl: './app.component.html',
   styleUrls: ['./app.component.css'],
+  providers: [UserService]
 })
 export class AppComponent implements OnInit {
 
   @ViewChild('sidenav') sideNav: MdSidenav;
-  userDidLogin;
+  
+  userDidLogin: boolean;
   user: User;
 
   links = [
@@ -29,10 +32,26 @@ export class AppComponent implements OnInit {
   sanitizer: DomSanitizer) {
     iconRegistry.addSvgIcon('login', sanitizer.bypassSecurityTrustResourceUrl('assets/images/icons/login.svg'));
     iconRegistry.addSvgIcon('dashboard', sanitizer.bypassSecurityTrustResourceUrl('assets/images/icons/view-dashboard.svg'));
+    iconRegistry.addSvgIcon('accountCircle', sanitizer.bypassSecurityTrustResourceUrl('assets/images/icons/account-circle.svg'));
+    iconRegistry.addSvgIcon('logout', sanitizer.bypassSecurityTrustResourceUrl('assets/images/icons/logout.svg'));
+    iconRegistry.addSvgIcon('menu', sanitizer.bypassSecurityTrustResourceUrl('assets/images/icons/menu.svg'));
   }
 
   ngOnInit() {
+
+    this.userService.userLoginDetected$.subscribe(
+      user => {
+        this.user = user;
+        this.announceLogin(user !== null || user !== undefined);
+      }
+    )
+
+    this.userDidLogin = false;
     this.getUser();
+  }
+
+  announceLogin(isLoggedIn: boolean) {
+    this.userService.announceLogin(isLoggedIn);
   }
 
   screenWidthGtSm(): boolean {
@@ -47,17 +66,21 @@ export class AppComponent implements OnInit {
     }
   }
 
+  onDidGetUser(user: User) {
+    this.user = user;
+    this.userDidLogin = true;
+  }
+
   getUser() {
     this.userService.getUser()
     .subscribe(
-      (user: User) => {
-        this.user = user;
-        this.userDidLogin = true;
-      },
-      () => {
-        this.userDidLogin = false;
-      }
+      this.onDidGetUser,
+      this.onHandleError
     );
+  }
+
+  private onHandleError(error) {
+    console.log(error);
   }
 
 }
