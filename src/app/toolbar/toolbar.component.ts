@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import {Component, Input, OnInit} from '@angular/core';
 
 @Component({
   selector: 'app-toolbar',
@@ -7,15 +7,13 @@ import { Component, OnInit } from '@angular/core';
 })
 export class ToolbarComponent implements OnInit {
 
+  @Input() userDoesExist: boolean;
+
   constructor() { }
 
   ngOnInit() {
   }
 
-  userExists() {
-    return false;
-  }
-  
   toggleSidenav() {
 
   }

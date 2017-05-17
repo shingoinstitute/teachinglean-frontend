@@ -1,6 +1,6 @@
 <!--<div fxLayout="column" >-->
 
-<app-toolbar></app-toolbar>
+<app-toolbar [userDoesExist]="userDidLogin"></app-toolbar>
 <md-sidenav-container class="sidenav-container">
 
     <md-sidenav #sidenav mode="side" [opened]="screenWidthGtSm()">
@@ -10,13 +10,13 @@
                 <a md-line routerLink="{{link.path}}" (click)="toggleSidenav()">{{link.name}}</a>
             </md-list-item>
             <hr>
-            <md-list-item *ngIf="showDashboard">
+            <md-list-item *ngIf="userDidLogin">
                 <a md-line routerLink="/dashboard" (click)="toggleSidenav()">Dashboard</a>
                 <button md-icon-buton>
                     <md-icon svgIcon="dashboard"></md-icon>
                 </button>
             </md-list-item>
-            <md-list-item *ngIf="showLogin">
+            <md-list-item *ngIf="!userDidLogin">
                 <a md-line routerLink="/login" (click)="toggleSidenav()">Login</a>
                 <button md-icon-button>
                     <md-icon svgIcon="login"></md-icon>

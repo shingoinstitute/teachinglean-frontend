@@ -1,12 +1,12 @@
 <md-toolbar class="mat-primary darken-3">
     <span fxFlex></span>
 
-    <a md-button color="accent" aria-label="Sign Up" routerLink="/createAccount" *ngIf="!userExists()">Sign Up</a>
-    <a md-raised-button aria-label="Login" routerLink="/login" *ngIf="!userExists()">Login</a>
+    <a md-button color="accent" aria-label="Sign Up" routerLink="/createAccount" *ngIf="!userDoesExist">Sign Up</a>
+    <a md-raised-button aria-label="Login" routerLink="/login" *ngIf="!userDoesExist">Login</a>
 
     <span flex-xs flex-sm></span>
 
-    <div md-offset="50" *ngIf="user">
+    <div md-offset="50" *ngIf="userDoesExist">
       <button md-button class="md-icon-button" aria-label="Profile" ng-click="$mdMenu.open($event)">
         <md-icon md-menu-align-target md-svg-icon="assets/images/icons/ic_account_circle_white_36px.svg"></md-icon>
       </button>

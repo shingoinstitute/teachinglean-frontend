@@ -2,6 +2,8 @@ import { Component, OnInit } from '@angular/core';
 import { UserService } from '../services/user.service';
 
 import { Globals } from '../globals';
+import { User } from '../user/user';
+import { Router } from "@angular/router";
 
 @Component({
   selector: 'app-login',
@@ -18,7 +20,7 @@ export class LoginComponent implements OnInit {
   password = '';
   baseUrl;
 
-  constructor(private userService: UserService) {
+  constructor(private userService: UserService, private router: Router) {
     this.baseUrl = Globals.baseApiUrl;
   }
 
@@ -26,12 +28,17 @@ export class LoginComponent implements OnInit {
   }
 
   onClickLogin() {
-    console.log('Username: ' + this.username);
-    console.log('Password: ' + this.password);
     this.userService.localLogin(this.username, this.password)
       .subscribe(
         result => {
-          console.log(result);
+
+          let user = new User();
+          user.initFromObject(result);
+
+          this.userService.setUser(user);
+
+          this.router.navigate(['/dashboard']);
+
         },
         error => console.error(error)
       );

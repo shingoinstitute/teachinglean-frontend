@@ -1,18 +1,21 @@
 <div>
-  <div ng-hide="mc.user" layout layout-align="center center">
-    <md-card class="md-whiteframe-2dp md-padding" layout="column" layout-align="center center" style="width: 500px;">
-      <h3 flex>You are not logged in.</h3>
-      <div flex>
-        <button md-button class="md-primary" ng-href="/login">Login here</button>
+
+  <div *ngIf="!user" fxLayout fxLayoutAlign="center center">
+    <md-card class="md-padding" fxLayout="column" fxLayoutAlign="center center" style="width: 500px;">
+      <h3 fxFlex>You are not logged in.</h3>
+      <div fxFlex>
+        <button md-button class="mat-accent" ng-href="/login">Login here</button>
       </div>
     </md-card>
   </div>
-  <md-tab-group [dynamicHeight]="true" [selectedIndex]="0">
+
+
+  <md-tab-group [dynamicHeight]="true" [selectedIndex]="0" *ngIf="user">
     <md-tab label="Dashboard">
-      <div ng-controller="DashboardController as vm">
+      <div>
         <md-tab-group [dynamicHeight]="true" [selectedIndex]="0">
           <md-tab label="My Recent Activity" ng-init="vm.getRecent()">
-            <div layout-padding>
+            <div class="md-padding">
               <md-list>
                 <md-list-item ng-repeat="entry in vm.recent">
                   <!--<entry-summary entry="entry" flex></entry-summary>-->
@@ -21,7 +24,7 @@
             </div>
           </md-tab>
           <md-tab label="My Questions">
-            <div layout-padding>
+            <div class="md-padding">
               <md-list>
                 <md-list-item ng-repeat="entry in vm.questions">
                   <!--<entry-summary entry="entry" flex></entry-summary>-->
@@ -30,7 +33,7 @@
             </div>
           </md-tab>
           <md-tab label="My Answers">
-            <div layout-padding>
+            <div class="md-padding">
               <md-list>
                 <md-list-item ng-repeat="entry in vm.answers">
                   <!--<entry-summary entry="entry" flex></entry-summary>-->
@@ -39,7 +42,7 @@
             </div>
           </md-tab>
           <md-tab label="My Comments">
-            <div layout-padding>
+            <div class="md-padding">
               <md-list>
                 <md-list-item ng-repeat="comment in vm.comments" class="md-3-line">
                   <!--<comment comm="comment" flex class="single-comment"></comment>-->
@@ -51,11 +54,18 @@
         <!--<profile user="mc.user"></profile>-->
       </div>
     </md-tab>
-    <md-tab ng-if="mc.user.isAdmin === true" label="Admin">
+
+
+    <md-tab *ngIf="user.isAdmin === true" label="Admin">
       <!--<admin ctrl="vm"></admin>-->
     </md-tab>
-    <md-tab ng-if="mc.user.isAdmin == true || mc.user.isModerator == true" label="Moderator">
+
+
+    <md-tab *ngIf="user.isAdmin == true || user.isModerator == true" label="Moderator">
       <!--<moderator users="vm.users"></moderator>-->
     </md-tab>
+
   </md-tab-group>
+
+
 </div>

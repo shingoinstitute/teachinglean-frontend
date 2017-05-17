@@ -1,4 +1,4 @@
-import { Component, OnInit, ViewChild } from '@angular/core';
+import {Component, EventEmitter, OnInit, Output, ViewChild} from '@angular/core';
 import { MdIconRegistry } from '@angular/material';
 import { DomSanitizer } from '@angular/platform-browser';
 import { MdSidenav } from '@angular/material';
@@ -13,10 +13,9 @@ import { User } from './user/user';
 })
 export class AppComponent implements OnInit {
 
-  user: User = new User();
   @ViewChild('sidenav') sideNav: MdSidenav;
-  showDashboard = false;
-  showLogin = true;
+  userDidLogin;
+  user: User;
 
   links = [
     {name: "Home", path: "/"},
@@ -51,14 +50,12 @@ export class AppComponent implements OnInit {
   getUser() {
     this.userService.getUser()
     .subscribe(
-      user => {
+      (user: User) => {
         this.user = user;
-        this.showDashboard = true;
-        this.showLogin = false;
+        this.userDidLogin = true;
       },
       () => {
-        this.showDashboard = false;
-        this.showLogin = true;
+        this.userDidLogin = false;
       }
     );
   }

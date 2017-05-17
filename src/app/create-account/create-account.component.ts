@@ -13,7 +13,7 @@ export class CreateAccountComponent implements OnInit {
   @Output() onClickLoginHandler = new EventEmitter<any>();
 
   private user: User = new User();
-  createButonEnabled = true;
+  private createButonEnabled = true;
   private password = "";
   private confirmPassword = "";
 
@@ -28,7 +28,6 @@ export class CreateAccountComponent implements OnInit {
         .subscribe(
           result => {
             console.log(result);
-            left off here, got a good result back from the server!
           },
           error => console.error(error)
         );

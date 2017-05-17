@@ -3,6 +3,7 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { NgModule } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { HttpModule, JsonpModule } from '@angular/http';
+import { CookieService } from 'angular2-cookie/services/cookies.service';
 import 'hammerjs';
 
 import { AngularMaterialModule } from './config/angular-material.module';
@@ -52,7 +53,8 @@ import { CreateAccountComponent } from './create-account/create-account.componen
     CreateAccountComponent
   ],
   providers: [
-    UserService
+    UserService,
+    CookieService
   ],
   bootstrap: [AppComponent]
 })
