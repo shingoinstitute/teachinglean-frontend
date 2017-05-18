@@ -1,14 +1,8 @@
 <div>
 
-  <div *ngIf="!user" fxLayout fxLayoutAlign="center center">
-    <md-card class="md-padding" fxLayout="column" fxLayoutAlign="center center" style="width: 500px;">
-      <h3 fxFlex>You are not logged in.</h3>
-      <div fxFlex>
-        <button md-button class="mat-accent" ng-href="/login">Login here</button>
-      </div>
-    </md-card>
+  <div fxLayout="row" fxLayoutAlign="center" *ngIf="spinnerEnabled">
+    <md-spinner></md-spinner>
   </div>
-
 
   <md-tab-group [dynamicHeight]="true" [selectedIndex]="0" *ngIf="user">
     <md-tab label="Dashboard">

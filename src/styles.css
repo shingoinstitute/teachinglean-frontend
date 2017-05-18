@@ -1,15 +1,11 @@
 html {
   position: relative;
-  min-height: 100%;
   font-family: 'Roboto', sans-serif;
 }
 
+html,
 body {
-  margin: 0 0 150px; /* bottom = footer height */
-}
-
-.site-content {
-  flex: 1;
+  height: 100%;
 }
 
 ul:not(.browser-default) {
@@ -47,8 +43,7 @@ h3.mat-headline {
   font-size: 24px;
 }
 
-footer {
-  position: absolute;
+#footer {
   left: 0;
   bottom: 0;
   height: 150px;

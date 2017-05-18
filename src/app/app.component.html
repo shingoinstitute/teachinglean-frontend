@@ -1,7 +1,8 @@
 <!--<div fxLayout="column" >-->
 
 <app-toolbar [userDoesExist]="userDidLogin"></app-toolbar>
-<md-sidenav-container class="sidenav-container">
+
+<md-sidenav-container>
 
     <md-sidenav #sidenav mode="side" [opened]="screenWidthGtSm()">
         <md-nav-list>
@@ -29,7 +30,7 @@
 
 </md-sidenav-container>
 
-<footer class="mat-primary darken-2">
+<footer id="footer" class="mat-primary darken-2">
   <div class="container" fxLayout="column" fxLayout.gt-sm>
     <ul fxFlex>
       <li><a ng-href="/about" class="white-text">About</a></li>

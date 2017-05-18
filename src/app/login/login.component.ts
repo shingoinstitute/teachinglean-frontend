@@ -28,15 +28,18 @@ export class LoginComponent implements OnInit {
   }
 
   onClickLogin() {
+    this.spinnerEnabled = true;
     this.userService.localLogin(this.username, this.password)
       .subscribe(
-        result => {
-          this.userService.user = User.initFromObject(result);
-          this.router.navigate(['/dashboard']);
-        },
-        error => console.error(error)
+        result => { this.onClickLoginComplete(result); },
+        error => console.error(error),
+        () => { this.spinnerEnabled = false; }
       );
   }
 
+  onClickLoginComplete(result) {
+    this.userService.user = User.initFromObject(result);
+    this.router.navigate(['/dashboard']);
+  }
 
 }
