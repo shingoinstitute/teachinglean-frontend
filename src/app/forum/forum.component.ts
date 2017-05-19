@@ -11,16 +11,16 @@ import {
 } from '@angular/animations';
 
 import { Http, Response, ResponseContentType } from '@angular/http';
+import { Router } from '@angular/router';
 import { Observable } from 'rxjs/Observable';
 
 import { UserService } from '../services/user.service';
-import {Entry} from "./entry";
+import { Entry } from "./entry";
 
 @Component({
   selector: 'app-forum',
   templateUrl: './forum.component.html',
   styleUrls: ['./forum.component.css'],
-  providers: [ForumService],
   animations: [
     trigger('shrinkGrow', [
       state('active', style({transform: 'translateX(0)', height: 'auto'})),
@@ -49,7 +49,7 @@ export class ForumComponent implements OnInit, AfterViewInit {
     private forumService: ForumService,
     private userService: UserService,
     private http: Http,
-    private zone: NgZone) {
+    private router: Router) {
 
     userService.userStatusChangeNotifier$.subscribe(
       (userIsLogged) => {
@@ -78,7 +78,9 @@ export class ForumComponent implements OnInit, AfterViewInit {
     this.recentQuestions = entries;
   }
 
-
+  navigateToEntry(entryId: string) {
+    this.router.navigate(['forum', entryId]);
+  }
 
   onClickAskQuestion() {
     let state = this.questionDialogState;
@@ -86,12 +88,12 @@ export class ForumComponent implements OnInit, AfterViewInit {
   }
 
   onClickPostQuestionHandler(question: { title: string, content: string }) {
-    console.log(question);
-    let entry = new Entry();
-    entry.owner = this.userService.user.uuid;
-    entry.title = question.title;
-    entry.content = question.content;
-    entry.parent = null;
+    let entry = Entry.initFromObject({
+      owner: this.userService.user.uuid,
+      title: question.title,
+      content: question.content,
+      parent: null
+    });
     
     this.forumService.createEntry(entry)
       .subscribe(

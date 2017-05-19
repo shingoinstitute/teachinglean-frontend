@@ -19,6 +19,7 @@ import { LoginComponent } from './login/login.component';
 import { TeachingComponent } from './teaching/teaching.component';
 import { ToolbarComponent } from './toolbar/toolbar.component';
 import { ForumComponent } from './forum/forum.component';
+import { ForumService } from './services/forum.service';
 import { ForumDetailDirective } from './directives/forum-detail.directive';
 import { ForumListItemComponent } from './forum-list-item/forum-list-item.component';
 import { AskQuestionComponent } from './ask-question/ask-question.component';
@@ -51,7 +52,8 @@ import { CreateAccountComponent } from './create-account/create-account.componen
     CreateAccountComponent
   ],
   providers: [
-    CookieService
+    CookieService,
+    ForumService
   ],
   bootstrap: [AppComponent]
 })

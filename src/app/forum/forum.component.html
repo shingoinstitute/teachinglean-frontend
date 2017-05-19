@@ -12,16 +12,18 @@
     <md-tab-group [dynamicHeight]="true" [selectedIndex]="1">
       <md-tab label="Top Questions">
         <ul>
-          <li [(ngModel)]="recentQuestions" *ngFor="let result of topResults">
-            {{result.question}}
+          <li [(ngModel)]="recentQuestions" *ngFor="let question of topResults">
+            <a class="flow-text" [innerHTML]="question.title" routerLink="/forum/{{ question.id }}"></a>
+            <div [innerHTML]="question.content"></div>
+            <md-divider></md-divider>
           </li>
         </ul>
       </md-tab>
       <md-tab label="Recent Questions">
         <ul>
-          <li *ngFor="let recent of recentQuestions">
-            <strong><p class="flow-text" [innerHTML]="recent.title"></p></strong>
-            <div [innerHTML]="recent.content"></div>
+          <li *ngFor="let question of recentQuestions">
+            <a class="flow-text" [innerHTML]="question.title" routerLink="/forum/{{ question.id }}"></a>
+            <div [innerHTML]="question.content"></div>
             <md-divider></md-divider>
           </li>
         </ul>

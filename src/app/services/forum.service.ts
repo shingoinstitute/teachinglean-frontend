@@ -18,76 +18,83 @@ export class ForumService {
     this.baseUrl = Globals.baseApiUrl;
   }
 
-  getUserQuestions(uuid): Observable<Entry[]> {
+  requestUserQuestions(uuid): Observable<Entry[]> {
     let url = this.baseUrl + '/entry?where={"owner": "' + uuid + '","parent":null}&populate=owner';
-    return this.http.get(url, {responseType: ResponseContentType.Json})
-               .map(this.handleResponse)
-               .catch(this.handleError);
+    return this.requestHandler(url);
   }
 
-  getUserAnswers(uuid): Observable<Entry[]> {
+  requestUserAnswers(uuid): Observable<Entry[]> {
     let url = this.baseUrl + '/entry?where={"owner":"' + uuid + '","parent": {"!":null}}&populate=owner';
-    return this.http.get(url, {responseType: ResponseContentType.Json})
-               .map(this.handleResponse)
-               .catch(this.handleError);
+    return this.requestHandler(url);
   }
 
-  getUserComments(uuid): Observable<Entry[]> {
+  requestUserComments(uuid): Observable<Entry[]> {
     let url = this.baseUrl + '/comment?where={"owner":"' + uuid + '"}&populate=owner,parent';
-    return this.http.get(url, {responseType: ResponseContentType.Json})
-      .map(this.handleResponse)
-      .catch(this.handleError);
+    return this.requestHandler(url);
   }
 
-  getQuestions(): Observable<Entry[]> {
+  requestQuestions(): Observable<Entry[]> {
     let url = this.baseUrl + '/entry?where={"parent":null}&populate=owner,parent';
-    return this.http.get(url, {responseType: ResponseContentType.Json})
-      .map(this.handleResponse)
-      .catch(this.handleError);
+    return this.requestHandler(url);
   }
 
-  getAnswers(): Observable<Entry[]> {
+  requestAnswers(): Observable<Entry[]> {
     let url = this.baseUrl + '/entry?where={"parent": {"!":null}}&populate=owner,parent';
-    return this.http.get(url, {responseType: ResponseContentType.Json})
-      .map(this.handleResponse)
-      .catch(this.handleError);
+    return this.requestHandler(url);
   }
 
-  getComments(): Observable<Entry[]> {
+  requestComments(): Observable<Entry[]> {
     let url = this.baseUrl + '/comment?populate=owner,parent';
-    return this.http.get(url, {responseType: ResponseContentType.Json})
-      .map(this.handleResponse)
-      .catch(this.handleError);
+    return this.requestHandler(url);
   }
 
-  getRecent(limit, userId) {
-    let withinTenDays = Date.now() - (10 * 24 * 60 * 60 * 1000);
-
+  requestRecent(limit, userId) {
     let params = {
       createdAt: {
-        ">": new Date(withinTenDays)
+        ">": new Date(Date.now() - (10 * 24 * 60 * 60 * 1000))
       },
       parent: null,
       owner: userId,
     };
-
     let url = this.baseUrl + '/entry?where=' + JSON.stringify(params) + (limit ? '&limit=' + limit : '');
-
-    return this.http.get(url, {
-      responseType: ResponseContentType.Json
-    })
-    .map(response => {
-      return response.json();
-    })
-    .catch(this.handleError);
+    return this.requestHandler(url);
   }
 
   requestAll(): Observable<any> {
     let url = this.baseUrl + '/entry';
-    // return this.http.get(url, {responseType: ResponseContentType.Json})
-    return this.http.get('http://localhost:3000/backend/entry', {responseType: ResponseContentType.Json})
-    .map(this.handleResponse)
-    .catch(this.handleError);
+    return this.requestHandler(url);
+  }
+
+  requestEntry(id: string) {
+    let url = this.baseUrl + '/entry/' + id;
+    return this.requestHandler(url);
+  }
+
+  getEntry(id: string): Entry {
+    var source = Observable.create(observer => {
+      return this.http.get(this.baseUrl + '/entry/' + id)
+      .map(res => res.json())
+      .catch(this.handleError)
+      .subscribe(
+        data => { 
+          observer.next(Entry.initFromObject(data)); 
+          observer.onCompleted();
+        },
+        err => console.error(err)
+      );
+    });
+
+    let _entry: Entry;
+
+    var subscription = source.subscribe(
+      (entry: Entry) => _entry = entry,
+      (error) => { console.error(error); return new Entry(); },
+      () => { return _entry; }
+    );
+
+    // Ended here, trying to figure out how to return an Entry object from this observer stuff...
+
+    subscription.dispose();
   }
 
   readEntry(id) {
@@ -191,9 +198,15 @@ export class ForumService {
     // })
   }
 
-  private handleResponse(response: Response) {
-    let body = response.json();
-    return body || {};
+  private requestHandler(url) {
+    return this.http.get(url, { responseType: ResponseContentType.Json })
+    .map(this.handleResponse)
+    .catch(this.handleError);
+  }
+
+  private handleResponse(response: Response): Object {
+    let data = response.json();
+    return data || {};
   }
 
   private handleError(error: Response | any) {
