@@ -17,7 +17,6 @@ export class AppComponent implements OnInit {
 
   @ViewChild('sidenav') sideNav: MdSidenav;
   
-  userDidLogin: boolean;
   user: User;
 
   links = [
@@ -35,23 +34,19 @@ export class AppComponent implements OnInit {
     iconRegistry.addSvgIcon('accountCircle', sanitizer.bypassSecurityTrustResourceUrl('assets/images/icons/account-circle.svg'));
     iconRegistry.addSvgIcon('logout', sanitizer.bypassSecurityTrustResourceUrl('assets/images/icons/logout.svg'));
     iconRegistry.addSvgIcon('menu', sanitizer.bypassSecurityTrustResourceUrl('assets/images/icons/menu.svg'));
+    iconRegistry.addSvgIcon('search', sanitizer.bypassSecurityTrustResourceUrl('assets/images/icons/ic_search_black_24px.svg'));
   }
 
   ngOnInit() {
-
-    this.userService.userLoginDetected$.subscribe(
-      user => {
-        this.user = user;
-        this.announceLogin(user !== null || user !== undefined);
-      }
-    )
-
-    this.userDidLogin = false;
-    this.getUser();
+    this.userService.userStatusChangeListener$.subscribe(
+      user => { this.handleUserStatusChange(user); }
+    );
+    this.userService.getUser();
   }
 
-  announceLogin(isLoggedIn: boolean) {
-    this.userService.announceLogin(isLoggedIn);
+  handleUserStatusChange(user?: User) {
+    this.user = user;
+    this.userService.onUserDidChangeStatus(this.user !== null);
   }
 
   screenWidthGtSm(): boolean {
@@ -64,19 +59,6 @@ export class AppComponent implements OnInit {
     } else {
       this.sideNav.open();
     }
-  }
-
-  onDidGetUser(user: User) {
-    this.user = user;
-    this.userDidLogin = true;
-  }
-
-  getUser() {
-    this.userService.getUser()
-    .subscribe(
-      this.onDidGetUser,
-      this.onHandleError
-    );
   }
 
   private onHandleError(error) {

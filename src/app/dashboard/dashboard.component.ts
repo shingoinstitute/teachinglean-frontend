@@ -1,4 +1,4 @@
-import { Component, OnDestroy } from '@angular/core';
+import { Component, OnDestroy, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { Subscription } from 'rxjs/Subscription';
 
@@ -10,7 +10,7 @@ import {User} from "../user/user";
   templateUrl: './dashboard.component.html',
   styleUrls: ['./dashboard.component.css']
 })
-export class DashboardComponent implements OnDestroy {
+export class DashboardComponent implements OnInit, OnDestroy {
 
   spinnerEnabled = true;
 
@@ -19,9 +19,18 @@ export class DashboardComponent implements OnDestroy {
   user: User;
 
   constructor(private userService: UserService, private router: Router) {
-    this.subscription = userService.userLoginAnnounce$.subscribe(
+    this.subscription = userService.userStatusChangeNotifier$.subscribe(
       userDoesExist => { this.handleUserLoginAnnounce(userDoesExist); }
     );
+  }
+
+  ngOnInit() {
+    this.user = this.userService.user;
+    if (!this.user) {
+      this.userService.getUser();
+    } else {
+      this.spinnerEnabled = false;
+    }
   }
 
   ngOnDestroy() {

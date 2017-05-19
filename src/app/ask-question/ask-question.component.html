@@ -5,19 +5,23 @@
 
     <div fxLayout class="input-wrapper">
       <p>Title</p>
-      <input fxFlex class="input-title" type="text" placeholder="What is your question?">
+      <input fxFlex 
+              [(ngModel)]="title"
+              name="title"
+              class="input-title"
+              type="text" 
+              placeholder="What is your question?">
     </div>
-
+    <p>Enter a detailed description of your question.</p>
     <textarea class="input-question"
               id="question-textarea-id"
-              [ngModel]="content"
               required
               form="ask-question-form"
               maxlength="500"
               name="Question text">
-      </textarea>
+    </textarea>
 
-    <span style="margin-top: 50px;"></span>
+    <span style="margin-top: 24px;"></span>
 
     <div>
       <button md-raised-button class="mat-primary" (click)="onSubmitQuestion()">Post Question</button>

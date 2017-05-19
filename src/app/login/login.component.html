@@ -1,36 +1,34 @@
-<div fxLayout>
+<div class="login-card-wrapper" fxLayout fxLayoutAlign="center">
 
 	<md-card *ngIf="!showCreateAccount">
 
-		<div fxFlex fxLayout="column">
-
-			<button md-button class="md-icon" aria-label="linkedin signup" ng-click="vm.authenticateLinkedIn()">
-				<img src="assets/images/logos/lkin-login-form-btn.png" class="md-card-image">
-			</button>
+		<div fxLayout="column">
 
 			<h5 class="text-center">Sign Into Your Account</h5>
 
+			<button md-button id="linkedin-image" aria-label="linkedin signup" ng-click="vm.authenticateLinkedIn()">
+				<img src="assets/images/logos/lkin-login-form-btn.png">
+			</button>
 
-			<div fxLayout="row" fxLayoutAlign="space-around">
+			<div id="login-spinner" fxLayout="row" fxLayoutAlign="space-around">
 				<md-spinner *ngIf="spinnerEnabled"></md-spinner>
 			</div>
 
+			<p class="red-text" *ngIf="loginError">{{loginError}}</p>
 
-      <div fxLayout="column">
+      <form id="login-form" fxLayout="column">
 
-        <md-input-container>
-          <input mdInput required (change)="username=$event.target.value" type="email" placeholder="Email">
-        </md-input-container>
+				<md-input-container>
+					<input mdInput required (change)="username=$event.target.value" type="email" placeholder="Email">
+				</md-input-container>
 
-        <span fxFlex style="margin-top: 16px;"></span>
+				<span fxFlex style="margin-top: 16px;"></span>
 
-        <md-input-container>
-          <input mdInput required (change)="password=$event.target.value" type="password" placeholder="Password">
-        </md-input-container>
+				<md-input-container>
+					<input mdInput required (change)="password=$event.target.value" type="password" placeholder="Password">
+				</md-input-container>
 
-        <span fxFlex style="margin-top: 24px;"></span>
-
-      </div>
+      </form>
 
 
 			<!--<div><button md-raised-button class="md-primary" ng-click="vm.authenticateLocal(username, password)">Login</button></div>-->
@@ -42,7 +40,7 @@
 
 			<md-divider style="margin-top: 16px;"></md-divider>
 
-			<p class="flow-text">Don't have an account? <a (click)="showCreateAccount=!showCreateAccount;">Sign Up</a></p>
+			<p class="">Don't have an account? <a (click)="showCreateAccount=!showCreateAccount;">Sign Up</a></p>
 
 
 		</div>

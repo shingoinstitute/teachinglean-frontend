@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, NgZone, AfterViewInit } from '@angular/core';
 import { ForumService } from '../services/forum.service';
 import { MdIconRegistry } from "@angular/material";
 import { DomSanitizer } from "@angular/platform-browser";
@@ -10,7 +10,10 @@ import {
   transition
 } from '@angular/animations';
 
+import { Http, Response, ResponseContentType } from '@angular/http';
+import { Observable } from 'rxjs/Observable';
 
+import { UserService } from '../services/user.service';
 import {Entry} from "./entry";
 
 @Component({
@@ -33,46 +36,81 @@ import {Entry} from "./entry";
   ]
 
 })
-export class ForumComponent implements OnInit {
+export class ForumComponent implements OnInit, AfterViewInit {
 
-  topResults;
-
-  isEditing = false;
+  topResults: Entry[] = [];
+  recentQuestions: Entry[] = [];
 
   questionDialogState = "inactive";
 
-  questionContent;
+  questionFormEnabled: boolean;
 
   constructor(
     private forumService: ForumService,
-    iconRegistry: MdIconRegistry,
-    sanitizer: DomSanitizer) {
-    iconRegistry.addSvgIcon('search', sanitizer.bypassSecurityTrustResourceUrl('assets/images/icons/ic_search_black_24px.svg'));
+    private userService: UserService,
+    private http: Http,
+    private zone: NgZone) {
+
+    userService.userStatusChangeNotifier$.subscribe(
+      (userIsLogged) => {
+        this.questionFormEnabled = userIsLogged;
+      }
+    );
+
   }
 
   ngOnInit() {
-    this.loadRecent();
+    this.forumService.requestAll().subscribe(
+      data => { this.onLoadRecentComplete(data) },
+      err => { console.log(err); }
+    );
   }
 
-  loadRecent() {
-    this.forumService.getRecent(10, '123abc')
-      .subscribe(results => this.topResults = results);
+  ngAfterViewInit() {
   }
+
+  onLoadRecentComplete(data) {
+    // TODO :: Rewrite function to return recent questions instead of ALL questions; Get rid of http service.
+    let entries: Entry[] = [];
+    for (let element of data) {
+      entries.push(Entry.initFromObject(element));
+    }
+    this.recentQuestions = entries;
+  }
+
+
 
   onClickAskQuestion() {
-    this.isEditing = !this.isEditing;
-    this.questionDialogState = this.isEditing ? "active" : "inactive";
+    let state = this.questionDialogState;
+    this.questionDialogState = state === "inactive" ? "active" : "inactive";
   }
 
-  onClickPostQuestionHandler(event) {
-    this.isEditing = false;
-    console.log(event);
-    // this.forumService.createEntry(new Entry())
-    //   .subscribe(entry => console.log(entry));
+  onClickPostQuestionHandler(question: { title: string, content: string }) {
+    console.log(question);
+    let entry = new Entry();
+    entry.owner = this.userService.user.uuid;
+    entry.title = question.title;
+    entry.content = question.content;
+    entry.parent = null;
+    
+    this.forumService.createEntry(entry)
+      .subscribe(
+        entry => console.log(entry),
+        error => console.log(error)
+      );
   }
 
-  onEditorKeyupHandler(event) {
-    console.log(event);
+  private handleError(error: Response | any) {
+    let errMsg: string;
+    if (error instanceof Response) {
+      const body = error.json();
+      const err = body.error || JSON.stringify(body);
+      errMsg = `${error.status} - ${error.statusText || ''} ${err}`;
+    } else {
+      errMsg = error.message ? error.message : error.toString();
+    }
+    console.error(errMsg);
+    return Observable.throw(errMsg);
   }
 
 }

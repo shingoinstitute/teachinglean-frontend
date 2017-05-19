@@ -82,6 +82,14 @@ export class ForumService {
     .catch(this.handleError);
   }
 
+  requestAll(): Observable<any> {
+    let url = this.baseUrl + '/entry';
+    // return this.http.get(url, {responseType: ResponseContentType.Json})
+    return this.http.get('http://localhost:3000/backend/entry', {responseType: ResponseContentType.Json})
+    .map(this.handleResponse)
+    .catch(this.handleError);
+  }
+
   readEntry(id) {
     // return $http({
     //   method: 'get',
@@ -185,7 +193,7 @@ export class ForumService {
 
   private handleResponse(response: Response) {
     let body = response.json();
-    return body.data || {};
+    return body || {};
   }
 
   private handleError(error: Response | any) {

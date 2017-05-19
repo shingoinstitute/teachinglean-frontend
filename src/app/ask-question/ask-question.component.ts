@@ -8,21 +8,25 @@ import {
   Input
 } from '@angular/core';
 
+import { UserService } from '../services/user.service';
+import { AppRoutingService } from '../services/app-routing.service';
 
 @Component({
   selector: 'ask-question',
   templateUrl: './ask-question.component.html',
-  styleUrls: ['./ask-question.component.css']
+  styleUrls: ['./ask-question.component.css'],
+  providers: [AppRoutingService]
 })
 export class AskQuestionComponent implements OnInit, AfterViewInit, OnDestroy {
 
-  @Input() content;
-  @Output() onEditorKeyup = new EventEmitter<any>();
   @Output() onClickPostQuestion = new EventEmitter<any>();
 
-  editor;
-
-  constructor() { }
+  private editor;
+  private title: any;
+  
+  constructor(private userService: UserService, private appRouter: AppRoutingService) {
+    // TODO :: Implement appRouter to redirect user to login page then back to Q&A Forum after sign in
+  }
 
   ngOnInit() {
   }
@@ -41,10 +45,9 @@ export class AskQuestionComponent implements OnInit, AfterViewInit, OnDestroy {
       skin_url: '../assets/skins/lightgray',
       setup: editor => {
         this.editor = editor;
-        editor.on('keyup', () => {
-          const content = editor.getContent();
-          this.onEditorKeyup.emit(content);
-        });
+        // editor.on('keyup', () => {
+        //   this.content = editor.getContent();
+        // });
       },
     });
 
@@ -55,7 +58,10 @@ export class AskQuestionComponent implements OnInit, AfterViewInit, OnDestroy {
   }
 
   onSubmitQuestion() {
-    this.onClickPostQuestion.emit(this.editor.getContent());
+    this.onClickPostQuestion.emit({
+      title: this.title,
+      content: this.editor.getContent()
+    });
   }
 
 }

@@ -1,25 +1,38 @@
-md-card {
+.login-card-wrapper {
   margin-top: 48px;
-  margin-bottom: 250px;
+  width: 80%;
 }
 
 @media screen and (max-width: 480px) {
-  md-card {
+  .login-card-wrapper {
     margin-left: 0;
     width: 100%;
   }
 }
 
 @media screen and (max-width: 960px) {
-  md-card {
+  .login-card-wrapper {
     margin: 48px auto 250px;
   }
 }
 
 @media screen and (min-width: 960px){
-  md-card {
-    margin-left: 25%;
+  .login-card-wrapper {
+    width: 90%
   }
+}
+
+#login-form {
+  margin-bottom: 24px;
+}
+
+#linkedin-image {
+  padding: 0;
+  margin-top: 16px;
+}
+
+#login-spinner {
+  margin-top: 24px;
 }
 
 .input-container {

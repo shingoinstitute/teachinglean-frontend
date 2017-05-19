@@ -4,6 +4,7 @@ import {
   OnDestroy,
   HostListener
 } from '@angular/core';
+import { Router } from '@angular/router';
 import { MdIconRegistry } from '@angular/material';
 import { DomSanitizer } from '@angular/platform-browser';
 import { Subscription } from 'rxjs/Subscription';
@@ -17,13 +18,14 @@ import { UserService } from '../services/user.service';
 })
 export class ToolbarComponent implements OnDestroy {
 
-  @Input() userDoesExist: boolean;
+  userDoesExist: boolean;
   userSubscription: Subscription;
   windowWidth: number = window.innerWidth;
 
   constructor(
-    private userService: UserService) {
-    this.userSubscription = userService.userLoginAnnounce$.subscribe(
+    private userService: UserService,
+    private router: Router) {
+    this.userSubscription = userService.userStatusChangeNotifier$.subscribe(
       userIsAuthenticated => {
         this.userDoesExist = userIsAuthenticated;
       }
@@ -44,7 +46,16 @@ export class ToolbarComponent implements OnDestroy {
   }
 
   onClickLogout() {
-    this.userService.logoutUser();
+    this.userService.logoutUser()
+    .subscribe(
+      data => {
+        console.log(data);
+        this.router.navigate(['/']);
+      },
+      err => {
+        console.error(err);
+      }
+    );
   }
 
 }

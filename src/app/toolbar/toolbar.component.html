@@ -1,4 +1,5 @@
 <md-toolbar class="mat-primary darken-3">
+  
   <span fxFlex></span>
 
   <a md-button color="accent" aria-label="Sign Up" routerLink="/createAccount" *ngIf="!userDoesExist">Sign Up</a>
@@ -7,6 +8,7 @@
   <span fxFlex.lt-md *ngIf="windowWidth < 960"></span>
 
   <div *ngIf="userDoesExist">
+
     <button md-button aria-label="Account" [mdMenuTriggerFor]="menu">
       <md-icon svgIcon="accountCircle"></md-icon>
     </button>
@@ -21,6 +23,7 @@
         Logout
       </button>
     </md-menu>
+
   </div>
 
 

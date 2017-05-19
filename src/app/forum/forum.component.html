@@ -2,7 +2,6 @@
 
 <div fxLayout="column" fxLayout.gt-sm class="container" >
 
-
   <div fxFlexOrder.lt-md="2" fxLayout="column" class="search-wrapper">
 
     <i class="material-icons">search</i>
@@ -10,25 +9,37 @@
       <input mdInput placeholder="Search...">
     </md-input-container>
 
-    <p>Top Questions</p>
-    <md-divider></md-divider>
+    <md-tab-group [dynamicHeight]="true" [selectedIndex]="1">
+      <md-tab label="Top Questions">
+        <ul>
+          <li [(ngModel)]="recentQuestions" *ngFor="let result of topResults">
+            {{result.question}}
+          </li>
+        </ul>
+      </md-tab>
+      <md-tab label="Recent Questions">
+        <ul>
+          <li *ngFor="let recent of recentQuestions">
+            <strong><p class="flow-text" [innerHTML]="recent.title"></p></strong>
+            <div [innerHTML]="recent.content"></div>
+            <md-divider></md-divider>
+          </li>
+        </ul>
+      </md-tab>
+    </md-tab-group>
 
-    <ul>
-      <li *ngFor="let result of topResults">
-        {{result.question}}
-      </li>
-    </ul>
+    
 
   </div>
 
-  <div fxFlexOrder.lt-md="1" fxLayout="column" class="md-margin">
+  <div fxFlexOrder.lt-md="1" fxLayout="column" class="md-margin" *ngIf="questionFormEnabled">
     <div>
       <button md-raised-button class="mat-accent" (click)="onClickAskQuestion()">Ask Question</button>
     </div>
 
 
-    <div [@shrinkGrow]="questionDialogState" >
-      <ask-question (onEditorKeyup)="onEditorKeyupHandler($event)" (onClickPostQuestion)="onClickPostQuestionHandler($event)" [content]="questionContent"></ask-question>
+    <div [@shrinkGrow]="questionDialogState">
+      <ask-question (onClickPostQuestion)="onClickPostQuestionHandler($event)"></ask-question>
     </div>
 
 

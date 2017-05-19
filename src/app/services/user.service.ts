@@ -3,7 +3,6 @@ import {
   Response, 
   ResponseContentType
 } from '@angular/http';
-import { Router } from '@angular/router';
 import { Injectable }    from '@angular/core';
 import { Observable }    from 'rxjs/Observable';
 import { Subject }       from 'rxjs/Subject';
@@ -18,15 +17,15 @@ import { Globals } from '../globals';
 export class UserService {
   
   // Observable sources
-  private userLoginDetectedSource = new Subject<User>();
-  private userLoginAnnounceSource = new Subject<boolean>();
+  private userStatusChangeListenerSource = new Subject<User>();
+  private userStatusChangeNotiferSource = new Subject<boolean>();
 
   // Observable streams
-  userLoginDetected$ = this.userLoginDetectedSource.asObservable();
-  userLoginAnnounce$ = this.userLoginAnnounceSource.asObservable();
+  userStatusChangeListener$ = this.userStatusChangeListenerSource.asObservable();
+  userStatusChangeNotifier$ = this.userStatusChangeNotiferSource.asObservable();
   
-  announceLogin(isAuthenticated: boolean) {
-    this.userLoginAnnounceSource.next(isAuthenticated);
+  onUserDidChangeStatus(userDidLogin: boolean) {
+    this.userStatusChangeNotiferSource.next(userDidLogin);
   }
 
   // User object
@@ -42,39 +41,54 @@ export class UserService {
   
   baseApiUrl: string;
   
-  constructor(private http: Http, private cookieService: CookieService, private router: Router) {
+  constructor(private http: Http, private cookieService: CookieService) {
     this.baseApiUrl = Globals.baseApiUrl;
   }
-  
-  getUser(): Observable<any> {
-    return this.http.get(this.baseApiUrl + '/me')
-    .map((res) => this.extractUserFromResponse(res))
-    .catch(this.handleError);
+
+  getUser() {
+    let observable = this.http.get(this.baseApiUrl + '/me')
+      .map((res) => {
+        return res.json();
+      })
+      .catch((error) => this.handleError(error));
+
+    observable.subscribe(
+      (data) => {
+        this._user = User.initFromObject(data);
+        return this.userStatusChangeListenerSource.next(this._user);
+      },
+      (error) => {
+        return this.userStatusChangeListenerSource.next(null);
+      }
+    );
   }
-  
-  localLogin(username, password): Observable<any> {
+
+  localLogin(username, password) {
     return this.http.post(this.baseApiUrl + '/auth/local', {
       username: username,
       password: password
     })
-    .map(result => {
-      return result.json();
+    .map(res => {
+      let data = res.json();
+      this._user = User.initFromObject(data);
+      return data;
     })
     .catch(this.handleError);
   }
   
-  logoutUser() {
-    // TODO :: make call to '/logout' to remove cookies and headers
-    this._user = null;
-    this.http.get(this.baseApiUrl + '/logout')
+  logoutUser(): Observable<any> {
+
+    delete this._user;
+    this.cookieService.removeAll();
+
+    return this.http.get(this.baseApiUrl + '/auth/logout')
     .map((res) => {
-      console.log(res);
+      return res.json();
     })
-    .catch((err) => {
-      console.log(err.message);
-      return Observable.throw(err);
+    .catch(this.handleError)
+    .finally(() => {
+      this.userStatusChangeListenerSource.next(null);
     });
-    this.router.navigate(['/']);
   }
   
   signUp(user: User, password: string): Observable<any> {
@@ -90,23 +104,6 @@ export class UserService {
       return response.json();
     })
     .catch(this.handleError);
-  }
-  
-  private extractUserFromResponse(res: Response | any): Observable<User> {
-    let data;
-    try {
-      data = res.json();
-      this._user = User.initFromObject(data);
-    } catch(e) {
-      return Observable.throw(e.message);
-    }
-    this.onLoginDetected(this._user);
-    // TODO :: this function shouldn't return an Observable if it's calling 'this.userLoginDetectedSource.next()'
-    return Observable.create(this._user);
-  }
-  
-  onLoginDetected(user: User) {
-    this.userLoginDetectedSource.next(user);
   }
 
   private extractData(res: Response): Observable<any> {
