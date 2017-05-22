@@ -34,6 +34,10 @@ export class User implements UserInterface {
     static initFromObject(obj: any) {
       let data = obj.user ? obj.user : obj;
 
+      if (!data.uuid) {
+        return undefined;
+      }
+
       let user = new User();
 
       user.uuid = data.uuid;

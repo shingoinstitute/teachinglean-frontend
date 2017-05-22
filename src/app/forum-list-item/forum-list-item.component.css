@@ -1,0 +1,34 @@
+@media screen and (min-width: 960px) {
+	.entry-content {
+		margin-top: 24px;
+		margin-right: 10%;
+		margin-left: 10%;
+	}
+
+	#submit-answer-button {
+		margin-top: 0;
+		margin-left: 8px;
+	}
+}
+
+@media screen and (max-width: 960px) {
+	.entry-content {
+		margin-top: 12px;
+		margin-right: 8px;
+		margin-left: 8px;
+	}
+
+	#submit-answer-button {
+		margin-top: 12px;
+		margin-left: 0;
+	}
+}
+
+#submit-answer-button {
+	z-index: 999;
+}
+
+#qa-answer-wrapper {
+	max-width: 550px;
+}
+

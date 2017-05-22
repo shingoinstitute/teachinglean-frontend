@@ -19,25 +19,54 @@ export class Entry {
   constructor() { }
 
   static initFromObject(obj): Entry {
+    // console.log('init obj: ', obj);
     let entry = new Entry();
-    entry.title = obj.title;
-    entry.answers = obj.answers;
-    entry.comments = obj.comments;
-    entry.content = obj.content;
+    if (!obj.id) {
+      return entry;
+    }
     entry.id = obj.id;
-    entry.isFlagged = obj.isFlagged;
-    entry.markedCorrect = obj.markedCorrect;
-    entry.owner = obj.owner instanceof String ? obj.owner : User.initFromObject(obj.owner);
-    entry.usersDidDownvote = obj.users_did_downvote;
-    entry.usersDidUpvote = obj.users_did_upvote;
+    entry.title = obj.title || null;
+    entry.answers = obj.answers || [];
+    entry.comments = obj.comments || [];
+    entry.content = obj.content || null;    
+    entry.isFlagged = obj.isFlagged || false;
+    entry.markedCorrect = obj.markedCorrect || false;
+    entry.parent = obj.parent || null;
+    if (obj.owner && obj.owner.uuid) {
+      entry.owner = obj.owner.uuid;
+    } else if (obj.owner instanceof String) {
+      entry.owner = obj.owner;
+    } else {
+      entry.owner = null;
+    }
+    entry.usersDidDownvote = obj.users_did_downvote || [];
+    entry.usersDidUpvote = obj.users_did_upvote || [];
     return entry;
+  }
+
+  downvoteCount() {
+    return this.usersDidDownvote.length;
+  }
+
+  upvoteCount() {
+    return this.usersDidUpvote.length;
+  }
+
+  userDidVote(userId: string) {
+    let index = this.usersDidUpvote.indexOf(userId);
+    return index !== -1;
+  }
+
+  userDidUpvote(userId: string) {
+    let index = this.usersDidDownvote.indexOf(userId);
+    return index !== -1;
   }
 
   toObject() {
     return {
       owner: this.owner,
-      uuid: this.id,
-      parent: this.parent,
+      id: this.id,
+      parent: this.parent || null,
       title: this.title,
       content: this.content,
       markedCorrect: this.markedCorrect,

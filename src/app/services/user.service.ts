@@ -55,10 +55,12 @@ export class UserService {
     observable.subscribe(
       (data) => {
         this._user = User.initFromObject(data);
-        return this.userStatusChangeListenerSource.next(this._user);
+        if (this._user) {
+          this.userStatusChangeListenerSource.next(this._user);
+        }
       },
       (error) => {
-        return this.userStatusChangeListenerSource.next(null);
+        this.userStatusChangeListenerSource.next(null);
       }
     );
   }

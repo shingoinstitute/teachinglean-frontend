@@ -1,3 +1,57 @@
-<p>
-  forum-list-item works!
-</p>
+<div fxLayout="column" class="container">
+  <md-card class="md-margin-top">
+    <md-card-title [innerHTML]="entry.title"></md-card-title>
+    <md-divider></md-divider>
+    <md-card-content>
+      <div class="flow-text" [innerHTML]="entry.content"></div>
+    </md-card-content>
+    <md-divider></md-divider>
+    <div fxLayout>
+      <input fxFlex 
+              [(ngModel)]="title"
+              name="title"
+              class="input-title input-wrapper"
+              type="text" 
+              placeholder="Add comments here.">
+      <div class="input-wrapper">
+        <button md-raised-button class="mat-primary white-text" [class.white-text]="canComment" [disabled]="!canComment">Add Comment</button>
+      </div>
+    </div>
+  </md-card>
+
+  <div *ngIf="!answers">
+    <p>This question has not been answered yet.</p>
+  </div>
+
+  <md-card *ngFor="let answer of answers" class="md-margin-top">
+    <!--<md-card-content>-->
+      <div fxLayout fxLayout.lt-md="column">
+        <div fxFlex [innerHTML]="answer.content"></div>
+        <div class="answered-by-wrapper">
+          <p>Answered by:</p>
+          <p>{{answer.owner}}</p>
+        </div>
+      </div>
+      
+    <!--</md-card-content>-->
+  </md-card>
+
+  <md-divider></md-divider>
+
+  <p><strong>Have an answer?</strong></p>
+  <div fxLayout="column" fxLayout.gt-sm>
+    <span id="qa-answer-wrapper">
+      <textarea id="question-textarea"
+                required
+                form="ask-question-form"
+                maxlength="500"
+                name="Question text">
+      </textarea>
+      <span>character count: {{characterCount}}</span>
+    </span>
+    <div>
+      <button id="submit-answer-button" md-raised-button class="mat-primary" [class.white-text]="canAnswer" (click)="onClickSubmitAnswer($event)" [disabled]="!canAnswer">Submit Answer</button>      
+    </div>
+  </div>
+</div>
+

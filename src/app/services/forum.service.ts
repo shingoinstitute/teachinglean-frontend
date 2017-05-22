@@ -70,31 +70,10 @@ export class ForumService {
     return this.requestHandler(url);
   }
 
-  getEntry(id: string): Entry {
-    var source = Observable.create(observer => {
-      return this.http.get(this.baseUrl + '/entry/' + id)
+  getEntry(id: string) {
+    return this.http.get(this.baseUrl + '/entry/' + id + '?populate=answers,owner,comments,parent,users_did_upvote,users_did_downvote')
       .map(res => res.json())
-      .catch(this.handleError)
-      .subscribe(
-        data => { 
-          observer.next(Entry.initFromObject(data)); 
-          observer.onCompleted();
-        },
-        err => console.error(err)
-      );
-    });
-
-    let _entry: Entry;
-
-    var subscription = source.subscribe(
-      (entry: Entry) => _entry = entry,
-      (error) => { console.error(error); return new Entry(); },
-      () => { return _entry; }
-    );
-
-    // Ended here, trying to figure out how to return an Entry object from this observer stuff...
-
-    subscription.dispose();
+      .catch(this.handleError);
   }
 
   readEntry(id) {
@@ -117,10 +96,10 @@ export class ForumService {
     return this.http.post(this.baseUrl + '/entry', entry.toObject(), {
       responseType: ResponseContentType.Json
     })
-      .map(response => {
-        return response.json();
-      })
-      .catch(this.handleError);
+    .map(response => {
+      return response.json();
+    })
+    .catch(this.handleError);
   }
 
   destroyEntry(entry) {
@@ -222,5 +201,12 @@ export class ForumService {
     return Observable.throw(errMsg);
   }
 
+  static extractEntries(raw: {}[]) {
+    let entries: Entry[] = [];
+    for (let i in raw) {
+      entries.push(Entry.initFromObject(raw[i]));
+    }
+    return entries;
+  }
 
 }

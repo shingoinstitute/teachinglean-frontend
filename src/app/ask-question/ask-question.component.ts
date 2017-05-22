@@ -45,23 +45,14 @@ export class AskQuestionComponent implements OnInit, AfterViewInit, OnDestroy {
       skin_url: '../assets/skins/lightgray',
       setup: editor => {
         this.editor = editor;
-        // editor.on('keyup', () => {
-        //   this.content = editor.getContent();
-        // });
       },
     });
-
   }
 
   ngOnDestroy() {
     tinymce.remove(this.editor);
   }
 
-  onSubmitQuestion() {
-    this.onClickPostQuestion.emit({
-      title: this.title,
-      content: this.editor.getContent()
-    });
-  }
+  
 
 }

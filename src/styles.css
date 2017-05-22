@@ -58,9 +58,39 @@ footer p {
   font-size: 10pt;
 }
 
-/*about-container {*/
-  /*background-color: rgb(250,250,250);*/
-/*}*/
+/* Input stylings */
+.input-container {
+  margin-top: 24px;
+}
+
+.input-title {
+  padding: 6px;
+  font-size: 12pt;
+  margin-bottom: 24px;
+}
+
+.input-wrapper {
+  margin: 12px;
+}
+
+.input-wrapper p {
+  margin: 8px;
+  font-size: 10pt;
+  font-weight: bold;
+}
+
+.input-wrapper * {
+  font-family: 'Roboto', sans-serif;
+}
+
+input:focus {
+  border: 1px solid cornflowerblue;
+  outline: none;
+}
+
+.textarea-question {
+  max-width: 500px;
+}
 
 /* text alignment */
 .ta-center {
@@ -70,8 +100,26 @@ footer p {
   text-align: right;
 }
 
+/* Helpers */
+
 .md-margin {
   margin: 16px 8px 16px 8px;
+}
+
+.md-margin-bottom {
+  margin-bottom: 16px;
+}
+
+.md-margin-top {
+  margin-top: 16px;
+}
+
+.md-margin-left {
+  margin-left: 8px;
+}
+
+.md-margin-right {
+  margin-right: 8px;
 }
 
 .md-padding {

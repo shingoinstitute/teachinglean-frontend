@@ -39,14 +39,12 @@ export class AppComponent implements OnInit {
 
   ngOnInit() {
     this.userService.userStatusChangeListener$.subscribe(
-      user => { this.handleUserStatusChange(user); }
+      user => {
+        this.user = user;
+        this.userService.onUserDidChangeStatus(this.user !== null);
+      }
     );
     this.userService.getUser();
-  }
-
-  handleUserStatusChange(user?: User) {
-    this.user = user;
-    this.userService.onUserDidChangeStatus(this.user !== null);
   }
 
   screenWidthGtSm(): boolean {
