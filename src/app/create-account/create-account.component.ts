@@ -1,4 +1,5 @@
 import {Component, EventEmitter, OnInit, Output} from '@angular/core';
+import {Router} from '@angular/router';
 
 import { User } from '../user/user';
 import {UserService} from "../services/user.service";
@@ -16,8 +17,9 @@ export class CreateAccountComponent implements OnInit {
   private createButonEnabled = true;
   private password = "";
   private confirmPassword = "";
+  errorMsg: string;
 
-  constructor(private userService: UserService) { }
+  constructor(private userService: UserService, private router: Router) { }
 
   ngOnInit() {
   }
@@ -27,9 +29,12 @@ export class CreateAccountComponent implements OnInit {
       this.userService.signUp(this.user, this.password)
         .subscribe(
           result => {
-            console.log(result);
+            this.router.navigate(['dashboard']);
           },
-          error => console.error(error)
+          error => {
+            console.error(error);
+            this.errorMsg = error.message ? error.message : error;
+          }
         );
     }
   }

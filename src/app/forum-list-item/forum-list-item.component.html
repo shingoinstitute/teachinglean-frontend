@@ -1,11 +1,25 @@
-<div fxLayout="column" class="container">
+<div fxLayout="column" class="container" (onEditorKeyup)="keyupHandler($event)">
+  
   <md-card class="md-margin-top">
-    <md-card-title [innerHTML]="entry.title"></md-card-title>
+
+    <md-card-title [innerHTML]="entry.title"></md-card-title>    
+
     <md-divider></md-divider>
+
     <md-card-content>
-      <div class="flow-text" [innerHTML]="entry.content"></div>
+      <div [innerHTML]="entry.content"></div>
     </md-card-content>
+
+    <div fxLayout="column" fxLayoutAlign.gt-sm="end end">
+      <span fxFlex.gt-sm></span>
+      <div fxLayout="column" fxLayoutAlign="end end" class="entry-by">
+        <p class="grey-text text-xs">Asked by {{ entry.owner ? entry.owner.name : "" }} on {{ createdAt(entry) }}</p>
+        <img src="https://i.stack.imgur.com/Zl4Gr.jpg?s=64&g=1">
+      </div>
+    </div>
+
     <md-divider></md-divider>
+
     <div fxLayout>
       <input fxFlex 
               [(ngModel)]="title"
@@ -13,10 +27,14 @@
               class="input-title input-wrapper"
               type="text" 
               placeholder="Add comments here.">
+
       <div class="input-wrapper">
         <button md-raised-button class="mat-primary white-text" [class.white-text]="canComment" [disabled]="!canComment">Add Comment</button>
       </div>
+
     </div>
+
+
   </md-card>
 
   <div *ngIf="!answers">
@@ -24,16 +42,26 @@
   </div>
 
   <md-card *ngFor="let answer of answers" class="md-margin-top">
-    <!--<md-card-content>-->
       <div fxLayout fxLayout.lt-md="column">
-        <div fxFlex [innerHTML]="answer.content"></div>
-        <div class="answered-by-wrapper">
-          <p>Answered by:</p>
-          <p>{{answer.owner}}</p>
+
+        <div fxFlex.gm-sm fxLayout>
+          <img *ngIf="answer.markedCorrect" id="checkmark-img" src="/assets/images/checkmark-64.png" alt="marked as correct">
+          <div fxFlex.gm-sm [innerHTML]="answer.content"></div>
         </div>
+
+        <span fxFlex.gt-sm></span>
+
+        <div fxFlex.gm-sm fxLayout="column" fxLayoutAlign="end end" class="entry-by">
+          <p class="grey-text text-xs">Answered by {{ answer.owner ? answer.owner.name : "" }} on {{ createdAt(answer) }}</p>
+          <img src="{{answer.owner ? answer.owner.pictureUrl : ''}}" 
+                alt="https://res.cloudinary.com/shingo/image/upload/v1414874243/silhouette_vzugec.png" />
+        </div>
+
       </div>
-      
-    <!--</md-card-content>-->
+      <md-card-actions *ngIf="entry.owner.uuid == currentUserId">
+        <button md-raised-button class="mat-accent white-text" (click)="markCorrect(answer)" *ngIf="!answer.markedCorrect && !didMarkAnswerCorrect">Mark Correct</button>
+        <button md-raised-button class="mat-accent white-text" (click)="unmarkCorrect(answer)" *ngIf="answer.markedCorrect">Undo Marked Correct</button>
+      </md-card-actions>
   </md-card>
 
   <md-divider></md-divider>
@@ -47,10 +75,11 @@
                 maxlength="500"
                 name="Question text">
       </textarea>
-      <span>character count: {{characterCount}}</span>
+      <span class="grey-text">{{characterCountMessage}}</span>
     </span>
     <div>
-      <button id="submit-answer-button" md-raised-button class="mat-primary" [class.white-text]="canAnswer" (click)="onClickSubmitAnswer($event)" [disabled]="!canAnswer">Submit Answer</button>      
+      <button id="submit-answer-button" md-raised-button class="mat-primary" [class.white-text]="canAnswer" (click)="onClickSubmitAnswer($event)" [disabled]="!canAnswer">Submit Answer</button>
+      <p class="md-margin">Answers must be a minimum of 25 characters.</p>
     </div>
   </div>
 </div>

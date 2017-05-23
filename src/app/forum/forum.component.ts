@@ -82,24 +82,23 @@ export class ForumComponent implements OnInit, AfterViewInit {
     this.router.navigate(['forum', entryId]);
   }
 
-  onClickAskQuestion() {
+  showHideAskQuestionButton() {
     let state = this.questionDialogState;
     this.questionDialogState = state === "inactive" ? "active" : "inactive";
   }
 
-  onClickPostQuestionHandler(question: { title: string, content: string }) {
-    let entry = Entry.initFromObject({
+  onClickSubmitQuestionHandler(question: { title: string, content: string }) {
+    
+    this.forumService.createEntry({
       owner: this.userService.user.uuid,
       title: question.title,
       content: question.content,
       parent: null
-    });
-    
-    this.forumService.createEntry(entry)
-      .subscribe(
-        entry => console.log(entry),
-        error => console.log(error)
-      );
+    })
+    .subscribe(
+      entry => console.log(entry),
+      error => console.log(error)
+    );
   }
 
   private handleError(error: Response | any) {

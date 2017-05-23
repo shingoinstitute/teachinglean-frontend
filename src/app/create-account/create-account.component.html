@@ -3,10 +3,13 @@
 
   <md-card class="md-padding">
     <p class="flow-text text-center"><b>Sign Up</b></p>
-      <md-divider style="height:16px;"></md-divider>
-      <a href="https://teachinglean.org/auth/linkedin">
-        <img src="/assets/images/logos/lkin-login-form-btn.png">
-      </a>
+    <p class="red-text" *ngIf="errorMsg">{{errorMsg}}</p>
+    <md-divider style="height:16px;"></md-divider>
+
+    <a href="https://teachinglean.org/auth/linkedin">
+      <img src="/assets/images/logos/lkin-login-form-btn.png">
+    </a>
+
     <p class="flow-text text-center"></p>
 
     <md-divider style="height:16px;"></md-divider>

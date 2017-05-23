@@ -5,7 +5,8 @@ import {
   AfterViewInit,
   OnDestroy,
   Output,
-  Input
+  Input,
+  NgZone
 } from '@angular/core';
 
 import { UserService } from '../services/user.service';
@@ -19,12 +20,13 @@ import { AppRoutingService } from '../services/app-routing.service';
 })
 export class AskQuestionComponent implements OnInit, AfterViewInit, OnDestroy {
 
-  @Output() onClickPostQuestion = new EventEmitter<any>();
+  @Output() submitQuestion = new EventEmitter<any>();
 
   private editor;
   private title: any;
+  content: string;
   
-  constructor(private userService: UserService, private appRouter: AppRoutingService) {
+  constructor(private userService: UserService, private appRouter: AppRoutingService, private zone: NgZone) {
     // TODO :: Implement appRouter to redirect user to login page then back to Q&A Forum after sign in
   }
 
@@ -45,6 +47,11 @@ export class AskQuestionComponent implements OnInit, AfterViewInit, OnDestroy {
       skin_url: '../assets/skins/lightgray',
       setup: editor => {
         this.editor = editor;
+        editor.on('keyup', () => {
+          this.zone.run(() => {
+            this.content = this.editor.getContent();
+          });
+        })
       },
     });
   }
@@ -53,6 +60,12 @@ export class AskQuestionComponent implements OnInit, AfterViewInit, OnDestroy {
     tinymce.remove(this.editor);
   }
 
+  onClickSubmitQuestion(e) {
+    this.submitQuestion.emit({
+      content: this.content,
+      title: this.title
+    });
+  }
   
 
 }

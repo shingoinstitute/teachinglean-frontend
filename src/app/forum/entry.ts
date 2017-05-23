@@ -1,10 +1,15 @@
-// import { UserService } from '../services/user.service';
+import { UserService } from '../services/user.service';
+import { Http } from '@angular/http';
 
 import { User } from '../user/user';
 
 export class Entry {
 
-  owner: User | string;
+  get owner(): User {
+    return this._owner === null ? User.initFromObject({uuid: this._ownerId}) : this._owner;
+  }
+  _owner: User;
+  _ownerId: string;
   id: string;
   parent: string;
   title: string;
@@ -15,6 +20,8 @@ export class Entry {
   usersDidUpvote: string[];
   usersDidDownvote: string[];
   comments: string[];
+  createdAt: Date;
+  updatedAt: Date;
 
   constructor() { }
 
@@ -32,15 +39,22 @@ export class Entry {
     entry.isFlagged = obj.isFlagged || false;
     entry.markedCorrect = obj.markedCorrect || false;
     entry.parent = obj.parent || null;
+
     if (obj.owner && obj.owner.uuid) {
-      entry.owner = obj.owner.uuid;
-    } else if (obj.owner instanceof String) {
-      entry.owner = obj.owner;
+      entry._owner = User.initFromObject(obj.owner);
+      entry._ownerId = obj.owner.uuid;
+    } else if (typeof obj.owner === 'string') {
+      entry._ownerId = obj.owner;
     } else {
-      entry.owner = null;
+      entry._ownerId = entry._owner = null;
     }
+
     entry.usersDidDownvote = obj.users_did_downvote || [];
     entry.usersDidUpvote = obj.users_did_upvote || [];
+
+    entry.createdAt = obj.createdAt ? new Date(obj.createdAt) : new Date();
+    entry.updatedAt = obj.updatedAt ? new Date(obj.updatedAt) : null;
+
     return entry;
   }
 

@@ -20,32 +20,32 @@ export class ForumService {
 
   requestUserQuestions(uuid): Observable<Entry[]> {
     let url = this.baseUrl + '/entry?where={"owner": "' + uuid + '","parent":null}&populate=owner';
-    return this.requestHandler(url);
+    return this.getRequestHandler(url);
   }
 
   requestUserAnswers(uuid): Observable<Entry[]> {
     let url = this.baseUrl + '/entry?where={"owner":"' + uuid + '","parent": {"!":null}}&populate=owner';
-    return this.requestHandler(url);
+    return this.getRequestHandler(url);
   }
 
   requestUserComments(uuid): Observable<Entry[]> {
     let url = this.baseUrl + '/comment?where={"owner":"' + uuid + '"}&populate=owner,parent';
-    return this.requestHandler(url);
+    return this.getRequestHandler(url);
   }
 
   requestQuestions(): Observable<Entry[]> {
     let url = this.baseUrl + '/entry?where={"parent":null}&populate=owner,parent';
-    return this.requestHandler(url);
+    return this.getRequestHandler(url);
   }
 
   requestAnswers(): Observable<Entry[]> {
     let url = this.baseUrl + '/entry?where={"parent": {"!":null}}&populate=owner,parent';
-    return this.requestHandler(url);
+    return this.getRequestHandler(url);
   }
 
   requestComments(): Observable<Entry[]> {
     let url = this.baseUrl + '/comment?populate=owner,parent';
-    return this.requestHandler(url);
+    return this.getRequestHandler(url);
   }
 
   requestRecent(limit, userId) {
@@ -57,17 +57,17 @@ export class ForumService {
       owner: userId,
     };
     let url = this.baseUrl + '/entry?where=' + JSON.stringify(params) + (limit ? '&limit=' + limit : '');
-    return this.requestHandler(url);
+    return this.getRequestHandler(url);
   }
 
   requestAll(): Observable<any> {
     let url = this.baseUrl + '/entry';
-    return this.requestHandler(url);
+    return this.getRequestHandler(url);
   }
 
   requestEntry(id: string) {
     let url = this.baseUrl + '/entry/' + id;
-    return this.requestHandler(url);
+    return this.getRequestHandler(url);
   }
 
   getEntry(id: string) {
@@ -92,8 +92,8 @@ export class ForumService {
     // });
   }
 
-  createEntry(entry: Entry) {
-    return this.http.post(this.baseUrl + '/entry', entry.toObject(), {
+  createEntry(entry: {content: any, owner: any, parent: any, title: any}) {
+    return this.http.post(this.baseUrl + '/entry', entry, {
       responseType: ResponseContentType.Json
     })
     .map(response => {
@@ -177,7 +177,17 @@ export class ForumService {
     // })
   }
 
-  private requestHandler(url) {
+  markIncorrect(entryId: string) {
+    return this.markCorrect(entryId, false);
+  }
+
+  markCorrect(entryId: string, isCorrect: boolean = true) {
+    return this.http.put(this.baseUrl + '/entry/' + entryId, {markedCorrect: isCorrect}, { responseType: ResponseContentType.Json })
+    .map(this.handleResponse)
+    .catch(this.handleError)
+  }
+
+  private getRequestHandler(url) {
     return this.http.get(url, { responseType: ResponseContentType.Json })
     .map(this.handleResponse)
     .catch(this.handleError);

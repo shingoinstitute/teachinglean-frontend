@@ -32,6 +32,7 @@ export class User implements UserInterface {
     }
 
     static initFromObject(obj: any) {
+
       let data = obj.user ? obj.user : obj;
 
       if (!data.uuid) {
@@ -41,10 +42,10 @@ export class User implements UserInterface {
       let user = new User();
 
       user.uuid = data.uuid;
-      user.firstname = data.firstname;
-      user.lastname = data.lastname;
-      user.email = data.email;
-      user.role = data.role;
+      user.firstname = data.firstname || "";
+      user.lastname = data.lastname || "";
+      user.email = data.email || "";
+      user.role = data.role || "member";
       user.pictureUrl = data.pictureUrl;
       user.reputation = data.reputation;
       user.accountIsActive = data.accountStatus;

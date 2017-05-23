@@ -36,12 +36,12 @@
 
   <div fxFlexOrder.lt-md="1" fxLayout="column" class="md-margin" *ngIf="questionFormEnabled">
     <div>
-      <button md-raised-button class="mat-accent" (click)="onClickAskQuestion()">Ask Question</button>
+      <button md-raised-button class="mat-accent" (click)="showHideAskQuestionButton()">Ask Question</button>
     </div>
 
 
     <div [@shrinkGrow]="questionDialogState">
-      <ask-question (onClickPostQuestion)="onClickPostQuestionHandler($event)"></ask-question>
+      <ask-question (submitQuestion)="onClickSubmitQuestionHandler($event)"></ask-question>
     </div>
 
 

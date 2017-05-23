@@ -282,14 +282,21 @@ input:focus {
   font-weight: bold;
 }
 
+.text-xs {
+  font-size: 8pt;
+}
+
+.text-sm,
 .fs-12pt {
   font-size: 12pt;
 }
 
+.text-md,
 .fs-14pt {
   font-size: 14pt;
 }
 
+.text-lg,
 .fs-16pt {
   font-size: 16pt;
 }
