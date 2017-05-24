@@ -24,6 +24,8 @@ import { ForumDetailDirective } from './directives/forum-detail.directive';
 import { ForumListItemComponent } from './forum-list-item/forum-list-item.component';
 import { AskQuestionComponent } from './ask-question/ask-question.component';
 import { CreateAccountComponent } from './create-account/create-account.component';
+import { SidenavService } from './services/sidenav.service';
+import { EntryComponent } from './entry/entry.component';
 
 @NgModule({
   imports: [
@@ -49,11 +51,13 @@ import { CreateAccountComponent } from './create-account/create-account.componen
     ForumDetailDirective,
     ForumListItemComponent,
     AskQuestionComponent,
-    CreateAccountComponent
+    CreateAccountComponent,
+    EntryComponent
   ],
   providers: [
     CookieService,
-    ForumService
+    ForumService,
+    SidenavService
   ],
   bootstrap: [AppComponent]
 })

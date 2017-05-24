@@ -15,7 +15,7 @@ import { Router } from '@angular/router';
 import { Observable } from 'rxjs/Observable';
 
 import { UserService } from '../services/user.service';
-import { Entry } from "./entry";
+import { Entry } from "../entry/entry";
 
 @Component({
   selector: 'app-forum',

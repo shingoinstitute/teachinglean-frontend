@@ -13,7 +13,7 @@ import { Subscription } from 'rxjs/Subscription';
 
 import {ForumService} from '../services/forum.service';
 import {UserService} from '../services/user.service';
-import { Entry } from '../forum/entry';
+import { Entry } from '../entry/entry';
 import { User } from '../user/user';
 
 @Component({

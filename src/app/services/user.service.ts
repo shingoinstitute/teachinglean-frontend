@@ -52,8 +52,9 @@ export class UserService {
     return this.http.get(this.baseApiUrl + '/me')
     .toPromise()
     .then(res => {
+      this._user = User.initFromObject(res.json());
       this.userStatusChangeListenerSource.next(this._user);
-      return res.json(); 
+      return this._user; 
     })
     .catch(this.handleError);
   }

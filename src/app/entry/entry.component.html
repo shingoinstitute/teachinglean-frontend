@@ -1,0 +1,5 @@
+<md-card>
+	<md-card-title>{{entry.title}}</md-card-title>
+	<md-card-subtitle>{{entry.owner ? entry.owner.name : "" }}</md-card-subtitle>
+	<md-card-content [innerHTML]="entry.content"></md-card-content>
+</md-card>

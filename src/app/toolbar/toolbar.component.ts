@@ -10,6 +10,7 @@ import { DomSanitizer } from '@angular/platform-browser';
 import { Subscription } from 'rxjs/Subscription';
 
 import { UserService } from '../services/user.service';
+import { SidenavService } from '../services/sidenav.service';
 
 @Component({
   selector: 'app-toolbar',
@@ -24,7 +25,8 @@ export class ToolbarComponent implements OnDestroy {
 
   constructor(
     private userService: UserService,
-    private router: Router) {
+    private router: Router,
+    private sidenav: SidenavService) {
     this.userSubscription = userService.userStatusChangeNotifier$.subscribe(
       userIsAuthenticated => {
         this.userDoesExist = userIsAuthenticated;
@@ -43,6 +45,10 @@ export class ToolbarComponent implements OnDestroy {
   @HostListener('window:resize', ['$event'])
   resize(event) {
     this.windowWidth = window.innerWidth;
+  }
+
+  toggleSidenav() {
+    this.sidenav.sendToggleNotification();
   }
 
   onClickLogout() {

@@ -6,7 +6,7 @@ import 'rxjs/add/operator/map';
 import 'rxjs/add/operator/toPromise';
 
 import { Globals } from '../globals';
-import { Entry } from '../forum/entry';
+import { Entry } from '../entry/entry';
 
 @Injectable()
 export class ForumService {

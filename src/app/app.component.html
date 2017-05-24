@@ -4,7 +4,7 @@
 
     <app-toolbar></app-toolbar>
 
-    <md-sidenav #sidenav mode="side" [opened]="screenWidthGtSm()">
+    <md-sidenav #sidenav mode="{{sidenavMode}}" [opened]="windowWidth > 959">
         <md-nav-list>
             <img src="/assets/images/logos/LEAN-logo-sm.png" alt="Teaching LEAN">
             <md-list-item *ngFor="let link of links">
