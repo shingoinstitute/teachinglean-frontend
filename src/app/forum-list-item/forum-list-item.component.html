@@ -13,7 +13,7 @@
     <div fxLayout="column" fxLayoutAlign.gt-sm="end end">
       <span fxFlex.gt-sm></span>
       <div fxLayout="column" fxLayoutAlign="end end" class="entry-by">
-        <p class="grey-text text-xs">Asked by {{ entry.owner ? entry.owner.name : "" }} on {{ createdAt(entry) }}</p>
+        <p class="grey-text text-xs">Asked by {{ entry.owner ? entry.owner.email : "" }} on {{ createdAt(entry) }}</p>
         <img src="https://i.stack.imgur.com/Zl4Gr.jpg?s=64&g=1">
       </div>
     </div>
@@ -52,7 +52,7 @@
         <span fxFlex.gt-sm></span>
 
         <div fxFlex.gm-sm fxLayout="column" fxLayoutAlign="end end" class="entry-by">
-          <p class="grey-text text-xs">Answered by {{ answer.owner ? answer.owner.name : "" }} on {{ createdAt(answer) }}</p>
+          <p class="grey-text text-xs">Answered by {{ answer.owner ? answer.owner.email : "" }} on {{ createdAt(answer) }}</p>
           <img src="{{answer.owner ? answer.owner.pictureUrl : ''}}" 
                 alt="https://res.cloudinary.com/shingo/image/upload/v1414874243/silhouette_vzugec.png" />
         </div>

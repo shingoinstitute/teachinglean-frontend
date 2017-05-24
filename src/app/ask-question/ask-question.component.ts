@@ -34,6 +34,7 @@ export class AskQuestionComponent implements OnInit, AfterViewInit, OnDestroy {
   }
 
   ngAfterViewInit() {
+    tinymce.remove(this.editor);
     tinymce.init({
       selector: 'textarea',
       plugins: [

@@ -14,13 +14,14 @@ import { Subscription } from 'rxjs/Subscription';
 import {ForumService} from '../services/forum.service';
 import {UserService} from '../services/user.service';
 import { Entry } from '../forum/entry';
+import { User } from '../user/user';
 
 @Component({
   selector: 'forum-list-item',
   templateUrl: './forum-list-item.component.html',
   styleUrls: ['./forum-list-item.component.css']
 })
-export class ForumListItemComponent implements OnDestroy, AfterViewInit {
+export class ForumListItemComponent implements AfterViewInit {
 
   @Output() onEditorKeyup = new EventEmitter();
   entry = new Entry();
@@ -36,6 +37,8 @@ export class ForumListItemComponent implements OnDestroy, AfterViewInit {
 
   constructor(private forumService: ForumService, private route: ActivatedRoute, userService: UserService, private zone: NgZone) {
 
+    userService.pokeUserAsync();
+
     this.listenForUser = userService.userStatusChangeNotifier$.subscribe(
       hasUser => {
         this.canComment = hasUser;
@@ -43,8 +46,14 @@ export class ForumListItemComponent implements OnDestroy, AfterViewInit {
       }
     );
 
-    route.params.subscribe((params: Params) => {
-      forumService.getEntry(params['id'])
+    this.loadData();
+
+  }
+
+  loadData() {
+    console.log('fetching data...');
+    this.route.params.subscribe((params: Params) => {
+      this.forumService.getEntry(params['id'])
       .subscribe(
         data => {
           this.entry = Entry.initFromObject(data);
@@ -59,13 +68,10 @@ export class ForumListItemComponent implements OnDestroy, AfterViewInit {
     });
   }
 
-  ngOnDestroy() {
-    this.listenForUser.unsubscribe();
-  }
-
   ngAfterViewInit() {
+    tinymce.remove();
     tinymce.init({
-      selector: 'textarea',
+      selector: '#question-textarea',
       plugins: [
         'advlist autolink lists link charmap print preview anchor',
         'searchreplace visualblocks code fullscreen',
@@ -87,7 +93,7 @@ export class ForumListItemComponent implements OnDestroy, AfterViewInit {
             // A user can submit an answer if their anwer is at least 25 characters in length
             // and they are logged in. If `this.canComment` is true, then we know a user is
             // logged in without needing to check again using the UserService.
-            this.canAnswer = characterCount > 25 && this.canComment;
+            this.canAnswer = characterCount > 5 && this.canComment;
           })
         });
       },
@@ -112,29 +118,27 @@ export class ForumListItemComponent implements OnDestroy, AfterViewInit {
 
   loadAnswers() {
     this.zone.runOutsideAngular(() => {
-      for (let i in this.answers) {
-        if (this.answers[i]._ownerId == null) throw new Error('entry has no "_ownerId"');
-
-        // Detailed info for `this.answers` has not been provided at this point.
-        // We can get this information by invoking `this.forumService.getEntry()` 
-        // on each element of `this.answers`.
-        this.forumService.getEntry(this.answers[i].id)
+      // Detailed info for `this.answers` has not been provided at this point.
+      // We can get this information by invoking `this.forumService.getEntry()` 
+      // on each element of `this.answers`.
+      this.answers.map(value => {
+        return this.forumService.getEntry(value.id)
         .subscribe(
           data => {
-            this.zone.run(() => {
-              this.answers[i] = Entry.initFromObject(data);
-              console.log('ANSWER: ', this.answers[i]);
+              let entry = Entry.initFromObject(data);
+              this.zone.run(() => {
               // The 'markedCorrect' attribute is fetched in this http request.
               // If an answer if marked correct, the answers array should be
               // re-sorted to reflect this new information.
-              if (this.answers[i].markedCorrect) {
+              if (entry.markedCorrect) {
                 this.sortAnswers();
               }
+              return entry;
             });
           },
           err => console.error(err)
         );
-      }
+      });
     });
   }
 
@@ -146,10 +150,14 @@ export class ForumListItemComponent implements OnDestroy, AfterViewInit {
       owner: this.currentUserId,
       title: null
     };
-    
+
+    this.editor.setContent('');
+
     this.forumService.createEntry(answer)
     .subscribe(
-      data => console.log(data),
+      data => {
+        this.loadData();
+      },
       error => console.error(error)
     );
   }

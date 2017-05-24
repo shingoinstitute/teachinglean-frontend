@@ -9,22 +9,20 @@
       <input mdInput placeholder="Search...">
     </md-input-container>
 
-    <md-tab-group [dynamicHeight]="true" [selectedIndex]="1">
+    <md-tab-group [dynamicHeight]="true" [selectedIndex]="0">
       <md-tab label="Top Questions">
-        <ul>
-          <li [(ngModel)]="recentQuestions" *ngFor="let question of topResults">
+        <ul class="entry-list-wrapper">
+          <li *ngFor="let question of topResults">
             <a class="flow-text" [innerHTML]="question.title" routerLink="/forum/{{ question.id }}"></a>
             <div [innerHTML]="question.content"></div>
-            <md-divider></md-divider>
           </li>
         </ul>
       </md-tab>
       <md-tab label="Recent Questions">
-        <ul>
+        <ul class="entry-list-wrapper">
           <li *ngFor="let question of recentQuestions">
             <a class="flow-text" [innerHTML]="question.title" routerLink="/forum/{{ question.id }}"></a>
             <div [innerHTML]="question.content"></div>
-            <md-divider></md-divider>
           </li>
         </ul>
       </md-tab>
@@ -35,16 +33,7 @@
   </div>
 
   <div fxFlexOrder.lt-md="1" fxLayout="column" class="md-margin" *ngIf="questionFormEnabled">
-    <div>
-      <button md-raised-button class="mat-accent" (click)="showHideAskQuestionButton()">Ask Question</button>
-    </div>
-
-
-    <div [@shrinkGrow]="questionDialogState">
-      <ask-question (submitQuestion)="onClickSubmitQuestionHandler($event)"></ask-question>
-    </div>
-
-
+    <ask-question (submitQuestion)="onClickSubmitQuestionHandler($event)"></ask-question>
   </div>
 
 

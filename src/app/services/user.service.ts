@@ -45,6 +45,19 @@ export class UserService {
     this.baseApiUrl = Globals.baseApiUrl;
   }
 
+  // Pokes the server for a user.
+  // You   : *pokes server*
+  // Server: "Hey!"
+  pokeUserAsync(): Promise<any> {
+    return this.http.get(this.baseApiUrl + '/me')
+    .toPromise()
+    .then(res => {
+      this.userStatusChangeListenerSource.next(this._user);
+      return res.json(); 
+    })
+    .catch(this.handleError);
+  }
+
   getUser() {
     let observable = this.http.get(this.baseApiUrl + '/me')
       .map((res) => {

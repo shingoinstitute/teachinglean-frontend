@@ -60,22 +60,23 @@ export class ForumComponent implements OnInit, AfterViewInit {
   }
 
   ngOnInit() {
-    this.forumService.requestAll().subscribe(
-      data => { this.onLoadRecentComplete(data) },
+    this.forumService.requestAllQuestions().subscribe(
+      data => { 
+        this.recentQuestions = data.map(Entry.initFromObject); 
+      },
       err => { console.log(err); }
     );
+
+    this.forumService.requestTopQuestions()
+    .subscribe(
+      data => {
+        this.topResults = data.map(Entry.initFromObject);
+      },
+      err => { console.error(err); }
+    )
   }
 
   ngAfterViewInit() {
-  }
-
-  onLoadRecentComplete(data) {
-    // TODO :: Rewrite function to return recent questions instead of ALL questions; Get rid of http service.
-    let entries: Entry[] = [];
-    for (let element of data) {
-      entries.push(Entry.initFromObject(element));
-    }
-    this.recentQuestions = entries;
   }
 
   navigateToEntry(entryId: string) {

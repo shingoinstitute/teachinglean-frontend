@@ -2,7 +2,7 @@
 <div fxLayout class="container">
 
   <form fxLayout="column" id="ask-question-form" class="input-container">
-
+    <p class="flow-text">Have a question? Ask the community right here.</p>
     <div fxLayout class="input-wrapper">
       <p>Title</p>
       <input fxFlex 
@@ -24,10 +24,8 @@
     <span style="margin-top: 24px;"></span>
 
     <div>
-      <button md-raised-button class="mat-primary" (click)="onClickSubmitQuestion($event)">Submit Question</button>
+      <button md-raised-button class="mat-accent" (click)="onClickSubmitQuestion($event)">Submit Question</button>
     </div>
-
-    <span style="margin-bottom: 100px;"></span>
 
   </form>
 

@@ -3,6 +3,7 @@ import { Http, Response, ResponseContentType } from '@angular/http';
 import { Observable } from "rxjs/Observable";
 import 'rxjs/add/operator/catch';
 import 'rxjs/add/operator/map';
+import 'rxjs/add/operator/toPromise';
 
 import { Globals } from '../globals';
 import { Entry } from '../forum/entry';
@@ -60,8 +61,16 @@ export class ForumService {
     return this.getRequestHandler(url);
   }
 
-  requestAll(): Observable<any> {
-    let url = this.baseUrl + '/entry';
+  requestAllQuestions(): Observable<any> {
+    let params = {
+      parent: null
+    };
+    let url = this.baseUrl + '/entry?where=' + JSON.stringify(params) + '&limit=10';
+    return this.getRequestHandler(url);
+  }
+
+  requestTopQuestions(): Observable<any> {
+    let url = this.baseUrl + '/entry/topResults';
     return this.getRequestHandler(url);
   }
 
