@@ -25,12 +25,3 @@ md-input-container {
   border: none
 }
 
-.entry-list-wrapper li {
-  margin-top: 8px;
-  min-height: 100px;
-  border-bottom: 1px solid grey;
-}
-
-.entry-list-wrapper p {
-  word-break: break-all;
-}

@@ -85,6 +85,14 @@ export class ForumService {
       .catch(this.handleError);
   }
 
+  getEntryParent(id: string) {
+    return this.http.get(this.baseUrl + '/entry/' + id + '?populate=parent')
+    .map(res => {
+      let data = res.json();
+      return data;
+    });
+  }
+
   readEntry(id) {
     // return $http({
     //   method: 'get',

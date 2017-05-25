@@ -9,40 +9,16 @@
       <div>
         <md-tab-group [dynamicHeight]="true" [selectedIndex]="0">
           <md-tab label="My Recent Activity">
-            <div style="h>
-              <md-list>
-                <md-list-item *ngFor="let entry of recent">
-                  <entry [entry]="entry"></entry>
-                </md-list-item>
-              </md-list>
-            </div>
+            <entries [entries]="recent" [type]="recent"></entries>
           </md-tab>
           <md-tab label="My Questions" (click)="loadQuestions()">
-            <div class="md-padding">
-              <md-list>
-                <md-list-item *ngFor="let entry of questions">
-                  <entry [entry]="entry"></entry>
-                </md-list-item>
-              </md-list>
-            </div>
+            <entries [entries]="questions" type="question"></entries>
           </md-tab>
           <md-tab label="My Answers" (click)="loadAnswers()">
-            <div class="md-padding">
-              <md-list>
-                <md-list-item *ngFor="let entry of answers">
-                  <entry [entry]="entry"></entry>
-                </md-list-item>
-              </md-list>
-            </div>
+            <entries [entries]="answers" type="answer"></entries>
           </md-tab>
           <md-tab label="My Comments" (click)="loadComments()">
-            <div class="md-padding">
-              <md-list>
-                <md-list-item *ngFor="let entry of comments">
-                  <entry [entry]="entry"></entry>
-                </md-list-item>
-              </md-list>
-            </div>
+            <entries [entries]="comments"  type="comment"></entries>
           </md-tab>
         </md-tab-group>
         <!--<profile user="mc.user"></profile>-->
