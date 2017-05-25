@@ -37,7 +37,7 @@ export class ForumListItemComponent implements AfterViewInit {
 
   constructor(private forumService: ForumService, private route: ActivatedRoute, userService: UserService, private zone: NgZone) {
 
-    userService.pokeUserAsync();
+    userService.getUserAsync();
 
     this.listenForUser = userService.userStatusChangeNotifier$.subscribe(
       hasUser => {

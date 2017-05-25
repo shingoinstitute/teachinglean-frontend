@@ -1,0 +1,10 @@
+table.user-admin-wrapper {
+	margin: 8px;
+}
+
+th.user-admin-header {
+	padding: 8px 4px;
+}
+tr.user-admin-item {
+	padding: 4px 4px;
+}

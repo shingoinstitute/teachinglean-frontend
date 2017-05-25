@@ -1,0 +1,38 @@
+<table class="user-admin-wrapper">
+  <tr class="user-admin-header">
+    <th>Name</th>
+    <th>Email</th>
+    <th>Last Login</th>
+    <th>Role</th>
+    <th>Status</th>
+  </tr>
+  <tr class="user-admin-item" *ngFor="let user of users">
+    <td role="name">
+      {{ user.name }}
+    </td>
+
+    <td role="email address">
+      {{ user.email }}
+    </td>
+
+    <td role="last login">
+      {{ getLastLogin(user) }}
+    </td>
+
+    <td role="role">
+      <md-select placeholder="{{ parseRole(user) }}" (change)="updateUser(user)" [(ngModel)]="user.role">
+        <md-option *ngFor="let role of roles" [value]="role.value">{{ role.viewValue }}</md-option>
+      </md-select>
+    </td>
+
+    <td role="account status">
+      <button md-button 
+      class="mat-accent" 
+      (click)="onClickStatus(user)"
+      [disabled]="user.isAdmin">
+        {{ user.accountIsActive ? "Active" : "Disabled" }}
+      </button>
+    </td>
+
+  </tr>
+</table>

@@ -45,16 +45,23 @@ export class UserService {
     this.baseApiUrl = Globals.baseApiUrl;
   }
 
-  // Pokes the server for a user.
-  // You   : *pokes server*
-  // Server: "Hey!"
-  pokeUserAsync(): Promise<any> {
+  getUserAsync(): Promise<any> {
     return this.http.get(this.baseApiUrl + '/me')
     .toPromise()
     .then(res => {
       this._user = User.initFromObject(res.json());
       this.userStatusChangeListenerSource.next(this._user);
       return this._user; 
+    })
+    .catch(this.handleError);
+  }
+
+  getUsersAsync(): Promise<any> {
+    return this.http.get(this.baseApiUrl + '/user')
+    .toPromise()
+    .then(res => {
+      let data = res.json();
+      return data.map(User.initFromObject);
     })
     .catch(this.handleError);
   }
@@ -77,6 +84,16 @@ export class UserService {
         this.userStatusChangeListenerSource.next(null);
       }
     );
+  }
+
+  updateUser(user: User) {
+    return this.http.put(this.baseApiUrl + '/user/' + user.uuid, user.toObject())
+    .toPromise()
+    .then(res => {
+      let data = res.json();
+      return data.map(User.initFromObject)
+    })
+    .catch(this.handleError);
   }
 
   localLogin(username, password) {

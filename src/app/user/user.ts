@@ -48,12 +48,25 @@ export class User implements UserInterface {
       user.role = data.role || "member";
       user.pictureUrl = data.pictureUrl;
       user.reputation = data.reputation;
-      user.accountIsActive = data.accountStatus;
+      user.accountIsActive = data.accountIsActive;
       user.createdAt = Date.parse(data.createdAt);
       user.updatedAt = Date.parse(data.updatedAt);
       user.lastLogin = Date.parse(data.lastLogin);
 
       return user;
+    }
+
+    toObject() {
+      return {
+        uuid: this.uuid,
+        firstname: this.firstname,
+        lastname: this.lastname,
+        email: this.email,
+        role: this.role,
+        pictureUrl: this.pictureUrl,
+        reputation: this.reputation,
+        accountIsActive: this.accountIsActive
+      }
     }
 
 }

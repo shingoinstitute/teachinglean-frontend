@@ -26,6 +26,9 @@ import { AskQuestionComponent } from './ask-question/ask-question.component';
 import { CreateAccountComponent } from './create-account/create-account.component';
 import { SidenavService } from './services/sidenav.service';
 import { EntryComponent } from './entry/entry.component';
+import { AdminPanelComponent } from './admin-panel/admin-panel.component';
+import { DisableUserDialog } from './admin-panel/disable-user.dialog';
+import { ModeratorComponent } from './moderator/moderator.component';
 
 @NgModule({
   imports: [
@@ -52,8 +55,12 @@ import { EntryComponent } from './entry/entry.component';
     ForumListItemComponent,
     AskQuestionComponent,
     CreateAccountComponent,
-    EntryComponent
+    EntryComponent,
+    AdminPanelComponent,
+    ModeratorComponent,
+    DisableUserDialog
   ],
+  entryComponents: [DisableUserDialog],
   providers: [
     CookieService,
     ForumService,

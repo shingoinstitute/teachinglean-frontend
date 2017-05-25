@@ -4,7 +4,7 @@
     <md-spinner></md-spinner>
   </div>
 
-  <md-tab-group [dynamicHeight]="true" [selectedIndex]="0" *ngIf="user">
+  <md-tab-group [dynamicHeight]="true" [selectedIndex]="1" *ngIf="user">
     <md-tab label="Dashboard">
       <div>
         <md-tab-group [dynamicHeight]="true" [selectedIndex]="0">
@@ -27,7 +27,7 @@
 
 
     <md-tab *ngIf="user.isAdmin === true" label="Admin">
-      <!--<admin ctrl="vm"></admin>-->
+      <admin-panel></admin-panel>
     </md-tab>
 
 

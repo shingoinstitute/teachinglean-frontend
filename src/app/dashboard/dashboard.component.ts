@@ -35,7 +35,7 @@ export class DashboardComponent implements OnInit, AfterViewInit {
 
   ngAfterViewInit() {
     if (!this.user) {
-      this.userService.pokeUserAsync()
+      this.userService.getUserAsync()
       .then(user => this.onLoadUser(user))
       .catch(this.onError);
     } else {
