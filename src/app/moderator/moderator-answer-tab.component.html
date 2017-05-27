@@ -1,0 +1,8 @@
+<ul class="md-margin">
+	<li *ngFor="let answer of answers">
+		<p><b>Question:</b> <a routerLink="/forum/{{ answer.parent.id }}" class="text-sm">{{ answer.parent.title }}</a></p>
+		<p><b>Author:</b> {{ answer.parent.owner }}</p>
+		<p><b>Content:</b></p>
+		<div class="answer-content-wrapper" [innerHTML]="answer.content"></div>
+	</li>
+</ul>

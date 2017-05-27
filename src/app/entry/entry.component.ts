@@ -51,15 +51,9 @@ export class EntryComponent implements OnChanges {
 		} else {
 			desc = "You asked this question on ";
 		}
-		return desc + this.formatDate(entry);
+		return desc + entry.createdAtToString();
 	}
 
-	// Formats date to 'MMM dd, yyyy, hh:mm a'
-	formatDate(entry: Entry) {
-		if (entry.createdAt) {
-			return `${entry.createdAt.toLocaleDateString([], {month: "short", day: "numeric", year: "numeric"})}, ${entry.createdAt.toLocaleTimeString([], {"hour": "2-digit", "minute": "2-digit", "hour12": true})}`;
-		}
-		return "n/a";
-	}
+	
 
 }

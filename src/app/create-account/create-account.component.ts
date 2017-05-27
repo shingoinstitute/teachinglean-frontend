@@ -26,7 +26,12 @@ export class CreateAccountComponent implements OnInit {
 
   onClickSignup() {
     if (this.password === this.confirmPassword) {
-      this.userService.signUp(this.user, this.password)
+      let user = {
+        firstname: this.user.firstname,
+        lastname: this.user.lastname,
+        email: this.user.email
+      }
+      this.userService.create(user, this.password)
         .subscribe(
           result => {
             this.router.navigate(['dashboard']);

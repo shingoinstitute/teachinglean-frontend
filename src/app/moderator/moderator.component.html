@@ -1,3 +1,87 @@
-<p>
-  moderator works!
-</p>
+
+
+<md-tab-group fxFlex [dynamicHeight]="true" (selectChange)="loadDataForTab($event)">
+  <md-tab label="Users">
+    <div fxLayout>
+
+
+      <ul class="md-margin" [style.width]="windowWidth > 960 ? '275px' : 'auto'">
+        <li *ngFor="let user of users">
+          <span class="is-action" (click)="onClickUser(user)">{{ user.lastname }}, {{ user.firstname }}</span>
+        </li>
+      </ul>
+
+      
+      <div fxLayout="column"
+      fxFlex
+      class="md-margin"
+      id="user-detail"
+      [(ngModel)]="selectedUser" 
+      name="selectedUser" 
+      *ngIf="selectedUser" 
+      [@fadeInOut]="elementState"
+      (@fadeInOut.done)="animationDone($event)"
+      ngDefaultControl>
+        
+        <table>
+          <tr>
+            <td class="field-name"><b>Name</b></td>
+            <td>{{selectedUser.name}}</td>
+
+            <td class="field-name"><b>Email</b></td>
+            <td>{{selectedUser.email}}</td>
+          </tr>
+
+          <tr>
+            <td class="field-name"><b>Username</b></td>
+            <td>{{selectedUser.username}}</td>
+
+            <td class="field-name"><b>Role</b></td>
+            <td>{{selectedUser.role}}</td>
+          </tr>
+
+          <tr>
+            <td class="field-name"><b>Status</b></td>
+            <td *ngIf="selectedUser.accountIsActive"><div class="circle-active" id="circle"></div></td>
+            <td *ngIf="!selectedUser.accountIsActive"><div class="circle-disabled" id="circle"></div></td>
+          </tr>
+        </table>
+
+        <md-tab-group [dynamicHeight]="true">
+          <md-tab label="Questions ({{ selectedUserQuestions.length }})">
+            <p class="grey-text text-center md-margin" *ngIf="selectedUserQuestions.length === 0">No Activity.</p>
+            <moderator-question-tab [questions]="selectedUserQuestions"></moderator-question-tab>
+          </md-tab>
+          <md-tab label="Answers ({{ selectedUserAnswers.length }})">
+            <p class="grey-text text-center md-margin" *ngIf="selectedUserAnswers.length === 0">No Activity.</p>
+            <moderator-answer-tab [answers]="selectedUserAnswers"></moderator-answer-tab>
+          </md-tab>
+          <md-tab label="Comments ({{ selectedUserComments.length }})">
+            <p class="grey-text text-center md-margin" *ngIf="selectedUserComments.length === 0">No Activity.</p>
+            <moderator-comment-tab [comments]="selectedUserComments"></moderator-comment-tab>
+          </md-tab>
+
+
+        </md-tab-group>
+
+      </div>
+
+
+    </div>
+  </md-tab>
+
+  <md-tab label="Questions">
+    <moderator-question-tab [questions]="questions"></moderator-question-tab>
+  </md-tab>
+
+  <md-tab label="Answers">
+    <moderator-answer-tab [answers]="answers"></moderator-answer-tab>
+  </md-tab>
+
+  <md-tab label="Comments">
+    <moderator-comment-tab [comments]="comments"></moderator-comment-tab>
+  </md-tab>
+</md-tab-group>
+
+
+

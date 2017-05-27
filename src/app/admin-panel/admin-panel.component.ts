@@ -39,13 +39,6 @@ export class AdminPanelComponent implements OnInit {
   ngOnInit() {
   }
 
-  getLastLogin(user: User) {
-    if (user.lastLogin) {
-      let lastLogin = new Date(user.lastLogin);
-      return `${lastLogin.toLocaleDateString([], {month: "short", day: "numeric", year: "numeric"})}, ${lastLogin.toLocaleTimeString([], {"hour": "2-digit", "minute": "2-digit", "hour12": true})}`;
-    }
-  }
-
   updateUser(user: User) {
     this.userService.updateUser(user)
     .then((user: User) => {

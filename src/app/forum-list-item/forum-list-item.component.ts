@@ -21,44 +21,40 @@ import { User } from '../user/user';
   templateUrl: './forum-list-item.component.html',
   styleUrls: ['./forum-list-item.component.css']
 })
-export class ForumListItemComponent implements AfterViewInit {
+export class ForumListItemComponent implements AfterViewInit, OnDestroy {
 
   @Output() onEditorKeyup = new EventEmitter();
-  entry = new Entry();
+  editor;
   currentUserId;
-  observable: Observable<any>;
   canComment;
   canAnswer;
+
+  entry = new Entry();
   didMarkAnswerCorrect = false;
-  editor;
   answers: Entry[] = [];
-  listenForUser: Subscription;
-  characterCountMessage = "Enter 25 characters";
+  
+  characterCountMessage = "Enter 15 characters";
+  altUserPictureUrl = "https://res.cloudinary.com/shingo/image/upload/v1414874243/silhouette_vzugec.png";
 
   constructor(private forumService: ForumService, private route: ActivatedRoute, userService: UserService, private zone: NgZone) {
 
-    userService.getUserAsync();
-
-    this.listenForUser = userService.userStatusChangeNotifier$.subscribe(
-      hasUser => {
-        this.canComment = hasUser;
-        this.currentUserId = userService.user.uuid;
-      }
-    );
+    userService.getUserAsync()
+    .then(user => {
+      this.currentUserId = user.uuid;
+      this.canComment = true;
+    })
 
     this.loadData();
-
   }
 
   loadData() {
-    console.log('fetching data...');
     this.route.params.subscribe((params: Params) => {
       this.forumService.getEntry(params['id'])
       .subscribe(
         data => {
           this.entry = Entry.initFromObject(data);
           this.answers = ForumService.extractEntries(this.entry.answers); 
-
+          
           this.sortAnswers();
           this.loadAnswers();
           
@@ -66,6 +62,10 @@ export class ForumListItemComponent implements AfterViewInit {
         error => console.error(error)
       );
     });
+  }
+
+  ngOnDestroy() {
+    
   }
 
   ngAfterViewInit() {
@@ -88,7 +88,7 @@ export class ForumListItemComponent implements AfterViewInit {
           this.zone.run(() => {
             let characterCount = this.editor.getContent({format: 'text'}).length;
 
-            this.characterCountMessage = characterCount > 25 ? `${500 - characterCount} characters left` : `Enter ${25 - characterCount} more characters`;
+            this.characterCountMessage = characterCount > 15 ? `${500 - characterCount} characters left` : `Enter ${15 - characterCount} more characters`;
 
             // A user can submit an answer if their anwer is at least 25 characters in length
             // and they are logged in. If `this.canComment` is true, then we know a user is
@@ -117,28 +117,18 @@ export class ForumListItemComponent implements AfterViewInit {
   }
 
   loadAnswers() {
-    this.zone.runOutsideAngular(() => {
-      // Detailed info for `this.answers` has not been provided at this point.
-      // We can get this information by invoking `this.forumService.getEntry()` 
-      // on each element of `this.answers`.
-      this.answers.map(value => {
-        return this.forumService.getEntry(value.id)
-        .subscribe(
-          data => {
-              let entry = Entry.initFromObject(data);
-              this.zone.run(() => {
-              // The 'markedCorrect' attribute is fetched in this http request.
-              // If an answer if marked correct, the answers array should be
-              // re-sorted to reflect this new information.
-              if (entry.markedCorrect) {
-                this.sortAnswers();
-              }
-              return entry;
-            });
-          },
-          err => console.error(err)
-        );
-      });
+    // Detailed info for `this.answers` has not been provided at this point.
+    // We can get this information by invoking `this.forumService.getEntry()` 
+    // on each element of `this.answers`.
+    this.answers.forEach((e, i) => this.loadAnswer(e, i));
+  }
+
+  private loadAnswer(answer: Entry, atIndex: number) {
+    this.forumService.getEntry(answer.id).subscribe( data => {
+      this.answers[atIndex] = Entry.initFromObject(data);
+    },
+    err => {
+      console.error(err);
     });
   }
 
@@ -164,12 +154,6 @@ export class ForumListItemComponent implements AfterViewInit {
 
   keyupHandler(event) {
     console.log(event);
-  }
-
-  createdAt(answer: Entry) {
-    if (answer.createdAt) {
-      return `${answer.createdAt.toLocaleDateString([], {month: "short", day: "numeric", year: "numeric"})}, ${answer.createdAt.toLocaleTimeString([], {"hour": "2-digit", "minute": "2-digit", "hour12": true})}`;
-    }
   }
 
   markCorrect(answer: Entry) {

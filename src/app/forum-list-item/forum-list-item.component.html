@@ -1,6 +1,6 @@
 <div fxLayout="column" class="container" (onEditorKeyup)="keyupHandler($event)">
   
-  <md-card class="md-margin-top">
+  <md-card class="md-margin-top md-margin-bottom">
 
     <md-card-title [innerHTML]="entry.title"></md-card-title>    
 
@@ -13,14 +13,14 @@
     <div fxLayout="column" fxLayoutAlign.gt-sm="end end">
       <span fxFlex.gt-sm></span>
       <div fxLayout="column" fxLayoutAlign="end end" class="entry-by">
-        <p class="grey-text text-xs">Asked by {{ entry.owner ? entry.owner.email : "" }} on {{ createdAt(entry) }}</p>
-        <img src="https://i.stack.imgur.com/Zl4Gr.jpg?s=64&g=1">
+        <p class="grey-text text-xs">Asked {{ entry.owner ? "by " + entry.owner.username : "" }} on {{ entry.createdAtToString() }}</p>
+        <img src="{{ entry.owner ? entry.owner.pictureUrl : altUserPictureUrl }}">
       </div>
     </div>
 
     <md-divider></md-divider>
 
-    <div fxLayout>
+    <div fxLayout class="md-margin-top">
       <input fxFlex 
               [(ngModel)]="title"
               name="title"
@@ -37,7 +37,7 @@
 
   </md-card>
 
-  <div *ngIf="!answers">
+  <div *ngIf="answers.length === 0">
     <p>This question has not been answered yet.</p>
   </div>
 
@@ -52,9 +52,8 @@
         <span fxFlex.gt-sm></span>
 
         <div fxFlex.gm-sm fxLayout="column" fxLayoutAlign="end end" class="entry-by">
-          <p class="grey-text text-xs">Answered by {{ answer.owner ? answer.owner.email : "" }} on {{ createdAt(answer) }}</p>
-          <img src="{{answer.owner ? answer.owner.pictureUrl : ''}}" 
-                alt="https://res.cloudinary.com/shingo/image/upload/v1414874243/silhouette_vzugec.png" />
+          <p class="grey-text text-xs">Answered {{ answer.owner ? "by " + answer.owner.username : "" }} on {{ answer.createdAtToString() }}</p>
+          <img src="{{answer.owner ? answer.owner.pictureUrl : altUserPictureUrl }}"/>
         </div>
 
       </div>
@@ -66,7 +65,7 @@
 
   <md-divider></md-divider>
 
-  <p><strong>Have an answer?</strong></p>
+  <p class="md-margin-top"><strong>Have an answer?</strong></p>
   <div fxLayout="column" fxLayout.gt-sm>
     <span id="qa-answer-wrapper">
       <textarea id="question-textarea"
@@ -75,11 +74,11 @@
                 maxlength="500"
                 name="Question text">
       </textarea>
-      <span class="grey-text">{{characterCountMessage}}</span>
+      <span class="grey-text">{{ characterCountMessage }}</span>
     </span>
     <div>
       <button id="submit-answer-button" md-raised-button class="mat-primary" [class.white-text]="canAnswer" (click)="onClickSubmitAnswer($event)" [disabled]="!canAnswer">Submit Answer</button>
-      <p class="md-margin">Answers must be a minimum of 25 characters.</p>
+      <p class="md-margin">Answers must be a minimum of 15 characters.</p>
     </div>
   </div>
 </div>

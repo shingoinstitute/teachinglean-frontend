@@ -3,6 +3,7 @@ export class User implements UserInterface {
     uuid;
     firstname;
     lastname;
+    _username;
     pictureUrl;
     email;
     role;
@@ -14,6 +15,10 @@ export class User implements UserInterface {
 
     get name() {
       return this.firstname + ' ' + this.lastname;
+    }
+
+    get username() {
+      return this._username.length > 0 ? this._username : this.name;
     }
 
     get isAdmin() {
@@ -44,6 +49,7 @@ export class User implements UserInterface {
       user.uuid = data.uuid;
       user.firstname = data.firstname || "";
       user.lastname = data.lastname || "";
+      user._username = data.username || "";
       user.email = data.email || "";
       user.role = data.role || "member";
       user.pictureUrl = data.pictureUrl;
@@ -56,11 +62,20 @@ export class User implements UserInterface {
       return user;
     }
 
+    lastLoginToString() {
+      if (this.lastLogin) {
+        let lastLogin = new Date(this.lastLogin);
+        return `${lastLogin.toLocaleDateString([], {month: "short", day: "numeric", year: "numeric"})}, ${lastLogin.toLocaleTimeString([], {"hour": "2-digit", "minute": "2-digit", "hour12": true})}`;
+      }
+      return "n/a"
+    }
+
     toObject() {
       return {
         uuid: this.uuid,
         firstname: this.firstname,
         lastname: this.lastname,
+        username: this.username,
         email: this.email,
         role: this.role,
         pictureUrl: this.pictureUrl,
@@ -76,6 +91,7 @@ interface UserInterface {
   name: string;
   firstname: string;
   lastname: string;
+  username: string;
   pictureUrl: string;
   email: string;
   role: string;

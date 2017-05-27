@@ -61,7 +61,7 @@ ul.entry-list-wrapper {
 ul.entry-list-wrapper li {
   margin: 8px 0 8px 0;
   padding-bottom: 8px;
-  border-bottom: 1px solid grey;
+  border-bottom: 1px solid lightgray;
 }
 
 ul.entry-list-wrapper p {

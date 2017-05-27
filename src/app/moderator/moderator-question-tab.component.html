@@ -1,0 +1,5 @@
+<ul class="md-margin">
+	<li *ngFor="let question of questions">
+	<a routerLink="/forum/{{ question.id }}">{{ question.title }}</a>
+	</li>
+</ul>

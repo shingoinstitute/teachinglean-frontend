@@ -28,7 +28,7 @@ import { SidenavService } from './services/sidenav.service';
 import { EntryComponent } from './entry/entry.component';
 import { AdminPanelComponent } from './admin-panel/admin-panel.component';
 import { DisableUserDialog } from './admin-panel/disable-user.dialog';
-import { ModeratorComponent } from './moderator/moderator.component';
+import { ModeratorComponent, ModeratorQuestionTab, ModeratorAnswerTab, ModeratorCommentTab } from './moderator/moderator.component';
 
 @NgModule({
   imports: [
@@ -58,7 +58,10 @@ import { ModeratorComponent } from './moderator/moderator.component';
     EntryComponent,
     AdminPanelComponent,
     ModeratorComponent,
-    DisableUserDialog
+    DisableUserDialog,
+    ModeratorQuestionTab, 
+    ModeratorAnswerTab, 
+    ModeratorCommentTab
   ],
   entryComponents: [DisableUserDialog],
   providers: [

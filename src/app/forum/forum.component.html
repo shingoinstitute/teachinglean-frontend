@@ -13,16 +13,16 @@
       <md-tab label="Top Questions">
         <ul class="entry-list-wrapper">
           <li *ngFor="let question of topResults">
-            <a class="flow-text" [innerHTML]="question.title" routerLink="/forum/{{ question.id }}"></a>
-            <div [innerHTML]="question.content"></div>
+            <p><a class="text-md" routerLink="/forum/{{ question.id }}">{{question.title}}</a></p>
+            <p class="text-xs grey-text">Asked on {{question.createdAtToString()}}</p>
           </li>
         </ul>
       </md-tab>
       <md-tab label="Recent Questions">
         <ul class="entry-list-wrapper">
           <li *ngFor="let question of recentQuestions">
-            <a class="flow-text" [innerHTML]="question.title" routerLink="/forum/{{ question.id }}"></a>
-            <div [innerHTML]="question.content"></div>
+            <p><a class="text-md" routerLink="/forum/{{ question.id }}">{{question.title}}</a></p>
+            <p class="text-xs grey-text">Asked on {{question.createdAtToString()}}</p>
           </li>
         </ul>
       </md-tab>

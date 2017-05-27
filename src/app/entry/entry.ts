@@ -5,10 +5,7 @@ import { User } from '../user/user';
 
 export class Entry {
 
-  get owner(): User {
-    return this._owner === null ? User.initFromObject({uuid: this._ownerId}) : this._owner;
-  }
-  _owner: User;
+  owner: User;
   _ownerId: string;
   id: string;
   parent: string;
@@ -40,13 +37,10 @@ export class Entry {
     entry.markedCorrect = obj.markedCorrect || false;
     entry.parent = obj.parent || null;
 
-    if (obj.owner && obj.owner.uuid) {
-      entry._owner = User.initFromObject(obj.owner);
-      entry._ownerId = obj.owner.uuid;
-    } else if (typeof obj.owner === 'string') {
-      entry._ownerId = obj.owner;
+    if (obj.owner) {
+      entry.owner = User.initFromObject(obj.owner);
     } else {
-      entry._ownerId = entry._owner = null;
+      obj.owner = null;
     }
 
     entry.usersDidDownvote = obj.users_did_downvote || [];
@@ -57,6 +51,14 @@ export class Entry {
 
     return entry;
   }
+
+  // Formats date to 'MMM dd, yyyy, hh:mm a'
+  createdAtToString() {
+		if (this.createdAt) {
+			return `${this.createdAt.toLocaleDateString([], {month: "short", day: "numeric", year: "numeric"})}, ${this.createdAt.toLocaleTimeString([], {"hour": "2-digit", "minute": "2-digit", "hour12": true})}`;
+		}
+		return "n/a";
+	}
 
   downvoteCount() {
     return this.usersDidDownvote.length;

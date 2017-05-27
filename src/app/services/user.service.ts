@@ -124,7 +124,7 @@ export class UserService {
     });
   }
   
-  signUp(user: User, password: string): Observable<any> {
+  create(user: {firstname: string, lastname: string, email: string}, password: string): Observable<any> {
     return this.http.post(this.baseApiUrl + '/user', {
       email: user.email,
       password: password,

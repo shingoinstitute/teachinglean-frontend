@@ -1,0 +1,5 @@
+<ul class="md-margin">
+	<li *ngFor="let comment of comments">
+		<a routerLink="/forum/{{ comment.id }}">{{ comment.parent }}</a>
+	</li>
+</ul>
