@@ -3,6 +3,9 @@
 	color: #039BE5;
 	font-weight: 300;
 }
+p {
+	font-weight: 300;
+}
 
 ul > li {
 	padding-left: 4px;

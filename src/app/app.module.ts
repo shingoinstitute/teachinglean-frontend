@@ -19,16 +19,18 @@ import { LoginComponent } from './login/login.component';
 import { TeachingComponent } from './teaching/teaching.component';
 import { ToolbarComponent } from './toolbar/toolbar.component';
 import { ForumComponent } from './forum/forum.component';
-import { ForumService } from './services/forum.service';
 import { ForumDetailDirective } from './directives/forum-detail.directive';
 import { ForumListItemComponent } from './forum-list-item/forum-list-item.component';
 import { AskQuestionComponent } from './ask-question/ask-question.component';
 import { CreateAccountComponent } from './create-account/create-account.component';
-import { SidenavService } from './services/sidenav.service';
 import { EntryComponent } from './entry/entry.component';
 import { AdminPanelComponent } from './admin-panel/admin-panel.component';
 import { DisableUserDialog } from './admin-panel/disable-user.dialog';
 import { ModeratorComponent, ModeratorQuestionTab, ModeratorAnswerTab, ModeratorCommentTab } from './moderator/moderator.component';
+
+// Custom Services
+import { SidenavService } from './services/sidenav.service';
+import { ForumService } from './services/forum.service';
 
 @NgModule({
   imports: [

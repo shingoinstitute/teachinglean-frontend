@@ -1,8 +1,12 @@
-<ul class="md-margin">
+<div fxLayoutAlign="center center">
+	<md-spinner *ngIf="!answers"></md-spinner>
+	<p class="grey-text text-center md-margin" *ngIf="answers && answers.length === 0">No Activity.</p>
+</div>
+<ul class="md-margin" *ngIf="answers">
 	<li *ngFor="let answer of answers">
-		<p><b>Question:</b> <a routerLink="/forum/{{ answer.parent.id }}" class="text-sm">{{ answer.parent.title }}</a></p>
-		<p><b>Author:</b> {{ answer.parent.owner }}</p>
-		<p><b>Content:</b></p>
+		<p><b>Question:</b> <a routerLink="/forum/{{ answer.parent.id }}" class="text-sm">{{ getParentTitle(answer) }}</a></p>
+		<p><b>Author:</b> {{ answer.parent && answer.parent.owner && answer.parent.owner.name ? answer.parent.owner.name : "n/a" }}</p>
 		<div class="answer-content-wrapper" [innerHTML]="answer.content"></div>
+		<p class="text-sm grey-text">Answered on {{ answer.createdAtToString() }}</p>
 	</li>
 </ul>

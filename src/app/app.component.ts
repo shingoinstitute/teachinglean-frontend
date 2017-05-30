@@ -55,31 +55,31 @@ export class AppComponent implements OnInit {
     iconRegistry.addSvgIcon('menu', sanitizer.bypassSecurityTrustResourceUrl('assets/images/icons/menu.svg'));
     iconRegistry.addSvgIcon('search', sanitizer.bypassSecurityTrustResourceUrl('assets/images/icons/ic_search_black_24px.svg'));
 
-    let toggleListener = sidenavService.toggleSidenavNotification$
-    .subscribe(onNext => { this.toggleSidenav(); })
+    let toggleListener = sidenavService
+    .toggleSidenavNotification$
+    .subscribe(onNext => {
+      this.toggleSidenav();
+    });
 
-    this.onWindowResizeEvent$.subscribe(
-      windowWidth => {
+    this.onWindowResizeEvent$
+    .subscribe(windowWidth => {
         this.windowWidth = windowWidth;
         this.sidenavMode = windowWidth > 959 ? "side" : "over";
         this.sidenavMode === "side" ? this.sideNav.open() : this.sideNav.close();
-      }
-    );
-
-    this.onToggleSidenav$.subscribe(
-      shouldToggle => {
-        shouldToggle ? this.sideNav.toggle() : this.sideNav.open();
       });
+
+    this.onToggleSidenav$.subscribe(shouldToggle => {
+      shouldToggle ? this.sideNav.toggle() : this.sideNav.open();
+    });
   }
 
   ngOnInit() {
-    this.userService.userStatusChangeListener$.subscribe(
-      user => {
-        this.user = user;
-        this.userService.onUserDidChangeStatus(this.user !== null);
-      }
-    );
-    this.userService.getUser();
+    this.userService.getUser()
+    .subscribe((user: User) => {
+      this.user = user;
+      this.userService.onUserDidChangeStatus(true);
+    }, this.onHandleError);
+
     this.windowWidth = window.innerWidth;
     this.sidenavMode = window.innerWidth > 960 ? "side" : "over";
   }
@@ -94,7 +94,15 @@ export class AppComponent implements OnInit {
   }
 
   private onHandleError(error) {
-    console.log(error);
+    if (error.message) {
+      error = error.message;
+    } else if (error.toString) {
+      error = error.toString();
+    }
+
+    if (!error.includes('missing xsrf-token')) {
+      console.error(error);
+    }
   }
 
 }

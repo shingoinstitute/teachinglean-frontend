@@ -11,6 +11,7 @@
         </li>
       </ul>
 
+      <p class="flow-text text-center md-margin" style="width: 100%;" *ngIf="!selectedUser">No user selected.</p>
       
       <div fxLayout="column"
       fxFlex
@@ -49,15 +50,12 @@
 
         <md-tab-group [dynamicHeight]="true">
           <md-tab label="Questions ({{ selectedUserQuestions.length }})">
-            <p class="grey-text text-center md-margin" *ngIf="selectedUserQuestions.length === 0">No Activity.</p>
             <moderator-question-tab [questions]="selectedUserQuestions"></moderator-question-tab>
           </md-tab>
           <md-tab label="Answers ({{ selectedUserAnswers.length }})">
-            <p class="grey-text text-center md-margin" *ngIf="selectedUserAnswers.length === 0">No Activity.</p>
             <moderator-answer-tab [answers]="selectedUserAnswers"></moderator-answer-tab>
           </md-tab>
           <md-tab label="Comments ({{ selectedUserComments.length }})">
-            <p class="grey-text text-center md-margin" *ngIf="selectedUserComments.length === 0">No Activity.</p>
             <moderator-comment-tab [comments]="selectedUserComments"></moderator-comment-tab>
           </md-tab>
 

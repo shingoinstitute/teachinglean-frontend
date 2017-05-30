@@ -28,16 +28,27 @@ export class DashboardComponent implements OnInit, AfterViewInit {
   answers: Entry[] = [];
   comments: Entry[] = [];
 
-  constructor(private userService: UserService, private router: Router, private forum: ForumService) {}
+  constructor(private userService: UserService, private router: Router, private forum: ForumService) {
+    userService.onDeliverableUser$
+    .subscribe((user: User) => {
+      this.user = user;
+    }, this.onError);
+  }
 
   ngOnInit() {
   }
 
   ngAfterViewInit() {
     if (!this.user) {
-      this.userService.getUserAsync()
-      .then(user => this.onLoadUser(user))
-      .catch(this.onError);
+
+      this.userService.getUser()
+      .subscribe((user: User) => {
+        this.onLoadUser(user);
+      },
+      err => {
+        this.onError(err);
+      });
+
     } else {
       this.loadRecentActivity();
     }
@@ -51,30 +62,30 @@ export class DashboardComponent implements OnInit, AfterViewInit {
 
   loadRecentActivity() {
     this.forum.requestRecent(10, this.user.uuid)
-    .subscribe(
-      data => { this.recent = data.map(Entry.initFromObject); this.loadQuestions(); }
-    )
+    .subscribe(data => { 
+      this.recent = data.map(Entry.initFromObject); this.loadQuestions(); 
+    });
   }
 
   loadQuestions() {
     this.forum.requestUserQuestions(this.user.uuid)
-    .subscribe(
-      data => { this.questions = data.map(Entry.initFromObject); this.loadAnswers(); }
-    )
+    .subscribe(data => {
+      this.questions = data.map(Entry.initFromObject); this.loadAnswers(); 
+    });
   }
 
   loadAnswers() {
     this.forum.requestUserAnswers(this.user.uuid)
-    .subscribe(
-      data => { this.answers = data.map(Entry.initFromObject); this.loadComments(); }
-    )
+    .subscribe(data => {
+      this.answers = data.map(Entry.initFromObject); this.loadComments();
+    });
   }
 
   loadComments() {
     this.forum.requestUserComments(this.user.uuid)
-    .subscribe(
-      data => { this.comments = data.map(Entry.initFromObject) }
-    )
+    .subscribe(data => {
+      this.comments = data.map(Entry.initFromObject) ;
+    });
   }
 
   onError(error) {

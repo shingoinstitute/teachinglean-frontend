@@ -9,6 +9,7 @@ import {
 
 import { UserService } from '../services/user.service';
 import { ForumService } from '../services/forum.service';
+
 import { User } from '../user/user';
 import { Entry } from '../entry/entry';
 
@@ -20,10 +21,10 @@ import { Entry } from '../entry/entry';
   styleUrls: ['./moderator.component.css'],
   animations: [
     trigger('fadeInOut', [
-      state('show', style({ opacity: 1, transform: 'translateX(0)' })),
-      state('hide', style({ opacity: 0, transform: 'translateX(100%)' })),
-      transition('* => show', [ style({ opacity: 0, transform: 'translateX(-100%)' }), animate('100ms ease-in') ]),
-      transition('* => hide', [ style({ opacity: 1, transform: 'translateX(0)' }), animate('100ms ease-out') ])
+      state('show', style({ opacity: 1 })),
+      state('hide', style({ opacity: 0 })),
+      transition('* => show', [ style({ opacity: 0 }), animate('100ms ease-in') ]),
+      transition('* => hide', [ style({ opacity: 1 }), animate('100ms ease-out') ])
     ]),
   ]
 })
@@ -51,7 +52,6 @@ export class ModeratorComponent {
       this.users = users.sort((a, b) => {
         return a.lastname > b.lastname ? 1: -1;
       });
-      this.onClickUser(this.users[0]);
     })
     .catch(err => console.error(err));
     this.windowWidth = window.innerWidth;
@@ -171,6 +171,37 @@ export class ModeratorComponent {
 })
 export class ModeratorQuestionTab {
   @Input() questions: Entry[];
+
+  constructor(private service: ForumService) {
+    if (!this.questions) {
+      service.requestQuestions()
+      .subscribe(data => {
+        this.questions = data.map(Entry.initFromObject);
+      });
+    }
+  }
+
+  getParent(entry: Entry) {
+
+    if (entry.parent && entry.parent.title) {
+      return;
+    }
+
+    let parentId;
+    if (entry.parent instanceof Entry) {
+      parentId = entry.parent.id;
+    } else if (entry._parentId) {
+      parentId = entry._parentId;
+    }
+
+    this.service.getEntry(parentId)
+    .subscribe((parent: Entry) => {
+      console.log('Parent: ', parent);
+      console.log('parent is entry? ' + (parent instanceof Entry));
+      entry.parent = parent;
+    });
+  }
+
 }
 
 @Component({
@@ -180,6 +211,21 @@ export class ModeratorQuestionTab {
 })
 export class ModeratorAnswerTab {
   @Input() answers: Entry[];
+
+  constructor(private service: ForumService) {
+    if (!this.answers) {
+      service.requestAnswers()
+      .subscribe(data => {
+        this.answers = data.map(Entry.initFromObject);
+      });
+    }
+  }
+
+  getParentTitle(entry: Entry) {
+    console.log('@moderator.component: ', entry);
+    
+  }
+
 }
 
 @Component({
@@ -189,4 +235,14 @@ export class ModeratorAnswerTab {
 })
 export class ModeratorCommentTab {
   @Input() comments: Entry[];
+
+  constructor(service: ForumService) {
+    if (!this.comments) {
+      service.requestComments().subscribe(data => {
+        console.log(data);
+        this.comments = data.map(Entry.initFromObject);
+      });
+    }
+  }
+
 }

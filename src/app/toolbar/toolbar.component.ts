@@ -27,11 +27,15 @@ export class ToolbarComponent implements OnDestroy {
     private userService: UserService,
     private router: Router,
     private sidenav: SidenavService) {
-    this.userSubscription = userService.userStatusChangeNotifier$.subscribe(
-      userIsAuthenticated => {
-        this.userDoesExist = userIsAuthenticated;
-      }
-    );
+    this.userSubscription = userService.userStatusChangeNotifier$.subscribe(userIsAuthenticated => {
+      this.userDoesExist = userIsAuthenticated;
+    });
+
+    userService.getUser()
+    .subscribe(data => {
+      
+    })
+
   }
 
   ngOnDestroy() {
@@ -53,15 +57,12 @@ export class ToolbarComponent implements OnDestroy {
 
   onClickLogout() {
     this.userService.logoutUser()
-    .subscribe(
-      data => {
-        console.log(data);
-        this.router.navigate(['/']);
-      },
-      err => {
-        console.error(err);
-      }
-    );
+    .subscribe(data => {
+      console.log(data);
+    }, err => {
+      console.error(err);
+    });
+    this.router.navigate(['/']);
   }
 
 }

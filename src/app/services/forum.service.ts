@@ -15,7 +15,7 @@ export class ForumService {
 
   entry: any;
 
-  constructor(private http: Http) {
+  constructor(public http: Http) {
     this.baseUrl = Globals.baseApiUrl;
   }
 

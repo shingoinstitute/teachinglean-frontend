@@ -1,14 +1,22 @@
-import { UserService } from '../services/user.service';
+// Angular imports
+import { Injectable, ReflectiveInjector } from '@angular/core';
 import { Http } from '@angular/http';
 
+// Services
+// import { EntryService } from '../services/entry.service';
+
+// Misc imports
 import { User } from '../user/user';
+
+
 
 export class Entry {
 
   owner: User;
   _ownerId: string;
   id: string;
-  parent: string;
+  parent: Entry;
+  _parentId: string;
   title: string;
   content: string;
   markedCorrect: boolean;
@@ -20,7 +28,21 @@ export class Entry {
   createdAt: Date;
   updatedAt: Date;
 
-  constructor() { }
+  constructor() {
+    this.id = null;
+    this.owner = null;
+    this._ownerId = null;
+    this.parent = null;
+    this._parentId = null;
+    this.title = null;
+    this.markedCorrect = null;
+    this.isFlagged = null;
+    this.answers = null;
+    this.usersDidUpvote = null;
+    this.usersDidDownvote = null;
+    this.createdAt = null;
+    this.updatedAt = null;
+  }
 
   static initFromObject(obj): Entry {
     // console.log('init obj: ', obj);
@@ -28,19 +50,24 @@ export class Entry {
     if (!obj.id) {
       return entry;
     }
-    entry.id = obj.id;
+    entry.id = obj.id || null;
     entry.title = obj.title || null;
     entry.answers = obj.answers || [];
     entry.comments = obj.comments || [];
     entry.content = obj.content || null;    
     entry.isFlagged = obj.isFlagged || false;
     entry.markedCorrect = obj.markedCorrect || false;
-    entry.parent = obj.parent || null;
 
-    if (obj.owner) {
+    if (obj.parent instanceof String) {
+      entry._parentId = obj.parent;
+    } else if (obj.parent) {
+      entry.parent = Entry.initFromObject(obj.parent);
+    }
+
+    if (obj.owner && obj.owner instanceof String) {
+      entry._ownerId = obj.owner;
+    } else if (obj.owner) {
       entry.owner = User.initFromObject(obj.owner);
-    } else {
-      obj.owner = null;
     }
 
     entry.usersDidDownvote = obj.users_did_downvote || [];
