@@ -137,13 +137,12 @@ export class ForumService {
     // });
   }
 
-  createComment(comment) {
-    // return $http({
-    //   method: 'post',
-    //   dataType: 'json',
-    //   url: '/comment',
-    //   data: comment
-    // });
+  createComment(comment: { parent: string, owner: string, content: string }) {
+    return this.http.post(this.baseUrl + '/comment', comment)
+    .map(res => {
+      return res.json();
+    })
+    .catch(this.handleError);
   }
 
   save(entry) {

@@ -19,21 +19,36 @@
     </div>
 
     <md-divider></md-divider>
+    <div fxLayout="column" *ngIf="entry.comments && entry.comments.length > 0">
+      <p class="text-sm grey-text">Comments</p>
+      <p *ngFor="let comment of entry.comments">
+        {{ comment.content }}
+      </p>
+    </div>
+
+    <md-divider></md-divider>
 
     <div fxLayout class="md-margin-top">
       <input fxFlex 
-              [(ngModel)]="title"
-              name="title"
+              [(ngModel)]="commentText"
+              name="commentText"
               class="input-title input-wrapper"
               type="text" 
-              placeholder="Add comments here.">
+              placeholder="Add comment here...">
 
       <div class="input-wrapper">
-        <button md-raised-button class="mat-primary white-text" [class.white-text]="canComment" [disabled]="!canComment">Add Comment</button>
+        <button md-raised-button 
+        class="mat-primary white-text" 
+        [class.white-text]="canComment" 
+        [disabled]="!canComment"
+        (click)="onClickAddComment($event, entry)">
+          Add Comment
+        </button>
       </div>
 
     </div>
 
+    <p *ngIf="commentError" [style.color]="'red'" [style.font-weight]="300" [innerHTML]="commentError"></p>
 
   </md-card>
 

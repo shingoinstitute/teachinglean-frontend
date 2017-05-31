@@ -3,7 +3,7 @@ import {
   OnDestroy, 
   AfterViewInit, 
   EventEmitter, 
-  Output, 
+  Output,
   NgZone 
 } from '@angular/core';
 import { ActivatedRoute, Params } from '@angular/router';
@@ -34,6 +34,9 @@ export class ForumListItemComponent implements AfterViewInit, OnDestroy {
   didMarkAnswerCorrect = false;
   answers: Entry[]     = [];
   
+  commentText: string;
+  commentError: string;
+
   characterCountMessage = "Enter 15 characters";
   altUserPictureUrl = "https://res.cloudinary.com/shingo/image/upload/v1414874243/silhouette_vzugec.png";
 
@@ -136,6 +139,22 @@ export class ForumListItemComponent implements AfterViewInit, OnDestroy {
     err => {
       console.error(err);
     });
+  }
+
+  onClickAddComment(event, entry) {
+
+    if (this.commentText && this.currentUser && entry) {
+
+      this.forumService.createComment({
+        parent: entry.id,
+        owner: this.currentUser.uuid,
+        content: this.commentText
+      }).subscribe(data => {
+        
+      })
+    } else {
+      this.commentError = "You cannot submit an empty comment!";
+    }
   }
 
   onClickSubmitAnswer(event) {
