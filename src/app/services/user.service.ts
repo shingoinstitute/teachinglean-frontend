@@ -32,47 +32,21 @@ export class UserService {
   private _user: User;
   
   get user(): User {
-    return this._user;
-  }
-  
-  set user(user: User) {
-    this._user = user;
+    return this._user || null;
   }
   
   baseApiUrl: string;
   
   constructor(private http: Http, private cookieService: CookieService) {
     this.baseApiUrl = Globals.baseApiUrl;
-  }
 
-  // Gets a single user if client has a valid JWT token (stored as cookie named 'XSRF-TOKEN')
-  getUserAsync(): Promise<any> {
-
+    // Get logged in user if XSRF-TOKEN is present
     if (!this.cookieService.get('XSRF-TOKEN')) {
-      return Promise.reject('missing xsrf-token');
+      this.http.get(this.baseApiUrl + '/me').subscribe(res => {
+        this._user = User.initFromObject(res.json());
+        this.onDeliverableUserSource.next(this._user);
+      });
     }
-
-    return this.http.get(this.baseApiUrl + '/me')
-    .toPromise()
-    .then(res => {
-      this._user = User.initFromObject(res.json());
-      this.onDeliverableUserSource.next(this._user);
-      return this._user; 
-    })
-    .catch(this.handleError);
-  }
-
-  // Same functionality as `getUserAsync`, only it returns an Observable instead of a Promise.
-  getUser(): Observable<User> {
-    if (!this.cookieService.get('XSRF-TOKEN')) {
-      return Observable.throw('missing xsrf-token');
-    }
-
-    return this.http.get(this.baseApiUrl + '/me')
-    .map((res) => {
-      return User.initFromObject(res.json());
-    })
-    .catch(this.handleError);
   }
 
   // Gets all users if client can authenticate using a JWT
@@ -88,7 +62,6 @@ export class UserService {
       this.handleError(err);
     });
   }
-
 
   updateUser(user: User) {
     return this.http.put(this.baseApiUrl + '/user/' + user.uuid, user.toObject())

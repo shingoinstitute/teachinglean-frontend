@@ -3,6 +3,7 @@
 
   <form fxLayout="column" id="ask-question-form" class="input-container">
     <p class="flow-text">Have a question? Ask the community right here.</p>
+    <p>{{ user ? user.name : "asdf" }}</p>
     <div fxLayout class="input-wrapper">
       <p>Title</p>
       <input fxFlex 

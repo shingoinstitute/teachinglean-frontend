@@ -60,13 +60,14 @@ export class Entry {
 
     if (obj.parent instanceof String) {
       entry._parentId = obj.parent;
-    } else if (obj.parent) {
+    } else if (obj.parent && obj.parent.id) {
+      delete obj.parent.parent;
       entry.parent = Entry.initFromObject(obj.parent);
     }
 
-    if (obj.owner && obj.owner instanceof String) {
+    if (obj.owner instanceof String) {
       entry._ownerId = obj.owner;
-    } else if (obj.owner) {
+    } else if (obj.owner && obj.owner.uuid) {
       entry.owner = User.initFromObject(obj.owner);
     }
 

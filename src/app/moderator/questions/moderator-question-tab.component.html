@@ -5,7 +5,7 @@
 
 <ul class="md-margin" *ngIf="questions">
 	<li *ngFor="let question of questions">
-	<a routerLink="/forum/{{ question.id }}">{{ question.title }}</a>
-	<p class="grey-text text-sm">Asked by {{ question.owner.name }} | {{ question.createdAtToString() }}</p>
+	<a routerLink="/forum/{{ question.id }}">{{ question && question.title ? question.title : "N/A" }}</a>
+	<p class="grey-text text-sm">Asked by {{ question.owner && question.owner.name ? question.owner.name : "loading..." }} | {{ question.createdAtToString() }}</p>
 	</li>
 </ul>

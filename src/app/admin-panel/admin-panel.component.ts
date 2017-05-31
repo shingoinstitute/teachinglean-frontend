@@ -26,9 +26,7 @@ export class AdminPanelComponent implements OnInit {
   ]
 
   constructor(private userService: UserService, public dialog: MdDialog) {
-    userService.getUserAsync()
-    .then(admin => this.admin = admin)
-    .catch(err => console.error(err));
+    this.admin = userService.user;
 
     userService.getUsersAsync()
     .then((users: User[]) => this.users = users)

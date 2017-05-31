@@ -38,11 +38,13 @@ export class ForumListItemComponent implements AfterViewInit, OnDestroy {
 
   constructor(private forumService: ForumService, private route: ActivatedRoute, userService: UserService, private zone: NgZone) {
 
-    userService.getUserAsync()
-    .then(user => {
+    if (userService.user != null) {
+      this.currentUserId = userService.user.uuid;
+    }
+
+    userService.onDeliverableUser$.subscribe(user => {
       this.currentUserId = user.uuid;
-      this.canComment = true;
-    })
+    });
 
     this.loadData();
   }

@@ -1,7 +1,5 @@
 import {
-  Component, 
-  Input,
-  OnDestroy,
+  Component,
   HostListener
 } from '@angular/core';
 import { Router } from '@angular/router';
@@ -17,7 +15,7 @@ import { SidenavService } from '../services/sidenav.service';
   templateUrl: './toolbar.component.html',
   styleUrls: ['./toolbar.component.css']
 })
-export class ToolbarComponent implements OnDestroy {
+export class ToolbarComponent {
 
   userDoesExist: boolean;
   userSubscription: Subscription;
@@ -27,19 +25,12 @@ export class ToolbarComponent implements OnDestroy {
     private userService: UserService,
     private router: Router,
     private sidenav: SidenavService) {
-    this.userSubscription = userService.userStatusChangeNotifier$.subscribe(userIsAuthenticated => {
-      this.userDoesExist = userIsAuthenticated;
+    
+    this.userDoesExist = userService.user != null
+    userService.onDeliverableUser$.subscribe(user => {
+      this.userDoesExist = true;
     });
 
-    userService.getUser()
-    .subscribe(data => {
-      
-    })
-
-  }
-
-  ngOnDestroy() {
-    this.userSubscription.unsubscribe();
   }
 
   ngAfterViewInit() {

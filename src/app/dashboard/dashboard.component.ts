@@ -18,7 +18,7 @@ import { Entry } from '../entry/entry';
   templateUrl: './dashboard.component.html',
   styleUrls: ['./dashboard.component.css'],
 })
-export class DashboardComponent implements OnInit, AfterViewInit {
+export class DashboardComponent implements OnInit {
 
   spinnerEnabled = true;
 
@@ -28,35 +28,19 @@ export class DashboardComponent implements OnInit, AfterViewInit {
   answers: Entry[] = [];
   comments: Entry[] = [];
 
-  constructor(private userService: UserService, private router: Router, private forum: ForumService) {
-    userService.onDeliverableUser$
-    .subscribe((user: User) => {
-      this.user = user;
-    }, this.onError);
-  }
+  constructor(private userService: UserService, private router: Router, private forum: ForumService) {}
 
   ngOnInit() {
-  }
-
-  ngAfterViewInit() {
-    if (!this.user) {
-
-      this.userService.getUser()
-      .subscribe((user: User) => {
-        this.onLoadUser(user);
-      },
-      err => {
-        this.onError(err);
-      });
-
+    this.user = this.userService.user;
+    if (this.user) {
+      this.onLoadUser();
     } else {
-      this.loadRecentActivity();
+      this.router.navigate(['login']);
     }
   }
 
-  onLoadUser(user: User) {
+  onLoadUser() {
     this.spinnerEnabled = false;
-    this.user = user;
     this.loadRecentActivity();
   }
 
@@ -86,11 +70,6 @@ export class DashboardComponent implements OnInit, AfterViewInit {
     .subscribe(data => {
       this.comments = data.map(Entry.initFromObject) ;
     });
-  }
-
-  onError(error) {
-    console.error(error);
-    this.router.navigate(['login']);
   }
 
 }

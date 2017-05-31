@@ -19,8 +19,7 @@ import { User } from './user/user';
 @Component({
   selector: 'app-root',
   templateUrl: './app.component.html',
-  styleUrls: ['./app.component.css'],
-  providers: [UserService]
+  styleUrls: ['./app.component.css']
 })
 export class AppComponent implements OnInit {
 
@@ -74,11 +73,11 @@ export class AppComponent implements OnInit {
   }
 
   ngOnInit() {
-    this.userService.getUser()
-    .subscribe((user: User) => {
+    this.user = this.userService.user;
+
+    this.userService.onDeliverableUser$.subscribe(user => {
       this.user = user;
-      this.userService.onUserDidChangeStatus(true);
-    }, this.onHandleError);
+    });
 
     this.windowWidth = window.innerWidth;
     this.sidenavMode = window.innerWidth > 960 ? "side" : "over";
@@ -91,18 +90,6 @@ export class AppComponent implements OnInit {
 
   toggleSidenav() {
     this.onToggleSidenavSource.next(this.windowWidth < 960);
-  }
-
-  private onHandleError(error) {
-    if (error.message) {
-      error = error.message;
-    } else if (error.toString) {
-      error = error.toString();
-    }
-
-    if (!error.includes('missing xsrf-token')) {
-      console.error(error);
-    }
   }
 
 }

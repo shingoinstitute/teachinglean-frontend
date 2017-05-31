@@ -21,7 +21,7 @@
       name="selectedUser" 
       *ngIf="selectedUser" 
       [@fadeInOut]="elementState"
-      (@fadeInOut.done)="animationDone($event)"
+      (@fadeInOut.done)="animateCompletionHandler($event)"
       ngDefaultControl>
         
         <table>
@@ -48,12 +48,12 @@
           </tr>
         </table>
 
-        <md-tab-group [dynamicHeight]="true">
+        <md-tab-group [dynamicHeight]="true" (selectChange)="onClickTab($event)">
           <md-tab label="Questions ({{ selectedUserQuestions.length }})">
             <moderator-question-tab [questions]="selectedUserQuestions"></moderator-question-tab>
           </md-tab>
           <md-tab label="Answers ({{ selectedUserAnswers.length }})">
-            <moderator-answer-tab [answers]="selectedUserAnswers"></moderator-answer-tab>
+            <moderator-answer-tab [answers]="selectedUserAnswers" (onClick)="onClickAnswerTab$($event)"></moderator-answer-tab>
           </md-tab>
           <md-tab label="Comments ({{ selectedUserComments.length }})">
             <moderator-comment-tab [comments]="selectedUserComments"></moderator-comment-tab>

@@ -1,5 +1,4 @@
 import { Component, OnInit, NgZone, AfterViewInit } from '@angular/core';
-import { ForumService } from '../services/forum.service';
 import { MdIconRegistry } from "@angular/material";
 import { DomSanitizer } from "@angular/platform-browser";
 import {
@@ -14,36 +13,21 @@ import { Http, Response, ResponseContentType } from '@angular/http';
 import { Router } from '@angular/router';
 import { Observable } from 'rxjs/Observable';
 
+import { ForumService } from '../services/forum.service';
 import { UserService } from '../services/user.service';
 import { Entry } from "../entry/entry";
 
 @Component({
   selector: 'app-forum',
   templateUrl: './forum.component.html',
-  styleUrls: ['./forum.component.css'],
-  animations: [
-    trigger('shrinkGrow', [
-      state('active', style({transform: 'translateX(0)', height: 'auto'})),
-      state('inactive', style({transform: 'translateX(200%)', height: '0'})),
-      transition('inactive => active', [
-        style({transform: 'translateX(200%)'}),
-        animate(200)
-      ]),
-      transition('active => inactive', [
-        animate(200, style({transform: 'translateX(200%)'}))
-      ])
-    ])
-  ]
-
+  styleUrls: ['./forum.component.css']
 })
 export class ForumComponent implements OnInit, AfterViewInit {
 
   topResults: Entry[] = [];
   recentQuestions: Entry[] = [];
 
-  questionDialogState = "inactive";
-
-  questionFormEnabled: boolean;
+  questionFormEnabled = false;
 
   constructor(
     private forumService: ForumService,
@@ -51,11 +35,7 @@ export class ForumComponent implements OnInit, AfterViewInit {
     private http: Http,
     private router: Router) {
 
-    userService.userStatusChangeNotifier$.subscribe(
-      (userIsLogged) => {
-        this.questionFormEnabled = userIsLogged;
-      }
-    );
+    this.questionFormEnabled = userService.user != null;
 
   }
 
@@ -83,23 +63,14 @@ export class ForumComponent implements OnInit, AfterViewInit {
     this.router.navigate(['forum', entryId]);
   }
 
-  showHideAskQuestionButton() {
-    let state = this.questionDialogState;
-    this.questionDialogState = state === "inactive" ? "active" : "inactive";
-  }
-
   onClickSubmitQuestionHandler(question: { title: string, content: string }) {
-    
     this.forumService.createEntry({
       owner: this.userService.user.uuid,
       title: question.title,
       content: question.content,
       parent: null
     })
-    .subscribe(
-      entry => console.log(entry),
-      error => console.log(error)
-    );
+    .subscribe(entry => console.log(entry), error => console.log(error));
   }
 
   private handleError(error: Response | any) {

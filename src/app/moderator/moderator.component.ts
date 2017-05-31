@@ -1,4 +1,13 @@
-import { Component, HostListener, Input } from '@angular/core';
+// Angular
+import { 
+  Component, 
+  HostListener,
+  OnChanges,
+  EventEmitter,
+  Output,
+  SimpleChange,
+  AfterViewInit,
+  Input } from '@angular/core';
 import {
   trigger,
   state,
@@ -7,14 +16,17 @@ import {
   transition
 } from '@angular/animations';
 
-import { UserService } from '../services/user.service';
+import { ModeratorQuestionTab } from './questions/moderator-questions.component';
+
+// Custom Services
+import { UserService }  from '../services/user.service';
 import { ForumService } from '../services/forum.service';
 
-import { User } from '../user/user';
-import { Entry } from '../entry/entry';
+// Misc
+import { User }         from '../user/user';
+import { Entry }        from '../entry/entry';
 
-
-
+// Moderator Component
 @Component({
   selector: 'app-moderator',
   templateUrl: './moderator.component.html',
@@ -23,28 +35,32 @@ import { Entry } from '../entry/entry';
     trigger('fadeInOut', [
       state('show', style({ opacity: 1 })),
       state('hide', style({ opacity: 0 })),
-      transition('* => show', [ style({ opacity: 0 }), animate('100ms ease-in') ]),
-      transition('* => hide', [ style({ opacity: 1 }), animate('100ms ease-out') ])
+      transition('* => show', [ style({ opacity: 0 }), animate('200ms ease-in') ]),
+      transition('* => hide', [ style({ opacity: 1 }), animate('200ms ease-out') ])
     ]),
   ]
 })
 export class ModeratorComponent {
 
-  private users: User[];
-  selectedUser: User;
+  @Output() onClickQuestionTab$   = new EventEmitter<any>();
+  @Output() onClickAnswerTab$     = new EventEmitter<any>();
+  @Output() onClickCommentTab$    = new EventEmitter<any>();
+
+  private users:         User[];
+  private nextUser:      User;
+  selectedUser:          User;
+
+  private comments:      Entry[];
+  private questions:     Entry[];
+  private answers:       Entry[];
+
   selectedUserQuestions: Entry[] = [];
-  selectedUserAnswers: Entry[] = [];
-  selectedUserComments: Entry[] = [];
+  selectedUserAnswers:   Entry[] = [];
+  selectedUserComments:  Entry[] = [];
 
-  comments: Entry[];
-  questions: Entry[];
-  answers: Entry[];
-
-  private windowWidth;
-
-  elementState = 'hide';
-  userState = 'inactive';
-  private nextUser: User;
+  windowWidth:  number;
+  elementState: string = 'hide';
+  userState:    string = 'inactive';
 
   constructor(private userService: UserService, private forumService: ForumService) {
     userService.getUsersAsync()
@@ -62,20 +78,17 @@ export class ModeratorComponent {
     this.windowWidth = window.innerWidth;
   }
 
-  loadDataForTab(e) {
-    switch (e.index) {
-      case 1:
-        this.loadAllQuestions();
-        break;
-      case 2:
+  loadDataForTab($ev) {
+    let index = $ev.index;
+    if (index == 1) {
+      console.log('loading questions');
+      this.loadAllQuestions();
+    } else if (index == 2) {
+      console.log('loading answers');
       this.loadAllAnswers();
-        break;
-      case 3:
+    } else if (index == 3) {
+      console.log('loading comments');
       this.loadAllComments();
-        break;
-
-      default:
-        break;
     }
   }
 
@@ -83,6 +96,7 @@ export class ModeratorComponent {
     if (!this.questions) {
       this.forumService.requestQuestions().subscribe(data => {
         this.questions = data.map(Entry.initFromObject);
+        console.log('loaded questions: ', this.questions);
       });
     }
   }
@@ -134,7 +148,7 @@ export class ModeratorComponent {
       this.selectedUser = user;
       this.userState = 'active';
       this.elementState = 'show';
-    } else if (this.selectedUser == user) {
+    } else if (this.selectedUser.uuid === user.uuid) {
       this.elementState = 'hide';
       this.userState = 'inactive';
     } else {
@@ -143,7 +157,7 @@ export class ModeratorComponent {
     }
   }
 
-  animationDone(e) {
+  animateCompletionHandler(e) {
     if (this.userState === 'inactive') {
       delete this.selectedUser;
     } else if (this.nextUser) {
@@ -158,91 +172,24 @@ export class ModeratorComponent {
     }
   }
 
+  onClickTab($ev) {
+    let index = $ev.index;
+    if (index == 0) {
+      this.onClickQuestionTab$.emit()
+    } else if (index == 1) {
+      this.onClickAnswerTab$.emit()
+    } else if (index == 2) {
+      this.onClickCommentTab$.emit();
+    }
+  }
+
   changeListWidth() {
     return this.windowWidth > 960 ? {width: '350px'} : {width: 'auto'};
   }
 
 }
 
-@Component({
-  selector: 'moderator-question-tab',
-  templateUrl: './moderator-question-tab.component.html',
-  styleUrls: ['./moderator.component.css']
-})
-export class ModeratorQuestionTab {
-  @Input() questions: Entry[];
 
-  constructor(private service: ForumService) {
-    if (!this.questions) {
-      service.requestQuestions()
-      .subscribe(data => {
-        this.questions = data.map(Entry.initFromObject);
-      });
-    }
-  }
 
-  getParent(entry: Entry) {
 
-    if (entry.parent && entry.parent.title) {
-      return;
-    }
 
-    let parentId;
-    if (entry.parent instanceof Entry) {
-      parentId = entry.parent.id;
-    } else if (entry._parentId) {
-      parentId = entry._parentId;
-    }
-
-    this.service.getEntry(parentId)
-    .subscribe((parent: Entry) => {
-      console.log('Parent: ', parent);
-      console.log('parent is entry? ' + (parent instanceof Entry));
-      entry.parent = parent;
-    });
-  }
-
-}
-
-@Component({
-  selector: 'moderator-answer-tab',
-  templateUrl: './moderator-answer-tab.component.html',
-  styleUrls: ['./moderator.component.css']
-})
-export class ModeratorAnswerTab {
-  @Input() answers: Entry[];
-
-  constructor(private service: ForumService) {
-    if (!this.answers) {
-      service.requestAnswers()
-      .subscribe(data => {
-        this.answers = data.map(Entry.initFromObject);
-      });
-    }
-  }
-
-  getParentTitle(entry: Entry) {
-    console.log('@moderator.component: ', entry);
-    
-  }
-
-}
-
-@Component({
-  selector: 'moderator-comment-tab',
-  templateUrl: './moderator-comment-tab.component.html',
-  styleUrls: ['./moderator.component.css']
-})
-export class ModeratorCommentTab {
-  @Input() comments: Entry[];
-
-  constructor(service: ForumService) {
-    if (!this.comments) {
-      service.requestComments().subscribe(data => {
-        console.log(data);
-        this.comments = data.map(Entry.initFromObject);
-      });
-    }
-  }
-
-}

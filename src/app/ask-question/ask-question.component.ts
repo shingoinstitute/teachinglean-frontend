@@ -10,6 +10,7 @@ import {
 } from '@angular/core';
 
 import { UserService } from '../services/user.service';
+import { User } from '../user/user';
 import { AppRoutingService } from '../services/app-routing.service';
 
 @Component({
@@ -21,16 +22,27 @@ import { AppRoutingService } from '../services/app-routing.service';
 export class AskQuestionComponent implements OnInit, AfterViewInit, OnDestroy {
 
   @Output() submitQuestion = new EventEmitter<any>();
-
+  user: User;
   private editor;
   private title: any;
   content: string;
   
   constructor(private userService: UserService, private appRouter: AppRoutingService, private zone: NgZone) {
     // TODO :: Implement appRouter to redirect user to login page then back to Q&A Forum after sign in
+    this.user = userService.user;
+    
+    if (!this.user) {
+      userService.onDeliverableUser$.subscribe(user => {
+        console.log('on deliverable', user);
+        this.user = user;
+      });
+    }
   }
 
   ngOnInit() {
+    // setTimeout(() => {
+    //   this.user = this.userService.user;  
+    // }, 100);
   }
 
   ngAfterViewInit() {
