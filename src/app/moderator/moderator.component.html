@@ -11,7 +11,7 @@
         </li>
       </ul>
 
-      <p class="flow-text text-center md-margin" style="width: 100%;" *ngIf="!selectedUser">No user selected.</p>
+      <p class="text-md text-center md-margin" [style.width]="'100%'" *ngIf="!selectedUser">Select a user.</p>
       
       <div fxLayout="column"
       fxFlex

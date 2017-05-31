@@ -24,26 +24,30 @@ import { User } from '../user/user';
 export class ForumListItemComponent implements AfterViewInit, OnDestroy {
 
   @Output() onEditorKeyup = new EventEmitter();
-  editor;
-  currentUserId;
+  private minCharacterCount = 15;
+  currentUser: User;
+  tinyMceEditor;
   canComment;
   canAnswer;
 
-  entry = new Entry();
+  entry                = new Entry();
   didMarkAnswerCorrect = false;
-  answers: Entry[] = [];
+  answers: Entry[]     = [];
   
   characterCountMessage = "Enter 15 characters";
   altUserPictureUrl = "https://res.cloudinary.com/shingo/image/upload/v1414874243/silhouette_vzugec.png";
 
-  constructor(private forumService: ForumService, private route: ActivatedRoute, userService: UserService, private zone: NgZone) {
+  constructor(userService: UserService, 
+              private forumService: ForumService, 
+              private route: ActivatedRoute, 
+              private zone: NgZone) {
 
-    if (userService.user != null) {
-      this.currentUserId = userService.user.uuid;
-    }
+    this.currentUser = userService.user;
+    this.canComment = !!this.currentUser;
 
     userService.onDeliverableUser$.subscribe(user => {
-      this.currentUserId = user.uuid;
+      this.currentUser = user;
+      this.canComment = !!this.currentUser;
     });
 
     this.loadData();
@@ -84,18 +88,18 @@ export class ForumListItemComponent implements AfterViewInit, OnDestroy {
       toolbar: 'undo redo | bold italic | alignleft aligncenter alignright alignjustify | bullist numlist outdent indent | link',
       skin_url: '../assets/skins/lightgray',
       setup: editor => {
-        this.editor = editor;
-        this.editor.on('keyup', () => {
+        this.tinyMceEditor = editor;
+        this.tinyMceEditor.on('keyup', () => {
 
           this.zone.run(() => {
-            let characterCount = this.editor.getContent({format: 'text'}).length;
+            let characterCount = this.tinyMceEditor.getContent({format: 'text'}).length;
 
-            this.characterCountMessage = characterCount > 15 ? `${500 - characterCount} characters left` : `Enter ${15 - characterCount} more characters`;
+            this.characterCountMessage = characterCount > this.minCharacterCount ? `${500 - characterCount} characters left` : `Enter ${this.minCharacterCount - characterCount} more characters`;
 
             // A user can submit an answer if their anwer is at least 25 characters in length
             // and they are logged in. If `this.canComment` is true, then we know a user is
             // logged in without needing to check again using the UserService.
-            this.canAnswer = characterCount > 5 && this.canComment;
+            this.canAnswer = characterCount > this.minCharacterCount && this.canComment;
           })
         });
       },
@@ -135,15 +139,18 @@ export class ForumListItemComponent implements AfterViewInit, OnDestroy {
   }
 
   onClickSubmitAnswer(event) {
+    if (!this.currentUser) {
+      return;
+    }
 
     let answer = {
-      content: this.editor.getContent(),
+      content: this.tinyMceEditor.getContent(),
       parent: this.entry.id,
-      owner: this.currentUserId,
+      owner: this.currentUser.uuid,
       title: null
     };
 
-    this.editor.setContent('');
+    this.tinyMceEditor.setContent('');
 
     this.forumService.createEntry(answer)
     .subscribe(

@@ -17,16 +17,12 @@ import { Globals } from '../globals';
 export class UserService {
   
   // Observable sources
-  private userStatusChangeNotiferSource = new Subject<boolean>();
+  private onUserLogoutSource = new Subject<void>();
   private onDeliverableUserSource = new Subject<User>();
 
   // Observable streams
-  userStatusChangeNotifier$ = this.userStatusChangeNotiferSource.asObservable();
+  onUserLogout$ = this.onUserLogoutSource.asObservable();
   onDeliverableUser$ = this.onDeliverableUserSource.asObservable();
-  
-  onUserDidChangeStatus(userDidLogin: boolean) {
-    this.userStatusChangeNotiferSource.next(userDidLogin);
-  }
 
   // User object
   private _user: User;
@@ -40,13 +36,29 @@ export class UserService {
   constructor(private http: Http, private cookieService: CookieService) {
     this.baseApiUrl = Globals.baseApiUrl;
 
-    // Get logged in user if XSRF-TOKEN is present
+    this.getAuthUser().subscribe((user: User) => {
+      this._user = user;
+      this.onDeliverableUserSource.next(this._user);
+    });
+  }
+
+  /**
+   * Returns an authenticated user based on an XSRF-TOKEN stored in cookies
+   */
+  getAuthUser(): Observable<User> {
+    // Throw error if client browser does not have xsrf-token
     if (!this.cookieService.get('XSRF-TOKEN')) {
-      this.http.get(this.baseApiUrl + '/me').subscribe(res => {
-        this._user = User.initFromObject(res.json());
-        this.onDeliverableUserSource.next(this._user);
-      });
+      return Observable.throw('missing xsrf-token');
     }
+
+    // Get logged in user if XSRF-TOKEN is present
+    return this.http.get(this.baseApiUrl + "/me")
+    .map(res => {
+      return User.initFromObject(res.json());
+    })
+    .catch(err => {
+      return this.handleError(err);
+    });
   }
 
   // Gets all users if client can authenticate using a JWT
@@ -58,7 +70,6 @@ export class UserService {
       return data.map(User.initFromObject);
     })
     .catch(err => {
-      console.log('adsfjildsajfkl');
       this.handleError(err);
     });
   }
@@ -81,6 +92,7 @@ export class UserService {
     .map(res => {
       let data = res.json();
       this._user = User.initFromObject(data);
+      this.onDeliverableUserSource.next(this._user);
       return data;
     })
     .catch(this.handleError);
@@ -91,14 +103,14 @@ export class UserService {
     delete this._user;
     this.cookieService.removeAll();
 
+    this.onUserLogoutSource.next();
+    this.onDeliverableUserSource.next(null);
+
     return this.http.get(this.baseApiUrl + '/auth/logout')
     .map((res) => {
       return res.json();
     })
-    .catch(this.handleError)
-    .finally(() => {
-      this.userStatusChangeNotiferSource.next(false);
-    });
+    .catch(this.handleError);
   }
   
   create(user: {firstname: string, lastname: string, email: string}, password: string): Observable<any> {

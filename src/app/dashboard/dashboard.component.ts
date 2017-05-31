@@ -33,15 +33,16 @@ export class DashboardComponent implements OnInit {
   ngOnInit() {
     this.user = this.userService.user;
     if (this.user) {
-      this.onLoadUser();
+      this.spinnerEnabled = false;
+      this.loadRecentActivity();
     } else {
-      this.router.navigate(['login']);
+      this.userService.onDeliverableUser$.subscribe(user => {
+        !user && this.router.navigate(['login']);
+        this.user = user;
+        this.spinnerEnabled = false;
+        this.loadRecentActivity();
+      });
     }
-  }
-
-  onLoadUser() {
-    this.spinnerEnabled = false;
-    this.loadRecentActivity();
   }
 
   loadRecentActivity() {

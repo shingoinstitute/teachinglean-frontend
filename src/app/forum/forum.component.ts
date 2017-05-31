@@ -35,8 +35,13 @@ export class ForumComponent implements OnInit, AfterViewInit {
     private http: Http,
     private router: Router) {
 
-    this.questionFormEnabled = userService.user != null;
-
+    this.questionFormEnabled = this.userService.user != null;
+    this.userService.onDeliverableUser$.subscribe(user => {
+      this.questionFormEnabled = true;
+    });
+    this.userService.onUserLogout$.subscribe(() => {
+      this.questionFormEnabled = false;
+    })
   }
 
   ngOnInit() {

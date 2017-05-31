@@ -28,7 +28,7 @@ export class ToolbarComponent {
     
     this.userDoesExist = userService.user != null
     userService.onDeliverableUser$.subscribe(user => {
-      this.userDoesExist = true;
+      this.userDoesExist = !!user;
     });
 
   }

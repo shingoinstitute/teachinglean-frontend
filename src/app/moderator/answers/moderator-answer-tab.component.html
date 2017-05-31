@@ -4,8 +4,10 @@
 </div>
 <ul class="md-margin" *ngIf="answers">
 	<li *ngFor="let answer of answers">
-		<p><b>Question:</b> <a routerLink="/forum/{{ answer.parent && answer.parent.id ? answer.parent.id : 'N/A' }}" class="text-sm">{{ answer.parent && answer.parent.title ? answer.parent.title : "N/A" }}</a></p>
-		<p><b>Author:</b> {{ '' }}</p>
+		<p><b>Question:</b> <a routerLink="{{ answer.routerLink }}" class="text-sm">{{ answer.linkTitle }}</a></p>
+		<p><b>Asked by:</b> {{ answer.ownerName }}</p>
+		
+		<p [style.margin-top]="'8px'"><b>Answer</b></p>
 		<div class="answer-content-wrapper" [innerHTML]="answer.content"></div>
 		<p class="text-sm grey-text">Answered on {{ answer.createdAtToString() }}</p>
 	</li>

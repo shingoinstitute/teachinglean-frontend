@@ -58,17 +58,17 @@ export class Entry {
     entry.isFlagged = obj.isFlagged || false;
     entry.markedCorrect = obj.markedCorrect || false;
 
-    if (obj.parent instanceof String) {
-      entry._parentId = obj.parent;
-    } else if (obj.parent && obj.parent.id) {
+    if (obj.parent && obj.parent.id) {
       delete obj.parent.parent;
       entry.parent = Entry.initFromObject(obj.parent);
+    } else if (obj.parent) {
+      entry._parentId = obj.parent;
     }
 
-    if (obj.owner instanceof String) {
-      entry._ownerId = obj.owner;
-    } else if (obj.owner && obj.owner.uuid) {
+    if (obj.owner && obj.owner.uuid) {
       entry.owner = User.initFromObject(obj.owner);
+    } else if (obj.owner) {
+      entry._ownerId = obj.owner;
     }
 
     entry.usersDidDownvote = obj.users_did_downvote || [];

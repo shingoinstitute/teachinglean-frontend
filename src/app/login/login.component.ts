@@ -28,19 +28,14 @@ export class LoginComponent implements OnInit {
 
   onClickLogin() {
     this.spinnerEnabled = true;
-    let observeLogin = this.userService.localLogin(this.username, this.password)
-    
-    observeLogin.subscribe(
-      (data) => {
-        this.userService.onUserDidChangeStatus(true);
-        this.router.navigate(['/dashboard']);
-      },
-      (error) => {
-        this.spinnerEnabled = false;
-        console.error(error);
-        this.loginError = error; 
-      }
-    );
+    this.userService.localLogin(this.username, this.password)
+    .subscribe((data) => {
+      this.router.navigate(['/dashboard']);
+    }, (error) => {
+      this.spinnerEnabled = false;
+      console.error(error);
+      this.loginError = error; 
+    });
   }
 
 }
