@@ -61,6 +61,15 @@ export class UserService {
     });
   }
 
+  getUserAsync(uuid: string): Promise<any> {
+    return this.http.get(this.baseApiUrl + '/user/' + uuid)
+    .toPromise()
+    .then(res => {
+      return User.initFromObject(res.json());
+    })
+    .catch(this.handleError);
+  }
+
   // Gets all users if client can authenticate using a JWT
   getUsersAsync(): Promise<any> {
     return this.http.get(this.baseApiUrl + '/user')

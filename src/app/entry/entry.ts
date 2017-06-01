@@ -7,6 +7,7 @@ import { Http } from '@angular/http';
 
 // Misc imports
 import { User } from '../user/user';
+import { Comment } from '../comment/comment';
 
 
 
@@ -24,7 +25,7 @@ export class Entry {
   answers: Entry[];
   usersDidUpvote: string[];
   usersDidDownvote: string[];
-  comments: string[];
+  comments: Comment[];
   createdAt: Date;
   updatedAt: Date;
 
@@ -40,6 +41,7 @@ export class Entry {
     this.answers = null;
     this.usersDidUpvote = null;
     this.usersDidDownvote = null;
+    this.comments = null;
     this.createdAt = null;
     this.updatedAt = null;
   }
@@ -73,6 +75,10 @@ export class Entry {
 
     entry.usersDidDownvote = obj.users_did_downvote || [];
     entry.usersDidUpvote = obj.users_did_upvote || [];
+
+    if (Array.isArray(obj.comments)) {
+      entry.comments = obj.comments.map(Comment.initFromObject);
+    }
 
     entry.createdAt = obj.createdAt ? new Date(obj.createdAt) : new Date();
     entry.updatedAt = obj.updatedAt ? new Date(obj.updatedAt) : null;

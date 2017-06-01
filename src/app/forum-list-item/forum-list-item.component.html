@@ -1,84 +1,20 @@
 <div fxLayout="column" class="container" (onEditorKeyup)="keyupHandler($event)">
   
-  <md-card class="md-margin-top md-margin-bottom">
+  <app-entry-card [entry]="entry" [style.margin-bottom]="'24px'"></app-entry-card>
 
-    <md-card-title [innerHTML]="entry.title"></md-card-title>    
+  
 
-    <md-divider></md-divider>
+  <p *ngIf="answers.length === 0">This question has not been answered yet.</p>
 
-    <md-card-content>
-      <div [innerHTML]="entry.content"></div>
-    </md-card-content>
+  <p class="flow-text" *ngIf="answers.length > 0">{{ answers.length }} Answer{{ answers.length > 1 ? 's' : '' }}</p>
 
-    <div fxLayout="column" fxLayoutAlign.gt-sm="end end">
-      <span fxFlex.gt-sm></span>
-      <div fxLayout="column" fxLayoutAlign="end end" class="entry-by">
-        <p class="grey-text text-xs">Asked {{ entry.owner ? "by " + entry.owner.username : "" }} on {{ entry.createdAtToString() }}</p>
-        <img src="{{ entry.owner ? entry.owner.pictureUrl : altUserPictureUrl }}">
-      </div>
-    </div>
+  <app-entry-card *ngFor="let answer of answers" 
+  [entry]="answer" 
+  [parentDidSelectEntry]="didMarkAnswerCorrect"
+  (onclickMarkAnswer)="onMarkAnswerHandler($event)"
+  (onclickDemarkAnswer)="onDemarkAnswerHandler($event)"></app-entry-card>
 
-    <md-divider></md-divider>
-    <div fxLayout="column" *ngIf="entry.comments && entry.comments.length > 0">
-      <p class="text-sm grey-text">Comments</p>
-      <p *ngFor="let comment of entry.comments">
-        {{ comment.content }}
-      </p>
-    </div>
-
-    <md-divider></md-divider>
-
-    <div fxLayout class="md-margin-top">
-      <input fxFlex 
-              [(ngModel)]="commentText"
-              name="commentText"
-              class="input-title input-wrapper"
-              type="text" 
-              placeholder="Add comment here...">
-
-      <div class="input-wrapper">
-        <button md-raised-button 
-        class="mat-primary white-text" 
-        [class.white-text]="canComment" 
-        [disabled]="!canComment"
-        (click)="onClickAddComment($event, entry)">
-          Add Comment
-        </button>
-      </div>
-
-    </div>
-
-    <p *ngIf="commentError" [style.color]="'red'" [style.font-weight]="300" [innerHTML]="commentError"></p>
-
-  </md-card>
-
-  <div *ngIf="answers.length === 0">
-    <p>This question has not been answered yet.</p>
-  </div>
-
-  <md-card *ngFor="let answer of answers" class="md-margin-top">
-      <div fxLayout fxLayout.lt-md="column">
-
-        <div fxFlex.gm-sm fxLayout>
-          <img *ngIf="answer.markedCorrect" id="checkmark-img" src="/assets/images/checkmark-64.png" alt="marked as correct">
-          <div fxFlex.gm-sm [innerHTML]="answer.content"></div>
-        </div>
-
-        <span fxFlex.gt-sm></span>
-
-        <div fxFlex.gm-sm fxLayout="column" fxLayoutAlign="end end" class="entry-by">
-          <p class="grey-text text-xs">Answered {{ answer.owner ? "by " + answer.owner.username : "" }} on {{ answer.createdAtToString() }}</p>
-          <img src="{{answer.owner ? answer.owner.pictureUrl : altUserPictureUrl }}"/>
-        </div>
-
-      </div>
-      <md-card-actions *ngIf="entry.owner.uuid == currentUserId">
-        <button md-raised-button class="mat-accent white-text" (click)="markCorrect(answer)" *ngIf="!answer.markedCorrect && !didMarkAnswerCorrect">Mark Correct</button>
-        <button md-raised-button class="mat-accent white-text" (click)="unmarkCorrect(answer)" *ngIf="answer.markedCorrect">Undo Marked Correct</button>
-      </md-card-actions>
-  </md-card>
-
-  <md-divider></md-divider>
+  
 
   <p class="md-margin-top"><strong>Have an answer?</strong></p>
   <div fxLayout="column" fxLayout.gt-sm>
@@ -92,8 +28,7 @@
       <span class="grey-text">{{ characterCountMessage }}</span>
     </span>
     <div>
-      <button id="submit-answer-button" md-raised-button class="mat-primary" [class.white-text]="canAnswer" (click)="onClickSubmitAnswer($event)" [disabled]="!canAnswer">Submit Answer</button>
-      <p class="md-margin">Answers must be a minimum of 15 characters.</p>
+      <button id="submit-answer-button" md-raised-button class="mat-primary" [class.white-text]="canSubmitAnswer" (click)="onClickSubmitAnswer($event)" [disabled]="!canSubmitAnswer">Submit Answer</button>
     </div>
   </div>
 </div>

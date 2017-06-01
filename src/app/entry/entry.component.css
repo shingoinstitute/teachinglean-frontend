@@ -12,6 +12,15 @@
 	margin-right: 8px;
 }
 
+.entry-card {
+   margin-top: 8px;
+   max-width: 850px;
+}
+
+.entry-card-answer {
+   
+}
+
 .entry-by {
 	margin: 4px;
 	padding: 4px;
@@ -27,4 +36,11 @@
 .entry-by p {
 	margin-top: 4px;
 	margin-bottom: 0;
+}
+
+p.comment-header {
+   font-size: 12px;
+   font-weight: 300;
+   color: grey;
+   margin-bottom: 12px;
 }

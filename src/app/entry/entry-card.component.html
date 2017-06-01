@@ -1,0 +1,57 @@
+<md-card class="entry-card" [class.entry-card-answer]="!!entry.parent">
+
+   <!--Title-->
+   <md-card-title [innerHTML]="entry.title"></md-card-title>    
+
+   <md-divider *ngIf="entry.title"></md-divider>
+
+   <div fxLayout>
+      <!--Show checkmark if answer is marked correct-->
+      <img *ngIf="entry.markedCorrect" id="checkmark-img" src="/assets/images/checkmark-64.png" alt="Selected Answer">
+      <!--Entry Content, show if entry is a question-->
+      <md-card-content [innerHTML]="entry.content"></md-card-content>
+   </div>
+
+
+   <!--User information card container-->
+   <div fxLayout="column" fxLayoutAlign.gt-sm="end end">
+      <!--flex to push user info card to the right-->
+      <span fxFlex.gt-sm></span>
+      <!--User info card-->
+      <app-user-info-card [user]="entry.owner" [entry]="entry"></app-user-info-card>
+   </div>
+
+
+
+   <md-divider></md-divider>
+
+   <!--Comments-->
+   <div fxLayout="column">
+      <p class="comment-header">Comments</p>
+      <app-comment *ngFor="let comment of entry.comments" [comment]="comment"></app-comment>
+   </div>
+
+   <p [style.color]="'red'" [style.font-weight]="200">{{ errMsg }}</p>
+
+   <md-card-actions>
+      <input 
+      fxFlex
+      [style.height]="'24px'"
+      [(ngModel)]="commentText"
+      name="commentText"
+      class="input-title input-wrapper"
+      type="text" 
+      placeholder="add comment here...">
+
+      <div class="input-wrapper">
+         <button md-raised-button class="mat-primary white-text" [class.white-text]="canComment" [disabled]="!canComment" (click)="onClickAddComment($event, entry)">
+         Add Comment
+         </button>
+      </div>
+      
+      <div class="input-wrapper" *ngIf="!!entry.parent && entry.owner && user && entry.owner.uuid == user.uuid">
+         <button md-raised-button class="mat-accent white-text" (click)="onclickMarkAnswerButton()" *ngIf="!entry.markedCorrect && !parentDidSelectEntry">Mark Correct</button>
+         <button md-raised-button class="mat-accent white-text" (click)="onclickMarkAnswerButton()" *ngIf="entry.markedCorrect">Undo Marked Correct</button>
+      </div>
+   </md-card-actions>
+</md-card>

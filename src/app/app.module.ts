@@ -30,6 +30,9 @@ import { ModeratorComponent  }     from './moderator/moderator.component';
 import { ModeratorQuestionTab }    from './moderator/questions/moderator-questions.component';
 import { ModeratorAnswerTab }      from './moderator/answers/moderator-answers.component';
 import { ModeratorCommentTab }     from './moderator/comments/moderator-comments.component'; 
+import { CommentComponent }        from './comment/comment.component';
+import { EntryCardComponent }      from './entry/entry-card.component';
+import { UserInfoCardComponent }   from './entry/user-info-card.component';
 
 // Custom Services
 import { SidenavService }          from './services/sidenav.service';
@@ -67,7 +70,10 @@ import { UserService }             from './services/user.service';
     DisableUserDialog,
     ModeratorQuestionTab, 
     ModeratorAnswerTab, 
-    ModeratorCommentTab
+    ModeratorCommentTab,
+    CommentComponent,
+    EntryCardComponent,
+    UserInfoCardComponent
   ],
   entryComponents: [DisableUserDialog],
   providers: [
