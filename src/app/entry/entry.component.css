@@ -17,9 +17,9 @@
    max-width: 850px;
 }
 
-.entry-card-answer {
+/*.entry-card-answer {
    
-}
+}*/
 
 .entry-by {
 	margin: 4px;
@@ -43,4 +43,75 @@ p.comment-header {
    font-weight: 300;
    color: grey;
    margin-bottom: 12px;
+}
+
+button {
+   font-weight: 300;
+}
+
+.material-icons {
+   color: grey;
+}
+
+.material-icons {
+   font-size: 18px;
+}
+
+#comment-button {
+   color: #263238;
+}
+
+#edit-button,
+#edit-button .material-icons {
+   color: #66BB6A;
+}
+
+#delete-button,
+#delete-button .material-icons {
+   color: #EF5350;
+}
+
+#mark-correct-button,
+#mark-correct-button .material-icons {
+   color: #546e7a;
+}
+
+#save-button,
+#save-button .material-icons {
+   background: #66BB6A;
+   color: white;
+}
+
+#comment-wrapper {
+   padding-bottom: 8px;
+   margin-bottom: 8px;
+   border-bottom: 1px solid #e4e6e8;
+}
+
+textarea {
+   margin-top: 0;
+   margin-bottom: 0;
+   height: 36px;
+   font-weight: 300;
+   font-size: 1em;
+}
+
+textarea.entry-content-area {
+   opacity: 0;
+   width: 0;
+}
+
+textarea::placeholder {
+   font-size: 0.85em;
+}
+
+app-comment {
+   border-bottom: 1px dotted #e4e6e8;
+   padding-bottom: 8px;
+   margin-bottom: 8px;
+}
+
+.disabled {
+   background-color: #f0f0f0;
+   color: #c0c0c0 !important;
 }

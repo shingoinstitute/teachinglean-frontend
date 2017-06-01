@@ -17,19 +17,36 @@
   
 
   <p class="md-margin-top"><strong>Have an answer?</strong></p>
+
+
   <div fxLayout="column" fxLayout.gt-sm>
     <span id="qa-answer-wrapper">
+
       <textarea id="question-textarea"
                 required
                 form="ask-question-form"
                 maxlength="500"
-                name="Question text">
-      </textarea>
+                name="Question text"></textarea>
+
       <span class="grey-text">{{ characterCountMessage }}</span>
     </span>
+
+
+
     <div>
-      <button id="submit-answer-button" md-raised-button class="mat-primary" [class.white-text]="canSubmitAnswer" (click)="onClickSubmitAnswer($event)" [disabled]="!canSubmitAnswer">Submit Answer</button>
+
+      <button id="submit-answer-button" 
+      md-raised-button 
+      class="mat-primary" 
+      [style.margin-left]="'8px'"
+      [class.white-text]="canSubmitAnswer" 
+      (click)="onClickSubmitAnswer($event)" 
+      [disabled]="!canSubmitAnswer">Submit Answer</button>
+
     </div>
+
   </div>
+
+
 </div>
 

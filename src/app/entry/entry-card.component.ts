@@ -1,6 +1,8 @@
-import { Component, Input, OnDestroy, EventEmitter, Output } from '@angular/core';
+import { Component, Input, OnDestroy, EventEmitter, Output, OnInit } from '@angular/core';
+import { trigger, state, style, animate, transition } from '@angular/animations';
 import { User } from '../user/user';
 import { Entry } from './entry';
+import { Comment } from '../comment/comment';
 import { UserService } from '../services/user.service';
 import { ForumService } from '../services/forum.service';
 import { Subscription } from 'rxjs';
@@ -10,7 +12,7 @@ import { Subscription } from 'rxjs';
    templateUrl: './entry-card.component.html',
    styleUrls: ['./entry.component.css']
 })
-export class EntryCardComponent implements OnDestroy {
+export class EntryCardComponent implements OnInit, OnDestroy {
    @Output() onclickMarkAnswer = new EventEmitter<Entry>();
    @Output() onclickDemarkAnswer = new EventEmitter<Entry>();
    @Input() entry: Entry;
@@ -18,6 +20,8 @@ export class EntryCardComponent implements OnDestroy {
    get canComment(): boolean { return !!this.user }
    user: User;
    commentText: string;
+   editor;
+   isEditing = false;
    errMsg: string;
    userSubscription: Subscription;
 
@@ -28,8 +32,46 @@ export class EntryCardComponent implements OnDestroy {
       });
    }
 
+   ngOnInit() { }
+
    ngOnDestroy() {
       this.userSubscription.unsubscribe();
+   }
+
+   onclickEdit() {
+      this.isEditing = true;
+      tinymce.init({
+         selector: '#entry-content-' + this.entry.id,
+         plugins: [
+         'advlist autolink lists link charmap print preview anchor',
+         'searchreplace visualblocks code fullscreen',
+         'table paste code'
+         ],
+         menubar: false,
+         height: "300px",
+         toolbar: 'undo redo | bold italic | alignleft aligncenter alignright alignjustify | bullist numlist outdent indent | link',
+         skin_url: '../assets/skins/lightgray',
+         setup: editor => {
+            this.editor = editor;
+         },
+      });
+      this.editor && this.editor.setContent(this.entry.content || "");
+   }
+
+   onclickSave() {
+      this.entry.content = this.editor.getContent();
+      this.isEditing = false;
+      tinymce.remove(this.editor);
+      this.forumService.updateEntry(this.entry).subscribe(data => {
+         this.entry = Entry.initFromObject(data);
+      }, err => {
+         console.error(err);
+      });
+   }
+
+   onclickCancel() {
+      this.isEditing = false;
+      tinymce.remove(this.editor);
    }
 
    onClickAddComment(event, entry) {
@@ -41,7 +83,11 @@ export class EntryCardComponent implements OnDestroy {
         owner: user.uuid,
         content: content
       }).subscribe(data => {
-         console.log(data);
+         delete this.commentText;
+         let comment: Comment = Comment.initFromObject(data);
+         this.entry.comments.push(comment);
+      }, err => {
+         this.errMsg = "An error occured, please try again."
       });
     } else {
       this.errMsg = "You cannot submit an empty comment!";

@@ -6,11 +6,7 @@ import {
   NgZone
 } from '@angular/core';
 import { ActivatedRoute, Params } from '@angular/router';
-// import { Subject } from 'rxjs/Subject';
-// import { Observable } from 'rxjs/Observable';
-// import { Subscription } from 'rxjs/Subscription';
-
-import {ForumService} from '../services/forum.service';
+import { ForumService } from '../services/forum.service';
 import { UserService } from '../services/user.service';
 import { Entry } from '../entry/entry';
 import { User } from '../user/user';
@@ -51,7 +47,6 @@ export class ForumListItemComponent implements OnInit {
   }
 
   ngOnInit() {
-    tinymce.remove();
     tinymce.init({
       selector: '#question-textarea',
       plugins: [
@@ -115,8 +110,6 @@ export class ForumListItemComponent implements OnInit {
       return;
     }
 
-    this.tinyMceEditor.setContent('');
-
     this.forumService.createEntry({
       content: this.tinyMceEditor.getContent(),
       parent: this.entry.id,
@@ -126,10 +119,8 @@ export class ForumListItemComponent implements OnInit {
     .subscribe(data => {
         this.loadData();
     });
-  }
 
-  onClickMarkCorrectHandler(event) {
-    console.log(event);
+    this.tinyMceEditor.setContent('');
   }
 
   onMarkAnswerHandler(answer: Entry) {

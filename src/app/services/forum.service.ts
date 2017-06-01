@@ -90,7 +90,17 @@ export class ForumService {
     .map(res => {
       let data = res.json();
       return data;
-    });
+    })
+    .catch(this.handleError);
+  }
+
+  updateEntry(entry: Entry) {
+    return this.http.put(this.baseUrl + '/entry/' + entry.id, {
+      content: entry.content,
+      title: entry.title
+    })
+    .map(res => res.json())
+    .catch(this.handleError);
   }
 
   readEntry(id) {
