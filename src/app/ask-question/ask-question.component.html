@@ -1,9 +1,8 @@
 
 <div fxLayout class="container">
 
-  <form fxLayout="column" id="ask-question-form" class="input-container">
+  <form fxLayout="column" id="ask-question-form" class="input-container" *ngIf="user">
     <p class="flow-text">Have a question? Ask the community right here.</p>
-    <p>{{ user ? user.name : "asdf" }}</p>
     <div fxLayout class="input-wrapper">
       <p>Title</p>
       <input fxFlex 
@@ -29,5 +28,7 @@
     </div>
 
   </form>
+
+  <div>Have a question? <a routerLink="/login">Sign in</a> to the ask the community.</div>
 
 </div>

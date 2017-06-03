@@ -1,0 +1,84 @@
+<md-tab-group (selectChange)="onTabChange($event)" [selectedIndex]="initialTabIndex">
+
+   <md-tab label="Profile">
+
+      <div class="profile-content-wrapper" fxLayout>
+
+         <!--Profile Picture-->
+         <div [style.margin-right]="'24px'">
+            <div class="img-wrapper">
+               <img src="{{ user.pictureUrl }} ">
+            </div>
+            <!--Name-->
+            <p [innerHTML]="user.name"></p>
+         </div>
+
+         <!--User Information-->
+         <div fxFlex="calc3Cols" fxLayout="column">
+
+            <div class="info-group">
+               <!--Username-->
+               <p class="flow-text" [innerHTML]="user.username"></p>
+               <!--Email-->
+               <p class="grey-text" [innerHTML]="user.email"></p>
+            </div>
+
+            <div class="info-group" *ngIf="user && user.organization">
+               <p><b>Organization</b></p>
+               <p [innerHTML]="user.organization"></p>
+            </div>
+
+            <div class="info-group">
+               <!--Biography-->
+               <p><strong>About Me</strong></p>
+               <span [innerHTML]="user.biography"></span>
+            </div>
+
+         </div>
+
+      </div>
+
+   </md-tab>
+
+   <md-tab label="Edit Profile">
+
+      <div class="profile-content-wrapper" fxLayout="column">
+
+         <div class="info-group" fxLayout="column">
+            <md-input-container>
+               <input mdInput placeholder="First name" [(ngModel)]="user.firstname">
+            </md-input-container>
+
+            <md-input-container>
+               <input mdInput placeholder="Last name" [(ngModel)]="user.lastname">
+            </md-input-container>
+
+            <md-input-container>
+               <input mdInput placeholder="Username" [(ngModel)]="user._username">
+            </md-input-container>
+
+            <md-input-container>
+               <input mdInput placeholder="Email" [(ngModel)]="user.email">
+            </md-input-container>
+
+            <md-input-container>
+               <input mdInput placeholder="Organization" [(ngModel)]="user.organization">
+            </md-input-container>
+
+            <textarea tinyMce id="bio-editor" [(ngModel)]="user.biography" (onCheckFocus)="editTabIsSelected($event)" name="biography"></textarea>
+
+         </div>
+
+         <!--Actions-->
+         <div class="info-group">
+            <button md-button id="save-button">
+               <i class="material-icons">save</i> Save
+            </button>
+         </div>
+
+      </div>
+
+
+
+   </md-tab>
+</md-tab-group>

@@ -115,11 +115,6 @@ h3.mat-headline {
   font-family: 'Roboto', sans-serif;
 }
 
-input:focus {
-  border: 1px solid cornflowerblue;
-  outline: none;
-}
-
 .textarea-question {
   max-width: 500px;
 }

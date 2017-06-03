@@ -30,13 +30,11 @@ export class AskQuestionComponent implements OnInit, AfterViewInit, OnDestroy {
   constructor(private userService: UserService, private appRouter: AppRoutingService, private zone: NgZone) {
     // TODO :: Implement appRouter to redirect user to login page then back to Q&A Forum after sign in
     this.user = userService.user;
-    
-    if (!this.user) {
-      userService.onDeliverableUser$.subscribe(user => {
-        console.log('on deliverable', user);
-        this.user = user;
-      });
-    }
+    userService.onDeliverableUser$.subscribe(user => {
+      this.user = user;
+    }, err => {
+      console.log(err);
+    });
   }
 
   ngOnInit() {

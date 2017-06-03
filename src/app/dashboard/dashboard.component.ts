@@ -32,20 +32,19 @@ export class DashboardComponent implements OnInit {
 
   ngOnInit() {
     this.user = this.userService.user;
-    if (this.user) {
-      this.spinnerEnabled = false;
+    this.userService.getAuthUser().subscribe(user => {
+      this.user = user;
       this.loadRecentActivity();
-    } else {
-      this.userService.onDeliverableUser$.subscribe(user => {
-        !user && this.router.navigate(['login']);
-        this.user = user;
-        this.spinnerEnabled = false;
-        this.loadRecentActivity();
-      });
-    }
+    }, err => {
+      console.error(err + ', please sign in.');
+      this.router.navigate(['login']);
+    });
+
+    this.user && this.loadRecentActivity();
   }
 
   loadRecentActivity() {
+    this.spinnerEnabled = false;
     this.forum.requestRecent(10, this.user.uuid)
     .subscribe(data => { 
       this.recent = data.map(Entry.initFromObject); this.loadQuestions(); 

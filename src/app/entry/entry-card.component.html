@@ -45,23 +45,14 @@
    <md-divider></md-divider>
 
    <!--Comments-->
-   <div fxLayout="column">
+   <div fxLayout="column" *ngIf="!!entry.comments && entry.comments.length > 0">
       <p class="comment-header">Comments</p>
       <app-comment *ngFor="let comment of entry.comments" [comment]="comment"></app-comment>
    </div>
 
    <p [style.color]="'red'" [style.font-weight]="200">{{ errMsg }}</p>
 
-   <md-card-actions fxLayout="column">
-      
-
-         <!--<div class="input-wrapper">
-            <button md-button class="mat-primary white-text" [class.white-text]="canComment" [disabled]="!canComment" (click)="onClickAddComment($event, entry)">
-               <i class="material-icons">chat_bubble</i> Comment
-            </button>
-         </div>-->
-
-      
+   <md-card-actions fxLayout="column" *ngIf="user">
       <div fxLayoutAlign="start start" id="comment-wrapper">
          <!--Comment Button-->
          <button md-button id="comment-button"
@@ -73,20 +64,19 @@
 
          <!--Comment Input Box-->
          <textarea 
-         fxFlex
-         [(ngModel)]="commentText"
-         name="commentText"
-         class="input-title input-wrapper"
-         placeholder="start typing to post comment..."
+         fxFlex 
+         [(ngModel)]="commentText" 
+         name="commentText" 
+         class="input-title input-wrapper" 
+         placeholder="start typing to post comment..." 
          type="text"></textarea>
 
       </div>
 
-      <div *ngIf="entry.owner && entry.owner.uuid === user.uuid">
+      <div *ngIf="isOwner(entry)">
          <!--Edit Button-->
          <button md-button id="edit-button" (click)="onclickEdit($event)">
-            <i class="material-icons">edit</i> 
-            <span id="edit-button-text">Edit</span>
+            <i class="material-icons">edit</i> Edit
          </button>
 
          <!--Delete Button-->

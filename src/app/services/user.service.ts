@@ -39,6 +39,8 @@ export class UserService {
     this.getAuthUser().subscribe((user: User) => {
       this._user = user;
       this.onDeliverableUserSource.next(this._user);
+    }, err => {
+      this.onDeliverableUserSource.next(null);
     });
   }
 

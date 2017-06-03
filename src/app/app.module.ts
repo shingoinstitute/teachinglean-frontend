@@ -5,6 +5,9 @@ import { FormsModule }             from '@angular/forms';
 import { HttpModule, JsonpModule } from '@angular/http';
 import { CookieService }           from 'angular2-cookie/services/cookies.service';
 import 'hammerjs';
+import 'rxjs/add/observable/of';
+import 'rxjs/add/operator/distinct';
+import 'rxjs/add/operator/distinctUntilChanged';
 
 import { AngularMaterialModule }   from './config/angular-material.module';
 import { FlexLayoutModule }        from '@angular/flex-layout';
@@ -33,6 +36,10 @@ import { ModeratorCommentTab }     from './moderator/comments/moderator-comments
 import { CommentComponent }        from './comment/comment.component';
 import { EntryCardComponent }      from './entry/entry-card.component';
 import { UserInfoCardComponent }   from './entry/user-info-card.component';
+import { UserProfileComponent }    from './user/user-profile.component';
+
+// Directives
+import { TinyMceDirective }        from './tinymce.directive';
 
 // Custom Services
 import { SidenavService }          from './services/sidenav.service';
@@ -73,7 +80,9 @@ import { UserService }             from './services/user.service';
     ModeratorCommentTab,
     CommentComponent,
     EntryCardComponent,
-    UserInfoCardComponent
+    UserInfoCardComponent,
+    UserProfileComponent,
+    TinyMceDirective
   ],
   entryComponents: [DisableUserDialog],
   providers: [

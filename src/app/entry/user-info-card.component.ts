@@ -17,7 +17,7 @@ export class UserInfoCardComponent {
    @Input() entry: Entry;
 
    get pictureUrl() { 
-      return this.user && this.user.pictureUrl ? this.user.pictureUrl : "https://res.cloudinary.com/shingo/image/upload/v1414874243/silhouette_vzugec.png"; 
+      return this.user && this.user.pictureUrl ? this.user.pictureUrl : ""; 
    }
 
    get detailText() {

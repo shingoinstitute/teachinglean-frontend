@@ -29,13 +29,20 @@ export class EntryCardComponent implements OnInit, OnDestroy {
       this.user = userService.user;
       this.userSubscription = userService.onDeliverableUser$.subscribe(user => {
          this.user = user;
-      });
+      }, err => {return;});
    }
 
    ngOnInit() { }
 
    ngOnDestroy() {
       this.userSubscription.unsubscribe();
+   }
+
+   isOwner(entry: Entry) {
+     if (this.entry && this.user) {
+       return !!this.entry.owner && this.entry.owner.uuid === this.user.uuid;
+     }
+     return false;
    }
 
    onclickEdit() {

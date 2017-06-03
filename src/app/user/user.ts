@@ -6,6 +6,8 @@ export class User implements UserInterface {
     _username;
     pictureUrl;
     email;
+    biography;
+    organization;
     role;
     reputation;
     accountIsActive;
@@ -14,11 +16,15 @@ export class User implements UserInterface {
     lastLogin;
 
     get name() {
-      return this.firstname + ' ' + this.lastname;
+      return this.username;
     }
 
     get username() {
       return this._username.length > 0 ? this._username : this.name;
+    }
+
+    set username(username: string) {
+      this._username = username;
     }
 
     get isAdmin() {
@@ -29,15 +35,17 @@ export class User implements UserInterface {
       this.uuid = '';
       this.firstname = '';
       this.lastname = '';
+      this._username = '';
       this.email = '';
       this.role = '';
-      this.pictureUrl = '';
+      this.biography = '<p class="grey-text"><i>Biography not entered.</i></p>';
+      this.organization = '';
+      this.pictureUrl = '/assets/images/silhouette_vzugec.png';
       this.reputation = 0;
       this.accountIsActive = false;
     }
 
     static initFromObject(obj: any) {
-
       let data = obj.user ? obj.user : obj;
 
       if (!data.uuid) {
@@ -52,7 +60,11 @@ export class User implements UserInterface {
       user._username = data.username || "";
       user.email = data.email || "";
       user.role = data.role || "member";
-      user.pictureUrl = data.pictureUrl;
+      if (!data.pictureUrl.includes('cloudinary') && !data.pictureUrl.includes('silhouette')) {
+        user.pictureUrl = data.pictureUrl || user.pictureUrl;
+      }
+      user.biography = data.bio || user.biography;
+      user.organization = data.organization || "";
       user.reputation = data.reputation;
       user.accountIsActive = data.accountIsActive;
       user.createdAt = Date.parse(data.createdAt);
@@ -92,9 +104,11 @@ interface UserInterface {
   firstname: string;
   lastname: string;
   username: string;
+  organization: string;
   pictureUrl: string;
   email: string;
   role: string;
+  biography: string;
   reputation: number;
   accountIsActive: boolean;
   createdAt?: Date;

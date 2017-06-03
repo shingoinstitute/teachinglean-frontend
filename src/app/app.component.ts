@@ -53,6 +53,12 @@ export class AppComponent implements OnInit {
     iconRegistry.addSvgIcon('logout', sanitizer.bypassSecurityTrustResourceUrl('assets/images/icons/logout.svg'));
     iconRegistry.addSvgIcon('menu', sanitizer.bypassSecurityTrustResourceUrl('assets/images/icons/menu.svg'));
     iconRegistry.addSvgIcon('search', sanitizer.bypassSecurityTrustResourceUrl('assets/images/icons/ic_search_black_24px.svg'));
+    iconRegistry.addSvgIcon('edit', sanitizer.bypassSecurityTrustResourceUrl('assets/images/icons/ic_edit_black_18px.svg'));
+    iconRegistry.addSvgIcon('checkmark', sanitizer.bypassSecurityTrustResourceUrl('assets/images/icons/ic_check_circle_black_18px.svg'));
+    iconRegistry.addSvgIcon('comment', sanitizer.bypassSecurityTrustResourceUrl('assets/images/icons/ic_comment_black_18px.svg'));
+    iconRegistry.addSvgIcon('delete', sanitizer.bypassSecurityTrustResourceUrl('assets/images/icons/ic_delete_black_18px.svg'));
+    iconRegistry.addSvgIcon('save', sanitizer.bypassSecurityTrustResourceUrl('assets/images/icons/ic_save_black_18px.svg'));
+    iconRegistry.addSvgIcon('undo', sanitizer.bypassSecurityTrustResourceUrl('assets/images/icons/ic_undo_black_18px.svg'));
 
     let toggleListener = sidenavService
     .toggleSidenavNotification$
@@ -77,6 +83,8 @@ export class AppComponent implements OnInit {
 
     this.userService.onDeliverableUser$.subscribe(user => {
       this.user = user;
+    }, err => {
+      console.log(err);
     });
 
     this.windowWidth = window.innerWidth;

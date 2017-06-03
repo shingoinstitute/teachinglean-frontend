@@ -29,6 +29,8 @@ export class ToolbarComponent {
     this.userDoesExist = userService.user != null
     userService.onDeliverableUser$.subscribe(user => {
       this.userDoesExist = !!user;
+    }, err => {
+      console.log(err);
     });
 
   }
@@ -47,12 +49,12 @@ export class ToolbarComponent {
   }
 
   onClickLogout() {
-    this.userService.logoutUser()
-    .subscribe(data => {
+    this.userService.logoutUser().subscribe(data => {
       console.log(data);
     }, err => {
       console.error(err);
     });
+    
     this.router.navigate(['/']);
   }
 

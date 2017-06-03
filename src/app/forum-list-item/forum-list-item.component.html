@@ -16,10 +16,11 @@
 
   
 
-  <p class="md-margin-top"><strong>Have an answer?</strong></p>
+  <p class="md-margin-top" *ngIf="!user"><strong>Have an answer? <a routerLink="/login">Sign in</a> to submit one.</strong></p>
+  <p class="md-margin-top" *ngIf="user"><strong>Have an answer?</strong></p>
 
 
-  <div fxLayout="column" fxLayout.gt-sm>
+  <div fxLayout="column" fxLayout.gt-sm *ngIf="user">
     <span id="qa-answer-wrapper">
 
       <textarea id="question-textarea"
@@ -46,7 +47,8 @@
     </div>
 
   </div>
-
+  
+  <span role="vertical-spacer" [style.margin-bottom]="'118px'"></span>
 
 </div>
 
