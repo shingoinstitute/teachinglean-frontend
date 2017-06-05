@@ -16,11 +16,11 @@ export class User implements UserInterface {
     lastLogin;
 
     get name() {
-      return this.username;
+      return `${this.firstname} ${this.lastname}`;
     }
 
     get username() {
-      return this._username.length > 0 ? this._username : this.name;
+      return this._username && this._username.length > 0 ? this._username : this.name;
     }
 
     set username(username: string) {
@@ -47,7 +47,7 @@ export class User implements UserInterface {
 
     static initFromObject(obj: any) {
       let data = obj.user ? obj.user : obj;
-
+      
       if (!data.uuid) {
         return undefined;
       }
@@ -92,7 +92,9 @@ export class User implements UserInterface {
         role: this.role,
         pictureUrl: this.pictureUrl,
         reputation: this.reputation,
-        accountIsActive: this.accountIsActive
+        accountIsActive: this.accountIsActive,
+        organization: this.organization,
+        bio: this.biography
       }
     }
 

@@ -85,12 +85,27 @@ export class UserService {
     });
   }
 
-  updateUser(user: User) {
-    return this.http.put(this.baseApiUrl + '/user/' + user.uuid, user.toObject())
+  updateUserAsync(user: User) {
+    let params = user.toObject();
+    delete params.uuid;
+    if (user.role != 'systemAdmin' || user.role != 'admin') delete params.role;
+    return this.http.put(this.baseApiUrl + '/user/' + user.uuid, params)
     .toPromise()
     .then(res => {
       let data = res.json();
-      return data.map(User.initFromObject)
+      return User.initFromObject(data);
+    })
+    .catch(this.handleError);
+  }
+
+  uploadPhotoAsync(file) {
+    let data = new FormData();
+    data.append('profile', file);
+    return this.http.post(this.baseApiUrl + '/user/photoUpload', data)
+    .toPromise()
+    .then(data => {
+      console.log(data);
+      return data;
     })
     .catch(this.handleError);
   }

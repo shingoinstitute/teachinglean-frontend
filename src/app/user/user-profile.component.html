@@ -1,4 +1,4 @@
-<md-tab-group (selectChange)="onTabChange($event)" [selectedIndex]="initialTabIndex">
+<md-tab-group (selectChange)="onclickTab($event)" [selectedIndex]="0">
 
    <md-tab label="Profile">
 
@@ -45,6 +45,13 @@
       <div class="profile-content-wrapper" fxLayout="column">
 
          <div class="info-group" fxLayout="column">
+            <div class="img-wrapper">
+               <img src="{{ user.pictureUrl }}">
+            </div>
+            <input (change)="uploadPhoto()" type="file" #fileUpload>
+         </div>
+
+         <div class="info-group" fxLayout="column">
             <md-input-container>
                <input mdInput placeholder="First name" [(ngModel)]="user.firstname">
             </md-input-container>
@@ -65,13 +72,17 @@
                <input mdInput placeholder="Organization" [(ngModel)]="user.organization">
             </md-input-container>
 
-            <textarea tinyMce id="bio-editor" [(ngModel)]="user.biography" (onCheckFocus)="editTabIsSelected($event)" name="biography"></textarea>
+            <textarea tinyMce 
+            id="bio-editor" 
+            [(ngModel)]="user.biography" 
+            *ngIf="shouldShowTinyEditor"
+            name="biography"></textarea>
 
          </div>
 
          <!--Actions-->
          <div class="info-group">
-            <button md-button id="save-button">
+            <button md-button id="save-button" (click)="onclickSave()">
                <i class="material-icons">save</i> Save
             </button>
          </div>

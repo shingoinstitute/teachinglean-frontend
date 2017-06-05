@@ -38,7 +38,7 @@ export class AdminPanelComponent implements OnInit {
   }
 
   updateUser(user: User) {
-    this.userService.updateUser(user)
+    this.userService.updateUserAsync(user)
     .then((user: User) => {
       user = user;
     })
