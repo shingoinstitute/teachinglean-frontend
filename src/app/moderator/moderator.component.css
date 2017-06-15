@@ -75,3 +75,7 @@ ul {
 
 	background-image: -webkit-radial-gradient(12px 12px, circle cover, orange, red 95%);
 }
+
+table {
+	width: auto;
+}

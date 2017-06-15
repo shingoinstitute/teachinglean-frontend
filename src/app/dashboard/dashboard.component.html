@@ -5,7 +5,7 @@
   </div>
 
   <!--Main Tab Group-->
-  <md-tab-group [dynamicHeight]="true" [selectedIndex]="1" *ngIf="user">
+  <md-tab-group [dynamicHeight]="true" [selectedIndex]="selectedDashboardTab" *ngIf="user" (selectChange)="onclickMainTabGroup($event)">
 
     <!--Dashboard Tab-->
     <md-tab label="Dashboard">

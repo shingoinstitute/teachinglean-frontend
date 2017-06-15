@@ -23,6 +23,7 @@ import { MdSnackBar } from '@angular/material';
 import { UserService } from '../services/user.service';
 import { ForumService } from '../services/forum.service';
 import { User } from '../user/user';
+import { Entry } from '../entry/entry';
 import { AppRoutingService } from '../services/app-routing.service';
 
 @Component({
@@ -32,10 +33,13 @@ import { AppRoutingService } from '../services/app-routing.service';
   providers: [AppRoutingService],
   animations: [
     trigger('questionState', [
-      state('q-active', style({ opacity: 1 })),
-      state('q-inactive', style({ opacity: 0 })),
-      transition('* => q-inactive', animate(200)),
-      transition('* => q-active', animate(200))
+      state('active', style({ opacity: 1 })),
+      state('inactive', style({ opacity: 0, display: 'none' })),
+      transition('* => inactive', [
+        style({ opacity: 1 }),
+        animate(200)
+      ]),
+      transition('* => active', animate(0))
     ])
   ]
 })
@@ -46,7 +50,8 @@ export class AskQuestionComponent implements OnInit, AfterViewInit, OnDestroy {
   private editor;
   private title = '';
   private content = '';
-  
+  private submittedQuestion: Entry;
+  questionState = 'active';
   constructor(
     private userService: UserService, 
     private appRouter: AppRoutingService, 
@@ -101,22 +106,15 @@ export class AskQuestionComponent implements OnInit, AfterViewInit, OnDestroy {
         content: this.content,
         parent: null
       }).subscribe(entry => {
-        this.title = this.content = '';
-        this.snackbar.open('Question Submitted', null, {
-          duration: 2500
+        this.submittedQuestion = Entry.initFromObject(entry);
+        this.questionState = 'inactive';
+        this.snackbar.open('Question Submitted!', 'Okay', {
+          duration: 5000
         });
       }, error => {
         console.error(error);
       });
     }
-
-    // this.forumService.createEntry({
-    //   owner: this.userService.user.uuid,
-    //   title: question.title,
-    //   content: question.content,
-    //   parent: null
-    // })
-    // .subscribe(entry => console.log(entry), error => console.log(error));
   }
   
 

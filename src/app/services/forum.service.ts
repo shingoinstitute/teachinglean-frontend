@@ -129,22 +129,24 @@ export class ForumService {
     .catch(this.handleError);
   }
 
-  destroyEntry(entry) {
-    // return $http({
-    //   method: 'delete',
-    //   dataType: 'json',
-    //   url: '/entry',
-    //   data: entry
-    // });
+  destroyEntry(entryId: string) {
+    return this.http.delete(this.baseUrl + '/entry/' + entryId, {
+      responseType: ResponseContentType.Json
+    })
+    .map(res => {
+      return res.json();
+    })
+    .catch(this.handleError);
   }
 
-  destroyComment(comm) {
-    // return $http({
-    //   method: 'delete',
-    //   dataType: 'json',
-    //   url: '/comment',
-    //   data: comm
-    // });
+  destroyComment(commId: string) {
+    return this.http.delete(this.baseUrl + '/comment/' + commId, {
+      responseType: ResponseContentType.Json
+    })
+    .map(res => {
+      return res.json();
+    })
+    .catch(this.handleError);
   }
 
   createComment(comment: { parent: string, owner: string, content: string }) {

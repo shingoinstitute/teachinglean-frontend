@@ -2,12 +2,12 @@
 
 <div fxLayout="column" fxLayout.gt-sm class="container" >
 
-  <div fxFlexOrder.lt-md="2" fxLayout="column" class="search-wrapper">
+  <div fxFlexOrder.lt-md="2" fxFlex fxLayout="column" class="search-wrapper">
 
-    <i class="material-icons">search</i>
+    <!--<i class="material-icons">search</i>
     <md-input-container>
       <input mdInput placeholder="Search...">
-    </md-input-container>
+    </md-input-container>-->
 
     <md-tab-group [dynamicHeight]="true" [selectedIndex]="0">
       <md-tab label="Top Questions">
@@ -32,7 +32,7 @@
 
   </div>
 
-  <div fxFlexOrder.lt-md="1" fxLayout="column" class="md-margin" *ngIf="questionFormEnabled">
+  <div fxFlexOrder.lt-md="1" fxFlex fxLayout="column" class="md-margin" *ngIf="questionFormEnabled">
     <ask-question></ask-question>
   </div>
 

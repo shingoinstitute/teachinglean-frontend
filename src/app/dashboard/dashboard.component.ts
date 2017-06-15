@@ -2,12 +2,12 @@ import {
   Component, 
   AfterViewInit,
   OnDestroy, 
-  OnInit 
+  OnInit
 } from '@angular/core';
 import { Router } from '@angular/router';
 import { Subscription } from 'rxjs/Subscription';
 import { Observable } from 'rxjs/Observable';
-
+import { CookieService } from 'angular2-cookie/services/cookies.service';
 import { UserService } from "../services/user.service";
 import { ForumService } from '../services/forum.service';
 import { User } from "../user/user";
@@ -21,16 +21,19 @@ import { Entry } from '../entry/entry';
 export class DashboardComponent implements OnInit {
 
   spinnerEnabled = true;
-
+  selectedDashboardTab = 0;
   user: User;
   recent: Entry[] = [];
   questions: Entry[] = [];
   answers: Entry[] = [];
   comments: Entry[] = [];
 
-  constructor(private userService: UserService, private router: Router, private forum: ForumService) {}
+  constructor(private userService: UserService, private router: Router, private forum: ForumService, private cookies: CookieService) {}
 
   ngOnInit() {
+    // Set dashboard tab from cookies
+    this.selectedDashboardTab = +this.cookies.get('selectedDashboardTab') || 0;
+    
     this.user = this.userService.user;
     this.userService.getAuthUser().subscribe(user => {
       this.user = user;
@@ -70,6 +73,11 @@ export class DashboardComponent implements OnInit {
     .subscribe(data => {
       this.comments = data.map(Entry.initFromObject) ;
     });
+  }
+
+  onclickMainTabGroup(e) {
+    // selected tab from main tab group
+    this.cookies.put('selectedDashboardTab', `${e.index}`);
   }
 
 }

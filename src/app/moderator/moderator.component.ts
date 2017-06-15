@@ -1,6 +1,7 @@
 // Angular
 import { 
-  Component, 
+  Component,
+  OnInit,
   HostListener,
   OnChanges,
   EventEmitter,
@@ -15,7 +16,7 @@ import {
   animate,
   transition
 } from '@angular/animations';
-
+import { CookieService } from 'angular2-cookie/services/cookies.service';
 import { ModeratorQuestionTab } from './questions/moderator-questions.component';
 
 // Custom Services
@@ -40,11 +41,13 @@ import { Entry }        from '../entry/entry';
     ]),
   ]
 })
-export class ModeratorComponent {
+export class ModeratorComponent implements OnInit {
 
   @Output() onClickQuestionTab$   = new EventEmitter<any>();
   @Output() onClickAnswerTab$     = new EventEmitter<any>();
   @Output() onClickCommentTab$    = new EventEmitter<any>();
+
+  private selectedModeratorTab = 0;
 
   private users:         User[];
   private nextUser:      User;
@@ -62,15 +65,13 @@ export class ModeratorComponent {
   elementState: string = 'hide';
   userState:    string = 'inactive';
 
-  constructor(private userService: UserService, private forumService: ForumService) {
-    userService.getUsersAsync()
-    .then(users => {
-      this.users = users.sort((a, b) => {
-        return a.lastname > b.lastname ? 1: -1;
-      });
-    })
-    .catch(err => console.error(err));
+  constructor(private userService: UserService, private forumService: ForumService, private cookies: CookieService) {
     this.windowWidth = window.innerWidth;
+  }
+
+  ngOnInit() {
+    this.selectedModeratorTab = +this.cookies.get('selectedModeratorTab') || 0;
+    this.loadDataForTab({ index: this.selectedModeratorTab });
   }
 
   @HostListener('window:resize', ['$event'])
@@ -80,23 +81,32 @@ export class ModeratorComponent {
 
   loadDataForTab($ev) {
     let index = $ev.index;
-    if (index == 1) {
-      console.log('loading questions');
+    this.cookies.put('selectedModeratorTab', `${index}`);
+    if (index === 0) {
+      this.loadUsers();
+    } else if (index == 1) {
       this.loadAllQuestions();
     } else if (index == 2) {
-      console.log('loading answers');
       this.loadAllAnswers();
     } else if (index == 3) {
-      console.log('loading comments');
       this.loadAllComments();
     }
+  }
+
+  loadUsers() {
+    this.userService.getUsersAsync()
+    .then(users => {
+      this.users = users.sort((a, b) => {
+        return a.lastname > b.lastname ? 1: -1;
+      });
+    })
+    .catch(err => console.error(err));
   }
 
   loadAllQuestions() {
     if (!this.questions) {
       this.forumService.requestQuestions().subscribe(data => {
         this.questions = data.map(Entry.initFromObject);
-        console.log('loaded questions: ', this.questions);
       });
     }
   }

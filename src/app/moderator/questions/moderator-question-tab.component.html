@@ -1,11 +1,48 @@
 <div fxLayoutAlign="center center">
-	<md-spinner *ngIf="!questions"></md-spinner>
+	<!--<md-spinner *ngIf="!questions"></md-spinner>-->
 	<p class="grey-text text-center md-margin" *ngIf="questions && questions.length === 0">No Activity.</p>
 </div>
 
-<ul class="md-margin" *ngIf="questions">
+
+<!--<ul class="md-margin" *ngIf="questions">
 	<li *ngFor="let question of questions">
-	<a routerLink="/forum/{{ question.id }}">{{ question && question.title ? question.title : "N/A" }}</a>
-	<p class="grey-text text-sm">Asked by {{ question.owner && question.owner.name ? question.owner.name : "loading..." }} | {{ question.createdAtToString() }}</p>
+		<a routerLink="/forum/{{ question.id }}">{{ question && question.title ? question.title : "N/A" }}</a>
+		<p class="grey-text text-sm">Asked by {{ question.owner && question.owner.name ? question.owner.name : "loading..." }} | {{ question.createdAtToString() }}</p>
 	</li>
-</ul>
+</ul>-->
+
+<!--<div fxLayout>-->
+<!--</div>-->
+<div fxLayout>
+	
+	<table class="md-margin" *ngIf="questions" fxFlex="nogrow">
+		<thead>
+			<tr>
+				<th>Question Details</th>
+				<td>
+					<button md-button class="btn-warn" (click)="onclickDelete($event)" >Delete</button>
+				</td>			
+				<td>
+					<md-checkbox [id]="-1" (change)="onclickCheckbox($event)"></md-checkbox>
+				</td>
+			</tr>
+		</thead>
+		<tr *ngFor="let question of questions">
+			<td>
+				<div fxLayout="column">
+					<p><strong>{{ question && question.title ? question.title : "N/A" }}</strong></p>
+					<p class="text-sm">Asked by {{ question.owner && question.owner.name ? question.owner.name : "loading..." }}</p>
+					<p class="text-sm">Created {{ question.createdAtToString() }}</p>
+				</div>
+			</td>
+			<td></td>
+			<td>
+				<md-checkbox
+				[checked]="selectedQuestions[question.id]"
+				[id]="question.id" 
+				(change)="onclickCheckbox($event)"></md-checkbox>
+			</td>
+
+		</tr>
+	</table>
+</div>

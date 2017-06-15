@@ -1,6 +1,6 @@
 
 
-<md-tab-group fxFlex [dynamicHeight]="true" (selectChange)="loadDataForTab($event)">
+<md-tab-group fxFlex [dynamicHeight]="true" (selectChange)="loadDataForTab($event)" [selectedIndex]="selectedModeratorTab">
   <md-tab label="Users">
     <div fxLayout>
 
@@ -58,8 +58,6 @@
           <md-tab label="Comments ({{ selectedUserComments.length }})">
             <moderator-comment-tab [comments]="selectedUserComments"></moderator-comment-tab>
           </md-tab>
-
-
         </md-tab-group>
 
       </div>
