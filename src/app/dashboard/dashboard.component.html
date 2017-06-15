@@ -16,7 +16,7 @@
         <md-tab-group fxFlex [dynamicHeight]="true" [selectedIndex]="0">
           <!--Recent Activity-->
           <md-tab label="My Recent Activity">
-            <entries [entries]="recent" [type]="recent"></entries>
+            <entries [entries]="recent" type="recent"></entries>
           </md-tab>
           <!--User Questions-->
           <md-tab label="My Questions" (click)="loadQuestions()">
@@ -28,7 +28,7 @@
           </md-tab>
           <!--User Comments-->
           <md-tab label="My Comments" (click)="loadComments()">
-            <entries [entries]="comments"  type="comment"></entries>
+            <entries [entries]="comments" type="comment"></entries>
           </md-tab>
         </md-tab-group><!--END Inner Dashboard Tab Group-->
 

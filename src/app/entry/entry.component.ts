@@ -13,12 +13,16 @@ import { Entry } from './entry';
 	selector: 'entries',
 	templateUrl: './entry.component.html'
 })
-export class EntryComponent implements OnChanges {
+export class EntryComponent implements OnInit, OnChanges {
 	@Input() entries: Entry[] = [];
-	
 	@Input() type: string;
+	private noEntryMsg: string = 'No activity.';
 
-	constructor(private forumService: ForumService) { }
+	constructor(private forumService: ForumService) {}
+
+	ngOnInit() {
+		if (this.type === 'recent') { this.noEntryMsg = 'No recent activity.'; }
+	}
 
 	ngOnChanges() {
 		this.entries.map(value => {

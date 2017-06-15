@@ -1,4 +1,4 @@
-import { Component, OnInit, NgZone, AfterViewInit } from '@angular/core';
+import { Component, OnInit, NgZone } from '@angular/core';
 import { MdIconRegistry } from "@angular/material";
 import { DomSanitizer } from "@angular/platform-browser";
 import {
@@ -22,7 +22,7 @@ import { Entry } from "../entry/entry";
   templateUrl: './forum.component.html',
   styleUrls: ['./forum.component.css']
 })
-export class ForumComponent implements OnInit, AfterViewInit {
+export class ForumComponent implements OnInit {
 
   topResults: Entry[] = [];
   recentQuestions: Entry[] = [];
@@ -64,21 +64,8 @@ export class ForumComponent implements OnInit, AfterViewInit {
     )
   }
 
-  ngAfterViewInit() {
-  }
-
   navigateToEntry(entryId: string) {
     this.router.navigate(['forum', entryId]);
-  }
-
-  onClickSubmitQuestionHandler(question: { title: string, content: string }) {
-    this.forumService.createEntry({
-      owner: this.userService.user.uuid,
-      title: question.title,
-      content: question.content,
-      parent: null
-    })
-    .subscribe(entry => console.log(entry), error => console.log(error));
   }
 
   private handleError(error: Response | any) {

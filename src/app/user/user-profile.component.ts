@@ -4,6 +4,7 @@ import {
   ViewChild,
   ElementRef
 } from '@angular/core';
+import { MdSnackBar } from '@angular/material';
 
 import { TinyMceDirective } from '../tinymce.directive';
 import { UserService } from '../services/user.service';
@@ -23,10 +24,9 @@ export class UserProfileComponent {
   set tinymce(view: TinyMceDirective) {
     view && view.initTinyMce();
   }
+  didClickSave = false;
 
-  constructor(private userService: UserService) {
-
-  }
+  constructor(private userService: UserService, private snackbar: MdSnackBar) {}
 
   shouldShowTinyEditor = false;
   
@@ -38,6 +38,7 @@ export class UserProfileComponent {
     this.userService.updateUserAsync(this.user)
     .then((user: User) => {
       this.user = user;
+      this.snackbar.open('Profile saved.', null, { duration: 2000 });
     })
     .catch(err => {
       console.error(err);

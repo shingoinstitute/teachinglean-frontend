@@ -124,6 +124,10 @@ export class UserService {
     .catch(this.handleError);
   }
   
+  authenticateLinkedin() {
+    window.location.href = this.baseApiUrl + '/auth/linkedin';
+  }
+
   logoutUser(): Observable<any> {
 
     delete this._user;

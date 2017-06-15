@@ -8,19 +8,13 @@ import { Observable } from 'rxjs/Observable';
    providers: [NgModel]
 })
 export class TinyMceDirective implements OnDestroy {
-   @Input() content: string = '';
    @Input() height: number;
    @Input() selector;
    @Input() editor;
 
    constructor(private el: ElementRef, private model: NgModel) {}
 
-   ngOnInit() {         
-      // Listen to value changes of ngModel
-      this.model.valueChanges.subscribe(value => {
-         this.content = value;
-      });
-   }
+   ngOnInit() {}
 
    ngOnDestroy() {
       tinymce.remove(this.editor);
@@ -44,10 +38,15 @@ export class TinyMceDirective implements OnDestroy {
             this.editor = editor;
             this.editor.on('keyup', () => {
                // Inform ngModel of udpates
-               this.model.update.emit(this.editor.getContent());
+               this.model.update.next(this.editor.getContent());
+            });
+            this.editor.on('change', () => {
+               // Inform ngModel of udpates for actions not detected by the 'keyup' event (such as clicking the `underline` button)
+               this.model.update.next(this.editor.getContent());
             });
             this.editor.on('init', () => {
-               editor.setContent(this.content);
+               // Set initial value of textarea
+               editor.setContent(this.model.value);
             });
          }
       });

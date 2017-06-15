@@ -16,12 +16,12 @@
 
   
 
-  <p class="md-margin-top" *ngIf="!user"><strong>Have an answer? <a routerLink="/login">Sign in</a> to submit one.</strong></p>
-  <p class="md-margin-top" *ngIf="user"><strong>Have an answer?</strong></p>
+  <p class="md-margin-top" *ngIf="!hasUser"><strong>Have an answer? <a routerLink="/login">Sign in</a> to submit one.</strong></p>
 
 
-  <div fxLayout="column" fxLayout.gt-sm *ngIf="user">
-    <span id="qa-answer-wrapper">
+  <div fxLayout="column" *ngIf="hasUser">
+  <p class="md-margin-top"><strong>Have an answer?</strong></p>
+    <div class="md-margin-top" id="qa-answer-wrapper">
 
       <textarea id="question-textarea"
                 required
@@ -30,16 +30,15 @@
                 name="Question text"></textarea>
 
       <span class="grey-text">{{ characterCountMessage }}</span>
-    </span>
-
+    </div>
 
 
     <div>
 
       <button id="submit-answer-button" 
       md-raised-button 
-      class="mat-primary" 
-      [style.margin-left]="'8px'"
+      class="mat-accent"
+      [style.margin-top]="'8px'"
       [class.white-text]="canSubmitAnswer" 
       (click)="onClickSubmitAnswer($event)" 
       [disabled]="!canSubmitAnswer">Submit Answer</button>

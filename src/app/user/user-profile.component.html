@@ -10,7 +10,7 @@
                <img src="{{ user.pictureUrl }} ">
             </div>
             <!--Name-->
-            <p [innerHTML]="user.name"></p>
+            <p class='center-align' [innerHTML]="user.username"></p>
          </div>
 
          <!--User Information-->
@@ -18,9 +18,9 @@
 
             <div class="info-group">
                <!--Username-->
-               <p class="flow-text" [innerHTML]="user.username"></p>
+               <p class="flow-text" [innerHTML]="user.name"></p>
                <!--Email-->
-               <p class="grey-text" [innerHTML]="user.email"></p>
+               <p class='' [innerHTML]="user.email"></p>
             </div>
 
             <div class="info-group" *ngIf="user && user.organization">
@@ -28,10 +28,21 @@
                <p [innerHTML]="user.organization"></p>
             </div>
 
-            <div class="info-group">
+            <div class="panel">
                <!--Biography-->
-               <p><strong>About Me</strong></p>
-               <span [innerHTML]="user.biography"></span>
+               <div class="panel-heading">About Me</div>
+               <div class="panel-body">
+                  <style>
+                     ul {
+                        list-style-position: outside !important;
+                     }
+                     li {
+                        list-style-type: disc !important;
+                        margin-left: 20px !important;
+                     }
+                  </style>
+                  <span [innerHTML]="user.biography" class="default-style"></span>
+               </div>
             </div>
 
          </div>
@@ -48,29 +59,43 @@
             <div class="img-wrapper">
                <img src="{{ user.pictureUrl }}">
             </div>
-            <input (change)="uploadPhoto()" type="file" #fileUpload>
+            <div>
+               <input (change)="uploadPhoto()" type="file" #fileUpload role="profile-picture-upload">
+            </div>
          </div>
 
          <div class="info-group" fxLayout="column">
-            <md-input-container>
-               <input mdInput placeholder="First name" [(ngModel)]="user.firstname">
-            </md-input-container>
 
-            <md-input-container>
-               <input mdInput placeholder="Last name" [(ngModel)]="user.lastname">
-            </md-input-container>
+            <div fxLayoutGap="8px" fxLayout.lt-sm="column">
+               <md-input-container fxFlex>
+                  <input mdInput placeholder="First name" [(ngModel)]="user.firstname">
+               </md-input-container>
 
-            <md-input-container>
-               <input mdInput placeholder="Username" [(ngModel)]="user._username">
-            </md-input-container>
+               <md-input-container fxFlex>
+                  <input mdInput placeholder="Last name" [(ngModel)]="user.lastname">
+               </md-input-container>
+            </div>
 
-            <md-input-container>
-               <input mdInput placeholder="Email" [(ngModel)]="user.email">
-            </md-input-container>
+            <div fxLayoutGap="8px" fxLayout.lt-sm="column">
 
-            <md-input-container>
-               <input mdInput placeholder="Organization" [(ngModel)]="user.organization">
-            </md-input-container>
+               <md-input-container fxFlex>
+                  <input mdInput placeholder="Username" [(ngModel)]="user._username">
+               </md-input-container>
+
+               <md-input-container fxFlex>
+                  <input mdInput placeholder="Organization" [(ngModel)]="user.organization">
+               </md-input-container>
+
+            </div>
+
+            <div fxLayout>
+
+               <md-input-container fxFlex.gt-sm="50%" fxFlex="100%">
+                  <input mdInput placeholder="Email" [(ngModel)]="user.email">
+               </md-input-container>
+
+            </div>
+
 
             <textarea tinyMce 
             id="bio-editor" 
@@ -83,8 +108,11 @@
          <!--Actions-->
          <div class="info-group">
             <button md-button id="save-button" (click)="onclickSave()">
-               <i class="material-icons">save</i> Save
+               <span><i class="material-icons">save</i> Save</span>
             </button>
+            <div *ngIf="didClickSave">
+               <p>Save Successful!</p>
+            </div>
          </div>
 
       </div>

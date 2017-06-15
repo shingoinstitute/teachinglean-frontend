@@ -20,8 +20,8 @@ export class ForumListItemComponent implements OnInit {
 
   @Output() onEditorKeyup = new EventEmitter();
   private minCharacterCount = 15;
+  private hasUser = false;
   tinyMceEditor;
-
   entry                = new Entry();
   didMarkAnswerCorrect = false;
   answers: Entry[]     = [];
@@ -29,6 +29,10 @@ export class ForumListItemComponent implements OnInit {
   characterCountMessage = "Enter 15 characters";
   
   constructor(private forumService: ForumService, private userService: UserService, private route: ActivatedRoute, public zone: NgZone) {
+    this.hasUser = !!userService.user;
+    userService.onDeliverableUser$.subscribe(user => {
+      this.hasUser = !!user;
+    }, err => {});
     this.loadData();
   }
 

@@ -33,9 +33,21 @@ export class LoginComponent implements OnInit {
       this.router.navigate(['/dashboard']);
     }, (error) => {
       this.spinnerEnabled = false;
-      console.error(error);
-      this.loginError = error; 
+      let errMsg;
+      if (error instanceof String) {
+        errMsg = error;
+      } else if (error.message) {
+        errMsg = error.message;
+      } else if (error.toString) {
+        errMsg = error.toString();
+      }
+      console.error(errMsg);
+      this.loginError = errMsg; 
     });
+  }
+
+  authenticateLinkedin(e) {
+    this.userService.authenticateLinkedin();
   }
 
 }

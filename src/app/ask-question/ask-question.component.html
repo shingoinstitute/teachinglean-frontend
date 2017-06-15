@@ -1,34 +1,51 @@
 
-<div fxLayout class="container">
+<div fxLayout class="container" [@questionState]="'active'">
 
   <form fxLayout="column" id="ask-question-form" class="input-container" *ngIf="user">
     <p class="flow-text">Have a question? Ask the community right here.</p>
     <div fxLayout class="input-wrapper">
-      <p>Title</p>
-      <input fxFlex 
+      <p [style.align-self]="'center'">Question Title</p>
+      <!--<input fxFlex 
               [(ngModel)]="title"
               name="title"
               class="input-title"
-              type="text" 
-              placeholder="What is your question?">
+              type="text"
+              placeholder="What is your question?">-->
+
+      <md-input-container fxFlex='grow'>
+        <input mdInput
+              #questionTitle
+              [(ngModel)]="title"
+              name="title"
+              type="text"
+              required='true'
+              placeholder="title">
+        <md-error *ngIf="title.length === 0">This field is required.</md-error>
+      </md-input-container>
+
     </div>
-    <p>Enter a detailed description of your question.</p>
+
+    <p class="md-margin-top">Enter a detailed description of your question.</p>
     <textarea class="input-question"
               id="question-textarea-id"
-              required
+              required='true'
               form="ask-question-form"
               maxlength="500"
               name="Question text">
     </textarea>
 
-    <span style="margin-top: 24px;"></span>
+    <span [style.margin-top]="'24px'"><!--vertical spacer--></span>
 
     <div>
-      <button md-raised-button class="mat-accent" (click)="onClickSubmitQuestion($event)">Submit Question</button>
+
+      <button md-raised-button 
+      class="mat-accent"
+      (click)="onClickSubmitQuestion($event, questionTitle)">Submit Question</button>
+
     </div>
 
   </form>
 
-  <div>Have a question? <a routerLink="/login">Sign in</a> to the ask the community.</div>
+  <div *ngIf="!user">Have a question? <a routerLink="/login">Sign in</a> to the ask the community.</div>
 
 </div>
