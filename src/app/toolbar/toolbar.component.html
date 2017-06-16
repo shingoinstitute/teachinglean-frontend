@@ -1,11 +1,21 @@
 <md-toolbar class="mat-primary darken-3">
   
-  <span fxFlex></span>
+  <span fxFlex *ngIf="windowWidth >= 960"></span>
 
-  <!--<a md-button color="accent" aria-label="Sign Up" routerLink="/createAccount" *ngIf="!userDoesExist">Sign Up</a>-->
-  <a md-raised-button aria-label="Login" routerLink="/login" *ngIf="!userDoesExist">Login</a>
+  <a md-button
+  color="accent" 
+  [style.font-weight]="'400'"
+  aria-label="Sign Up" 
+  routerLink="/signup" 
+  *ngIf="!userDoesExist">SIGN UP</a>
 
-  <span fxFlex.lt-md *ngIf="windowWidth < 960"></span>
+  <a md-raised-button 
+  aria-label="Login"
+  [style.margin-left]="'8px'"
+  routerLink="/login" 
+  *ngIf="!userDoesExist">LOGIN</a>
+
+  <span fxFlex *ngIf="windowWidth < 960"></span>
 
   <div *ngIf="userDoesExist">
 

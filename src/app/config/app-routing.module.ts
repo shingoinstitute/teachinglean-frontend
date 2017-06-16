@@ -9,6 +9,7 @@ import { TeachingComponent } from '../teaching/teaching.component';
 import { ForumComponent } from "../forum-home/forum.component";
 import { AskQuestionComponent } from "../ask-question/ask-question.component";
 import { ForumListItemComponent } from '../forum-list-item/forum-list-item.component';
+import { SignupComponent } from '../signup/signup.component';
 
 const appRoutes: Routes = [
     { path: '', component: HomeComponent },
@@ -17,7 +18,8 @@ const appRoutes: Routes = [
     { path: 'login', component: LoginComponent },
     { path: 'teaching', component: TeachingComponent },
     { path: 'forum', component: ForumComponent },
-    { path: 'forum/:id', component: ForumListItemComponent }
+    { path: 'forum/:id', component: ForumListItemComponent },
+    { path: 'signup', component: SignupComponent }
 ];
 
 @NgModule({

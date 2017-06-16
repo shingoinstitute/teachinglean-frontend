@@ -2,6 +2,7 @@ import { BrowserModule }           from '@angular/platform-browser';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { NgModule }                from '@angular/core';
 import { FormsModule }             from '@angular/forms';
+import { ReactiveFormsModule }     from '@angular/forms';
 import { HttpModule, JsonpModule } from '@angular/http';
 import { CookieService }           from 'angular2-cookie/services/cookies.service';
 import 'hammerjs';
@@ -25,7 +26,7 @@ import { ForumComponent }          from './forum-home/forum.component';
 import { ForumDetailDirective }    from './directives/forum-detail.directive';
 import { ForumListItemComponent }  from './forum-list-item/forum-list-item.component';
 import { AskQuestionComponent }    from './ask-question/ask-question.component';
-import { CreateAccountComponent }  from './create-account/create-account.component';
+import { SignupComponent }         from './signup/signup.component';
 import { EntryComponent }          from './entry/entry.component';
 import { AdminPanelComponent }     from './admin-panel/admin-panel.component';
 import { DisableUserDialog }       from './admin-panel/disable-user.dialog';
@@ -40,6 +41,7 @@ import { UserProfileComponent }    from './user/user-profile.component';
 
 // Directives
 import { TinyMceDirective }        from './tinymce.directive';
+import { MdMarginDirective }       from './directives/md-margin.directive';
 
 // Custom Services
 import { SidenavService }          from './services/sidenav.service';
@@ -54,6 +56,7 @@ import { UserService }             from './services/user.service';
     MaterialModule.forRoot(),
     AngularMaterialModule,
     FormsModule,
+    ReactiveFormsModule,
     HttpModule,
     JsonpModule,
     AppRoutingModule
@@ -70,7 +73,7 @@ import { UserService }             from './services/user.service';
     ForumDetailDirective,
     ForumListItemComponent,
     AskQuestionComponent,
-    CreateAccountComponent,
+    SignupComponent,
     EntryComponent,
     AdminPanelComponent,
     ModeratorComponent,
@@ -82,7 +85,8 @@ import { UserService }             from './services/user.service';
     EntryCardComponent,
     UserInfoCardComponent,
     UserProfileComponent,
-    TinyMceDirective
+    TinyMceDirective,
+    MdMarginDirective
   ],
   entryComponents: [DisableUserDialog],
   providers: [

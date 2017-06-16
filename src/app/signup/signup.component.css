@@ -1,0 +1,7 @@
+.disabled {
+   color: #3e3e3e !important;
+   background-color: lightgrey !important;
+   font-weight: 500;
+   cursor: not-allowed;
+   pointer-events: none;
+}

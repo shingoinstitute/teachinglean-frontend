@@ -16,7 +16,14 @@ export class User implements UserInterface {
     lastLogin;
 
     get name() {
-      return `${this.firstname} ${this.lastname}`;
+      if (this.firstname && this.lastname) {
+        return `${this.firstname} ${this.lastname}`;
+      } else if (this.firstname && !this.lastname) {
+        return this.firstname;
+      } else if (this.lastname && !this.firstname) {
+        return this.lastname
+      }
+      return ""
     }
 
     get username() {

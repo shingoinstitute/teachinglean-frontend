@@ -40,12 +40,10 @@
 
 			<md-divider style="margin-top: 16px;"></md-divider>
 
-			<p class="">Don't have an account? <a (click)="showCreateAccount=!showCreateAccount;">Sign Up</a></p>
+			<p class="">Don't have an account? <a routerLink="/signup">Sign Up</a></p>
 
 
 		</div>
 	</md-card>
-
-  <app-create-account *ngIf="showCreateAccount" (onClickLoginHandler)="showCreateAccount=false;"></app-create-account>
 
 </div>

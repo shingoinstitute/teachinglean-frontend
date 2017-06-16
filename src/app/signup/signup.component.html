@@ -1,0 +1,104 @@
+
+<div fxLayout fxLayoutAlign="center center" class="md-margin">
+
+  <md-card class="md-padding">
+    <p class="flow-text text-center"><b>Sign Up</b></p>
+    <p class="red-text" *ngIf="errorMsg">{{errorMsg}}</p>
+    <md-divider style="height:16px;"></md-divider>
+
+    <a href="https://teachinglean.org/auth/linkedin">
+      <img src="/assets/images/logos/lkin-login-form-btn.png">
+    </a>
+
+    <p class="flow-text text-center"></p>
+
+    <md-divider style="height:16px;"></md-divider>
+
+
+    <form [formGroup]="signupForm" name="newUserForm" fxLayout="column" (ngSubmit)="onSubmit()">
+
+      <!--Username-->
+      <md-input-container>
+        <input mdInput 
+               formControlName="username" 
+               type="text" 
+               [(ngModel)]="username" 
+               required 
+               placeholder="Username">
+      </md-input-container>
+
+      <!--Firstname-->
+      <md-input-container>
+        <input mdInput 
+                formControlName="firstname" 
+                type="text" 
+                [(ngModel)]="user.firstname" 
+                required 
+                placeholder="First name">
+      </md-input-container>
+
+      <!--Lastname-->
+      <md-input-container>
+        <input mdInput 
+                formControlName="lastname" 
+                type="text" 
+                [(ngModel)]="user.lastname" 
+                required 
+                placeholder="Last name">
+      </md-input-container>
+
+      <!--Email-->
+      <md-input-container>
+        <input mdInput 
+               formControlName="email" 
+              type="email" 
+              [(ngModel)]="user.email" 
+              required 
+              placeholder="Email address">
+      </md-input-container>
+
+
+      <div fxLayout md-margin="bottom">
+
+        <!--Password-->
+        <md-input-container fxFlex md-margin="right">
+          <input mdInput 
+                formControlName="password" 
+                type="password" 
+                [(ngModel)]="password" 
+                minlength="8" 
+                required 
+                placeholder="Password">
+          <md-error>Passwords don't match</md-error>
+        </md-input-container>
+
+        <!--Confirm Password-->
+        <md-input-container fxFlex>
+          <input mdInput 
+                formControlName="confirmPassword" 
+                type="password" 
+                [(ngModel)]="confirmPassword" 
+                required 
+                placeholder="Confirm password">
+                <md-error></md-error>
+        </md-input-container>
+      </div>
+
+
+      <!--Submit button-->
+      <div [style.margin-bottom]="'16px'">
+        <button md-raised-button 
+                class="mat-primary white-text" 
+                [style.font-weight]="300"
+                [class.disabled]="!formIsValid"
+                type="submit">Sign Up</button>
+      </div>
+  
+    </form>
+
+    <md-divider></md-divider>
+    
+    <p>Have an account? <a routerLink="/login">Log In</a></p>
+  </md-card>
+</div>
+

@@ -1,0 +1,17 @@
+header {
+   margin: 12px 8px 24px 0;
+}
+
+h3.header-title {
+   font-size: 2.92rem;
+   line-height: 110%;
+   font-weight: 400;
+   -webkit-font-smoothing: antialiased;
+}
+
+@media only screen and (min-width: 1280px) {
+   h3.header-title {
+      font-size: 3.56rem;
+      font-weight: 700;
+   }
+}

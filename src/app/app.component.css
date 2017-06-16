@@ -24,7 +24,22 @@ md-nav-list, img {
     padding: 4px;
 }
 
-.mat-line {
-    font-size: 11pt;
-    color: #2f2f2f;
+.sidenav-link {
+    font-size: 15px !important;
+    font-weight: 500 !important;
+    -webkit-font-smoothing: antialiased;
+    letter-spacing: .010em;
+    color: #3a3a3a;
+}
+
+button.mat-icon-button {
+    color: #5a5a5a;
+}
+
+button.sidenav-link {
+    width: 0;
+    margin-right: 40px;
+    /* 40px is the default width of svg icons. Setting width 
+    to 0 and adding a right margin correctly positions the 
+    svg and text inside the sidenav */
 }

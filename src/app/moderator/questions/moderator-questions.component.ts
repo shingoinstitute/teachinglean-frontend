@@ -5,7 +5,7 @@ import {
 } from '@angular/core';
 
 import { ForumService } from '../../services/forum.service';
-
+import { MdSnackBar } from '@angular/material';
 import { Entry } from '../../entry/entry';
 
 import { Observable } from 'rxjs/Observable';
@@ -20,7 +20,7 @@ export class ModeratorQuestionTab implements OnInit {
   @Input() questions: Entry[];
   private selectedQuestions = {};
 
-  constructor(private service: ForumService) {}
+  constructor(private service: ForumService, private snackbar: MdSnackBar) {}
 
   ngOnInit() {
     // TODO: Sort questions
@@ -40,7 +40,6 @@ export class ModeratorQuestionTab implements OnInit {
     } else if (!isChecked) {
       delete this.selectedQuestions[id];
     }
-    // console.log('selected questions', $.map(this.selectedQuestions, (value, index) => { return +index }));
   }
 
   onclickDelete(e) {
@@ -60,6 +59,9 @@ export class ModeratorQuestionTab implements OnInit {
         console.error(err);
       },
       complete: () => {
+        this.snackbar.open('Questions deleted.', 'Okay', {
+          duration: 2500
+        });
         this.questions = this.questions.filter((question) => {
           if (!this.selectedQuestions[question.id]) {
             return question;
