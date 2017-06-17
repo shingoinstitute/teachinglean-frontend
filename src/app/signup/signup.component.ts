@@ -1,9 +1,9 @@
-import {Component, EventEmitter, OnInit, Output } from '@angular/core';
+import { Component, EventEmitter, OnInit, Output } from '@angular/core';
 import { FormGroup, FormControl, FormBuilder, Validators } from '@angular/forms';
-import {Router} from '@angular/router';
+import { Router } from '@angular/router';
 
 import { User } from '../user/user';
-import {UserService} from "../services/user.service";
+import { UserService } from "../services/user.service";
 
 @Component({
   selector: 'app-signup',
@@ -15,28 +15,40 @@ export class SignupComponent implements OnInit {
   signupForm: FormGroup;
 
   private user: User = new User();
-  private username: string;
-  private password = "";
-  private confirmPassword = "";
-  errorMsg: string;
+  private username = '';
+  private password = '';
+  private errMsg: string;
 
+  private passwordType = "password";
   private formIsValid = false;
+
+  validationMessages = {
+    required: 'this field is required',
+    username: {
+      minLength: 'username must be at least 3 characters',
+      maxLength: 'username too long, must be less than 24 characters'
+    },
+    email: {
+      invalid: 'invalid email address'
+    },
+    password: {
+      minLength: 'password must be at least 6 characters',
+      maxLength: 'password too long, must be less than 18 characters'
+    }
+  }
+
+  formErrors = {
+    'required': this.validationMessages.required,
+    'username': '',
+    'email': '',
+    'password': ''
+  }
 
   constructor(private userService: UserService, private router: Router, private fb: FormBuilder) { }
 
   ngOnInit() {
-    this.user.username = "";
     this.buildForm();
   }
-
-  private formFields = [
-    'firstname',
-    'lastname',
-    'username',
-    'email',
-    'password',
-    'confirmPassword'
-  ]
 
   buildForm() {
     this.signupForm = this.fb.group({
@@ -44,7 +56,7 @@ export class SignupComponent implements OnInit {
       'lastname': [this.user.lastname, Validators.required ],
       'username': [this.user.username, [
         Validators.required,
-        Validators.minLength(4),
+        Validators.minLength(3),
         Validators.maxLength(24)
       ]],
       'email': [this.user.email, [
@@ -55,63 +67,66 @@ export class SignupComponent implements OnInit {
         Validators.required,
         Validators.minLength(6),
         Validators.maxLength(18)
-      ]],
-      'confirmPassword': [this.confirmPassword, [
-        Validators.required,
-        Validators.minLength(6),
-        Validators.maxLength(18)
       ]]
     });
 
     this.signupForm.valueChanges.subscribe(changes => {
       this.onValueChanged(changes);
     });
-
-    this.onValueChanged();
   }
 
   onValueChanged(data?: any) {
     if (!this.signupForm) { return; }
+    const form = this.signupForm;
+    let control;
 
-    const passwordControl = this.signupForm.get('password');
-    const confirmPasswordControl = this.signupForm.get('confirmPassword');
-
-    if (passwordControl.dirty && confirmPasswordControl.dirty) {
-        if (passwordControl.value != confirmPasswordControl.value) {
-          passwordControl.setErrors({
-            passwordMismatch: true
-          });
-          confirmPasswordControl.setErrors({
-            passwordMismatch: true
-          });
-        } else {
-          passwordControl.setErrors(null);
-          confirmPasswordControl.setErrors(null);
-        }
+    control = form.get('username');
+    if (Validators.required(control)) {
+      this.formErrors.username = this.validationMessages.required;
+    } else if (Validators.minLength(control)) {
+      this.formErrors.username = this.validationMessages.username.minLength;
+    } else if (Validators.maxLength(control)) {
+      this.formErrors.username = this.validationMessages.username.maxLength;
     }
-    
+
+    control = form.get('email');
+    if (Validators.required(control)) {
+      this.formErrors.email = this.validationMessages.required;
+    } else if (Validators.email(control)) {
+      this.formErrors.email = this.validationMessages.email.invalid;
+    }
+
+    control = form.get('password');
+    if (Validators.required(control)) {
+      this.formErrors.password = this.validationMessages.required;
+    } else if (Validators.minLength(control)) {
+      this.formErrors.password = this.validationMessages.password.minLength;
+    } else if (Validators.maxLength(control)) {
+      this.formErrors.password = this.validationMessages.password.maxLength;
+    }
 
     this.formIsValid = this.signupForm.valid;
   }
 
+  onclickShowBtn(e) {
+    this.passwordType = this.passwordType === 'password' ? 'text' : 'password';
+  }
+
   onSubmit() {
-    if (this.password === this.confirmPassword) {
-      let user = {
-        firstname: this.user.firstname,
-        lastname: this.user.lastname,
-        email: this.user.email
-      }
-      this.userService.create(user, this.password)
-        .subscribe(
-          result => {
-            this.router.navigate(['dashboard']);
-          },
-          error => {
-            console.error(error);
-            this.errorMsg = error.message ? error.message : error;
-          }
-        );
+    let user = {
+      firstname: this.user.firstname,
+      lastname: this.user.lastname,
+      email: this.user.email
     }
+    this.userService.create(user, this.password).subscribe(result => {
+      this.router.navigate(['dashboard']);
+    }, error => {
+      let errMsg = error;
+      if (error.toString) { errMsg = error.toString(); }
+      else if (error.message) { errMsg = error.message; }
+      console.error(errMsg);
+      this.errMsg = errMsg;
+    });
   }
 
 }

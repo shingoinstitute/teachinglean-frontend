@@ -3,8 +3,9 @@
 
   <md-card class="md-padding">
     <p class="flow-text text-center"><b>Sign Up</b></p>
-    <p class="red-text" *ngIf="errorMsg">{{errorMsg}}</p>
-    <md-divider style="height:16px;"></md-divider>
+    <p class="red-text" *ngIf="errMsg">{{ errMsg }}</p>
+
+    <md-divider md-margin="['top', 8, 'bottom', 8]"></md-divider>
 
     <a href="https://teachinglean.org/auth/linkedin">
       <img src="/assets/images/logos/lkin-login-form-btn.png">
@@ -12,7 +13,7 @@
 
     <p class="flow-text text-center"></p>
 
-    <md-divider style="height:16px;"></md-divider>
+    <md-divider md-margin="['top', 4, 'bottom', 8]"></md-divider>
 
 
     <form [formGroup]="signupForm" name="newUserForm" fxLayout="column" (ngSubmit)="onSubmit()">
@@ -22,9 +23,9 @@
         <input mdInput 
                formControlName="username" 
                type="text" 
-               [(ngModel)]="username" 
-               required 
+               [(ngModel)]="username"
                placeholder="Username">
+        <md-error>{{ formErrors.username }}</md-error>
       </md-input-container>
 
       <!--Firstname-->
@@ -33,8 +34,8 @@
                 formControlName="firstname" 
                 type="text" 
                 [(ngModel)]="user.firstname" 
-                required 
                 placeholder="First name">
+        <md-error>{{ formErrors.required }}</md-error>
       </md-input-container>
 
       <!--Lastname-->
@@ -43,8 +44,8 @@
                 formControlName="lastname" 
                 type="text" 
                 [(ngModel)]="user.lastname" 
-                required 
                 placeholder="Last name">
+        <md-error>{{ formErrors.required }}</md-error>
       </md-input-container>
 
       <!--Email-->
@@ -53,35 +54,34 @@
                formControlName="email" 
               type="email" 
               [(ngModel)]="user.email" 
-              required 
               placeholder="Email address">
+        <md-error>{{ formErrors.email }}</md-error>
       </md-input-container>
 
 
       <div fxLayout md-margin="bottom">
-
         <!--Password-->
         <md-input-container fxFlex md-margin="right">
           <input mdInput 
-                formControlName="password" 
-                type="password" 
+                formControlName="password"
+                id="password"
+                type="{{ passwordType }}" 
                 [(ngModel)]="password" 
                 minlength="8" 
-                required 
                 placeholder="Password">
-          <md-error>Passwords don't match</md-error>
+          <md-error>{{ formErrors.password }}</md-error>
         </md-input-container>
 
-        <!--Confirm Password-->
-        <md-input-container fxFlex>
-          <input mdInput 
-                formControlName="confirmPassword" 
-                type="password" 
-                [(ngModel)]="confirmPassword" 
-                required 
-                placeholder="Confirm password">
-                <md-error></md-error>
-        </md-input-container>
+        <!--hidden input field used to fix issue with lastpass when 
+        the visible input password field's text is set to `show`-->
+        <input hidden formControlName="password" type="password" [(ngModel)]="password">
+
+        <!--Show/hide password button-->
+        <button class="show-pword-btn" type="button" (click)="onclickShowBtn($event)">
+          <span>SHOW</span>
+          <i class="material-icons">visibility</i>
+        </button>
+
       </div>
 
 
