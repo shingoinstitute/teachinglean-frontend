@@ -6,7 +6,7 @@ import {
 import { Injectable }    from '@angular/core';
 import { Observable }    from 'rxjs/Observable';
 import { Subject }       from 'rxjs/Subject';
-import { CookieService } from 'angular2-cookie/services/cookies.service';
+import { CookieService } from 'ngx-cookie';
 import 'rxjs/add/operator/catch';
 import 'rxjs/add/operator/map';
 
@@ -104,7 +104,6 @@ export class UserService {
     return this.http.post(this.baseApiUrl + '/user/photoUpload', data)
     .toPromise()
     .then(data => {
-      console.log(data);
       return data;
     })
     .catch(this.handleError);

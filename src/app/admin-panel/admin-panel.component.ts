@@ -13,8 +13,8 @@ import { User } from '../user/user';
 })
 export class AdminPanelComponent implements OnInit {
 
-  private users: User[];
-  private admin: User;
+  users: User[];
+  admin: User;
 
   roles = [
     { value: "System Admin", viewValue: "System Admin" },

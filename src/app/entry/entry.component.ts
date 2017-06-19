@@ -16,7 +16,7 @@ import { Entry } from './entry';
 export class EntryComponent implements OnInit, OnChanges {
 	@Input() entries: Entry[] = [];
 	@Input() type: string;
-	private noEntryMsg: string = 'No activity.';
+	noEntryMsg: string = 'No activity.';
 
 	constructor(private forumService: ForumService) {}
 

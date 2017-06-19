@@ -47,10 +47,10 @@ export class AskQuestionComponent implements OnInit, AfterViewInit, OnDestroy {
 
   @Output() submitQuestion = new EventEmitter<any>();
   user: User;
-  private editor;
-  private title = '';
-  private content = '';
-  private submittedQuestion: Entry;
+  editor;
+  title = '';
+  content = '';
+  submittedQuestion: Entry;
   questionState = 'active';
   constructor(
     private userService: UserService, 

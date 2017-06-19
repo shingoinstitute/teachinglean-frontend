@@ -32,16 +32,16 @@ export class AppComponent implements OnInit {
     {name: "About Us", path: "/about"}
   ];
 
-  private user: User;
-  private sidenavMode = "side"
+  user: User;
+  sidenavMode = "side"
 
-  private onWindowResizeEventSource = new Subject<number>();
-  private onToggleSidenavSource = new Subject<boolean>();
+  onWindowResizeEventSource = new Subject<number>();
+  onToggleSidenavSource = new Subject<boolean>();
 
-  private onWindowResizeEvent$ = this.onWindowResizeEventSource.asObservable();
-  private onToggleSidenav$ = this.onToggleSidenavSource.asObservable();
+  onWindowResizeEvent$ = this.onWindowResizeEventSource.asObservable();
+  onToggleSidenav$ = this.onToggleSidenavSource.asObservable();
 
-  private windowWidth;
+  windowWidth;
 
   constructor(private userService: UserService,
   iconRegistry: MdIconRegistry,

@@ -11,7 +11,7 @@ import { Entry } from '../entry/entry';
 @Injectable()
 export class ForumService {
 
-  private baseUrl;
+  baseUrl: string;
 
   entry: any;
 

@@ -14,13 +14,13 @@ export class SignupComponent implements OnInit {
 
   signupForm: FormGroup;
 
-  private user: User = new User();
-  private username = '';
-  private password = '';
-  private errMsg: string;
+  user: User = new User();
+  username = '';
+  password = '';
+  errMsg: string;
 
-  private passwordType = "password";
-  private formIsValid = false;
+  passwordType = "password";
+  formIsValid = false;
 
   validationMessages = {
     required: 'this field is required',

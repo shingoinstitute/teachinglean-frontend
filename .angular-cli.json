@@ -20,7 +20,7 @@
       "prefix": "app",
 
       "styles": [
-        "lean-app-theme.css",
+        "app-theme.css",
         "styles.css"
       ],
 

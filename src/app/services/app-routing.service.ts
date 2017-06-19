@@ -7,10 +7,10 @@ import { Observable } from 'rxjs/Observable';
 export class AppRoutingService {
 
 	// Observable sources
-	private onNextRouteSource = new Subject<any>();
+	onNextRouteSource = new Subject<any>();
 	
 	// Stack of urls to redirect to after task completions on components
-	private urlRedirectStack: string[] = [];
+	urlRedirectStack: string[] = [];
 
 	constructor(private router: Router) {}
 

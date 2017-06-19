@@ -50,12 +50,10 @@ export class ToolbarComponent {
 
   onClickLogout() {
     this.userService.logoutUser().subscribe(data => {
-      console.log(data);
+      this.router.navigate(['/']);
     }, err => {
       console.error(err);
     });
-    
-    this.router.navigate(['/']);
   }
 
 }

@@ -47,7 +47,6 @@ export class Entry {
   }
 
   static initFromObject(obj): Entry {
-    // console.log('init obj: ', obj);
     let entry = new Entry();
     if (!obj.id) {
       return entry;

@@ -16,7 +16,7 @@ import {
   animate,
   transition
 } from '@angular/animations';
-import { CookieService } from 'angular2-cookie/services/cookies.service';
+import { CookieService } from 'ngx-cookie';
 import { ModeratorQuestionTab } from './questions/moderator-questions.component';
 
 // Custom Services
@@ -47,15 +47,15 @@ export class ModeratorComponent implements OnInit {
   @Output() onClickAnswerTab$     = new EventEmitter<any>();
   @Output() onClickCommentTab$    = new EventEmitter<any>();
 
-  private selectedModeratorTab = 0;
+  selectedModeratorTab = 0;
 
-  private users:         User[];
-  private nextUser:      User;
+  users:         User[];
+  nextUser:      User;
   selectedUser:          User;
 
-  private comments:      Entry[];
-  private questions:     Entry[];
-  private answers:       Entry[];
+  comments:      Entry[];
+  questions:     Entry[];
+  answers:       Entry[];
 
   selectedUserQuestions: Entry[] = [];
   selectedUserAnswers:   Entry[] = [];
@@ -114,7 +114,6 @@ export class ModeratorComponent implements OnInit {
   loadAllAnswers() {
     if (!this.answers) {
       this.forumService.requestAnswers().subscribe(data => {
-        console.log(data);
         this.answers = data.map(Entry.initFromObject);
       });
     }
@@ -123,7 +122,6 @@ export class ModeratorComponent implements OnInit {
   loadAllComments() {
     if (!this.comments) {
       this.forumService.requestComments().subscribe(data => {
-        console.log(data);
         this.comments = data.map(Entry.initFromObject);
       });
     }

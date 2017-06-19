@@ -19,8 +19,8 @@ import { User } from '../user/user';
 export class ForumListItemComponent implements OnInit {
 
   @Output() onEditorKeyup = new EventEmitter();
-  private minCharacterCount = 15;
-  private hasUser = false;
+  minCharacterCount = 15;
+  hasUser = false;
   tinyMceEditor;
   entry                = new Entry();
   didMarkAnswerCorrect = false;

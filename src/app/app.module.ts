@@ -4,16 +4,18 @@ import { NgModule }                from '@angular/core';
 import { FormsModule }             from '@angular/forms';
 import { ReactiveFormsModule }     from '@angular/forms';
 import { HttpModule, JsonpModule } from '@angular/http';
-import { CookieService }           from 'angular2-cookie/services/cookies.service';
+import { CookieModule }           from 'ngx-cookie';
 import 'hammerjs';
 import 'rxjs/add/observable/of';
 import 'rxjs/add/operator/distinct';
 import 'rxjs/add/operator/distinctUntilChanged';
 
+// Material Design
 import { AngularMaterialModule }   from './config/angular-material.module';
 import { FlexLayoutModule }        from '@angular/flex-layout';
 import { MaterialModule }          from '@angular/material';
 
+// App Components
 import { AppRoutingModule }        from './config/app-routing.module';
 import { AppComponent }            from './app.component';
 import { HomeComponent }           from './home/home.component';
@@ -23,7 +25,6 @@ import { LoginComponent }          from './login/login.component';
 import { TeachingComponent }       from './teaching/teaching.component';
 import { ToolbarComponent }        from './toolbar/toolbar.component';
 import { ForumComponent }          from './forum-home/forum.component';
-import { ForumDetailDirective }    from './directives/forum-detail.directive';
 import { ForumListItemComponent }  from './forum-list-item/forum-list-item.component';
 import { AskQuestionComponent }    from './ask-question/ask-question.component';
 import { SignupComponent }         from './signup/signup.component';
@@ -39,11 +40,12 @@ import { EntryCardComponent }      from './entry/entry-card.component';
 import { UserInfoCardComponent }   from './entry/user-info-card.component';
 import { UserProfileComponent }    from './user/user-profile.component';
 
-// Directives
+// App Directives
+import { ForumDetailDirective }    from './directives/forum-detail.directive';
 import { TinyMceDirective }        from './tinymce.directive';
 import { MdMarginDirective }       from './directives/md-margin.directive';
 
-// Custom Services
+// App Services
 import { SidenavService }          from './services/sidenav.service';
 import { ForumService }            from './services/forum.service';
 import { UserService }             from './services/user.service';
@@ -56,6 +58,7 @@ import { UserService }             from './services/user.service';
     MaterialModule.forRoot(),
     AngularMaterialModule,
     FormsModule,
+    CookieModule.forRoot(),
     ReactiveFormsModule,
     HttpModule,
     JsonpModule,
@@ -88,14 +91,13 @@ import { UserService }             from './services/user.service';
     TinyMceDirective,
     MdMarginDirective
   ],
-  entryComponents: [DisableUserDialog],
+  entryComponents: [ DisableUserDialog ],
   providers: [
-    CookieService,
     UserService,
     ForumService,
     SidenavService
   ],
-  bootstrap: [AppComponent]
+  bootstrap: [ AppComponent ]
 })
 export class AppModule { }
 
