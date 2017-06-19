@@ -5,6 +5,7 @@ import { FormsModule }             from '@angular/forms';
 import { ReactiveFormsModule }     from '@angular/forms';
 import { HttpModule, JsonpModule } from '@angular/http';
 import { CookieModule }           from 'ngx-cookie';
+import 'jquery';
 import 'hammerjs';
 import 'rxjs/add/observable/of';
 import 'rxjs/add/operator/distinct';

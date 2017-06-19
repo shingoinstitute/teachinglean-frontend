@@ -25,7 +25,8 @@
       ],
 
       "scripts": [
-        "./js-dependencies/tinymce.bundle.js"
+        "./js-dependencies/tinymce.bundle.js",
+        "../node_modules/jquery/dist/jquery.js"
       ],
 
       "environmentSource": "environments/environment.ts",
