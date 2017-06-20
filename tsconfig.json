@@ -11,10 +11,11 @@
     "target": "es5",
     "typeRoots": [
       "./node_modules/@types",
-      "./node_modules/moment/moment.d.ts"
+      "./typings/globals/jquery/index.d.ts"
     ],
     "types":[
-      "node"
+      "node",
+      "jquery"
     ],
     "lib": [
       "es2016",

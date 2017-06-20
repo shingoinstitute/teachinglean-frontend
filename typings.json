@@ -1,0 +1,8 @@
+{
+  "globalDependencies": {
+    "jquery": "registry:dt/jquery#1.10.0+20170310222111"
+  },
+  "dependencies": {
+    "tinymce": "registry:dt/tinymce#4.5.0+20170316005726"
+  }
+}
