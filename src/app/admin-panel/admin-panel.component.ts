@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 
-import { MdDialog, MdDialogRef } from '@angular/material';
+import { MdDialog, MdDialogRef, MdSnackBar } from '@angular/material';
 import { DisableUserDialog } from './disable-user.dialog';
 import { UserService } from '../services/user.service';
 
@@ -17,30 +17,41 @@ export class AdminPanelComponent implements OnInit {
   admin: User;
 
   roles = [
-    { value: "System Admin", viewValue: "System Admin" },
-    { value: "admin", viewValue: "Admin" },
-    { value: "editor", viewValue: "Editor" },
-    { value: "author", viewValue: "Author" },
-    { value: "moderator", viewValue: "Moderator" },
-    { value: "user", viewValue: "Member" }
+    { value: "systemAdmin", displayValue: "System Admin" },
+    { value: "admin", displayValue: "Admin" },
+    { value: "editor", displayValue: "Editor" },
+    { value: "author", displayValue: "Author" },
+    { value: "moderator", displayValue: "Moderator" },
+    { value: "user", displayValue: "Member" }
   ]
 
-  constructor(private userService: UserService, public dialog: MdDialog) {
-    this.admin = userService.user;
-
-    userService.getUsersAsync()
-    .then((users: User[]) => this.users = users)
-    .catch(err => console.error(err));
-
-  }
+  constructor(private userService: UserService, public dialog: MdDialog, private snackbar: MdSnackBar) {}
 
   ngOnInit() {
+    this.getAdminUser();
+    this.getUsers();
+  }
+
+  private getAdminUser() {
+    this.admin = this.userService.user;
+    this.userService.getAuthUser().subscribe(user => {
+      this.admin = user;
+    });
+  }
+
+  private getUsers() {
+    this.userService.getUsersAsync()
+    .then(users => {
+      this.users = users.map(User.initFromObject);
+    })
+    .catch(err => console.error(err));
   }
 
   updateUser(user: User) {
     this.userService.updateUserAsync(user)
     .then((user: User) => {
       user = user;
+      this.snackbar.open('Succesfully Updated User.', null, { duration: 2500 })
     })
     .catch(err => console.error(err));
   }
@@ -59,28 +70,21 @@ export class AdminPanelComponent implements OnInit {
   }
 
   parseRole(user: User) {
-    let role;
     switch (user.role) {
       case "systemAdmin":
-        role = "System Admin";
-        break;
+        return "System Admin";
       case "admin":
-        role = "Admin";
-        break;
+        return "Admin";
       case "author":
-        role = "Author";
-        break;
+        return "Author";
       case "editor":
-        role = "Editor";
-        break;
+        return "Editor";
       case "moderator":
-        role = "Moderator";
-        break;
-      default: 
-        role = "Member";
-        break;
+        return "Moderator";
+      case "user": 
+        return "Member";
     }
-    return role;
+    return "unassigned";
   }
 
 }

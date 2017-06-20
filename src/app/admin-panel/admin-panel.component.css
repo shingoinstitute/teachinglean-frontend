@@ -1,3 +1,7 @@
+md-select {
+	background-color: transparent !important;
+}
+
 table.user-admin-wrapper {
 	margin: 8px;
 }

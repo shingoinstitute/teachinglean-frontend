@@ -41,11 +41,11 @@
     </div>
 
     <div fxLayout="column" fxLayout.gt-md class="mb-2">
-      <div>
-        <img src="assets/images/Space_Needle002.png" [ngStyle.lt-sm]="{'max-width': '100%'}" />
+      <div fxFlex>
+        <img src="assets/images/Space_Needle002.png" [style.max-width]="'100%'" />
       </div>
 
-      <div class="ml-1">
+      <div class="ml-1" fxFlex>
         <h5 class="bold-text mt-0">OUR NEXT MEETING</h5>
 
         <p class="fs-14pt">
@@ -64,13 +64,13 @@
 
     <div fxLayout.gt-sm fxLayout="column" class="md-padding md-margin">
 
-      <div fxLayout="column" [ngStyle.gt-sm]="{'width': '50%'}">
+      <div fxLayout="column" fxFlex>
         <p class="flow-text center-align orange-text text-darken-3"><strong>GET IN ON THE GROUND FLOOR</strong></p>
         <a md-raised-button class="mat-accent mat-button" href="https://pomsmeetings.org/conf-2017/">REGISTER FOR CONFERENCE</a>
         <p class="flow-text">If you are interested in getting in on the ground floor and providing input and direction, we would like to see you there. Just register at the POMS website.</p>
       </div>
 
-      <div class="beige md-margin md-padding" [ngStyle.gt-sm]="{'width': '50%'}">
+      <div class="beige md-margin md-padding" fxFlex>
         <p class="fs-16pt">The primary objective of the <strong>COE</strong> is to build a community focused on operational excellence to</p>
         <ul class="disc aside blue-grey-text text-darken-2">
           <li class="fs-14pt bold-text">Foster creation and dissemination of scholarly knowledge.</li>

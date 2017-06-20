@@ -74,9 +74,9 @@ export class User implements UserInterface {
       user.organization = data.organization || "";
       user.reputation = data.reputation;
       user.accountIsActive = data.accountIsActive;
-      user.createdAt = Date.parse(data.createdAt);
-      user.updatedAt = Date.parse(data.updatedAt);
-      user.lastLogin = Date.parse(data.lastLogin);
+      user.createdAt = new Date(data.createdAt);
+      user.updatedAt = new Date(data.updatedAt);
+      user.lastLogin = new Date(data.lastLogin);
 
       return user;
     }
@@ -122,5 +122,5 @@ interface UserInterface {
   accountIsActive: boolean;
   createdAt?: Date;
   updatedAt?: Date;
-  lastLogin?: Date;
+  lastLogin?: any;
 }

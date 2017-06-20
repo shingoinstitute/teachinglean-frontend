@@ -1,20 +1,19 @@
+import { NgModule }                from '@angular/core';
 import { BrowserModule }           from '@angular/platform-browser';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
-import { NgModule }                from '@angular/core';
 import { FormsModule }             from '@angular/forms';
 import { ReactiveFormsModule }     from '@angular/forms';
 import { HttpModule, JsonpModule } from '@angular/http';
-import { CookieModule }           from 'ngx-cookie';
-import 'jquery';
+import { CookieModule }            from 'ngx-cookie';
 import 'hammerjs';
 import 'rxjs/add/observable/of';
 import 'rxjs/add/operator/distinct';
 import 'rxjs/add/operator/distinctUntilChanged';
 
 // Material Design
-import { AngularMaterialModule }   from './config/angular-material.module';
 import { FlexLayoutModule }        from '@angular/flex-layout';
 import { MaterialModule }          from '@angular/material';
+import { MaterialDesignModule }    from './config/material-design.module';
 
 // App Components
 import { AppRoutingModule }        from './config/app-routing.module';
@@ -55,14 +54,14 @@ import { UserService }             from './services/user.service';
   imports: [
     BrowserModule,
     BrowserAnimationsModule,
-    FlexLayoutModule,
-    MaterialModule.forRoot(),
-    AngularMaterialModule,
     FormsModule,
     CookieModule.forRoot(),
     ReactiveFormsModule,
     HttpModule,
     JsonpModule,
+    MaterialModule,
+    MaterialDesignModule,
+    FlexLayoutModule,
     AppRoutingModule
   ],
   declarations: [

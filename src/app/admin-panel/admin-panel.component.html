@@ -20,14 +20,17 @@
     </td>
 
     <td role="role">
-      <md-select placeholder="{{ parseRole(user) }}" (change)="updateUser(user)" [(ngModel)]="user.role">
-        <md-option *ngFor="let role of roles" [value]="role.value">{{ role.viewValue }}</md-option>
+      <md-select name='userRole'
+                 (change)="updateUser(user)" 
+                 [(ngModel)]="user.role" 
+                 [floatPlaceholder]="never">
+        <md-option *ngFor="let role of roles" [value]="role.value">{{ role.displayValue }}</md-option>
       </md-select>
     </td>
 
     <td role="account status">
-      <button md-button 
-      class="mat-accent" 
+      <button md-button
+      class="mat-accent"
       (click)="onClickStatus(user)"
       [disabled]="user.isAdmin">
         {{ user.accountIsActive ? "Active" : "Disabled" }}
