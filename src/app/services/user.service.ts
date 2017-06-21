@@ -116,6 +116,8 @@ export class UserService {
     })
     .map(res => {
       let data = res.json();
+      let token = data['xsrf-token'];
+      if (token) { this.cookieService.put('XSRF-TOKEN', token); }
       this._user = User.initFromObject(data);
       this.onDeliverableUserSource.next(this._user);
       return data;

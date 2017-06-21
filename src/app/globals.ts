@@ -2,5 +2,5 @@
 import { environment } from '../environments/environment';
 
 export const Globals = Object.freeze({
-  baseApiUrl: environment.production ? 'https://dev.teachinglean.org/backend/' : 'http://localhost:3000/backend'
+  baseApiUrl: environment.production ? 'https://api.teachinglean.org' : 'http://localhost:3000/backend'
 });
