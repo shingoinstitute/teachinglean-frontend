@@ -1,12 +1,8 @@
 {
   "globalDependencies": {
-    "jasmine": "registry:dt/jasmine#2.5.2+20170317130948",
-    "jquery": "registry:dt/jquery#1.10.0+20170310222111",
-    "node": "registry:dt/node#7.0.0+20170322231424"
+    "jquery": "registry:dt/jquery#1.10.0+20170310222111"
   },
   "dependencies": {
-    "q": "registry:dt/q#1.0.0+20170315012124",
-    "selenium-webdriver": "registry:dt/selenium-webdriver#3.0.0+20170308031439",
     "tinymce": "registry:dt/tinymce#4.5.0+20170316005726"
   }
 }
