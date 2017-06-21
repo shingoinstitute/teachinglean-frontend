@@ -7,6 +7,8 @@ import { UserService } from '../services/user.service';
 import { ForumService } from '../services/forum.service';
 import { Subscription } from 'rxjs';
 
+declare const tinymce: any;
+
 @Component({
    selector: 'app-entry-card',
    templateUrl: './entry-card.component.html',

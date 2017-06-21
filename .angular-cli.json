@@ -23,7 +23,7 @@
         "styles.css"
       ],
       "scripts": [
-
+        "assets/js/tinymce.bundle.js"
       ],
       "environmentSource": "environments/environment.ts",
       "environments": {

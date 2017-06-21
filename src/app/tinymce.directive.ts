@@ -3,6 +3,8 @@ import { NgModel } from '@angular/forms';
 import { Subject } from 'rxjs/Subject';
 import { Observable } from 'rxjs/Observable';
 
+declare const tinymce: any;
+
 @Directive({
    selector: '[tinyMce]',
    providers: [NgModel]

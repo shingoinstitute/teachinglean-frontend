@@ -11,6 +11,8 @@ import { UserService } from '../services/user.service';
 import { Entry } from '../entry/entry';
 import { User } from '../user/user';
 
+declare const tinymce: any;
+
 @Component({
   selector: 'forum-list-item',
   templateUrl: './forum-list-item.component.html',
