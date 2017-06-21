@@ -10,6 +10,8 @@ import { CookieService } from 'ngx-cookie';
 import 'rxjs/add/operator/catch';
 import 'rxjs/add/operator/map';
 
+import { environment } from '../../environments/environment';
+
 import { User }    from '../user/user';
 import { Globals } from '../globals';
 
@@ -41,6 +43,7 @@ export class UserService {
       this.onDeliverableUserSource.next(this._user);
     }, err => {
       this.onDeliverableUserSource.next(null);
+      return this.handleError(err);
     });
   }
 
@@ -54,7 +57,9 @@ export class UserService {
     }
 
     // Get logged in user if XSRF-TOKEN is present
-    return this.http.get(this.baseApiUrl + "/me")
+    return this.http.get(this.baseApiUrl + `/me?xsrf-token=${this.cookieService.get('XSRF-TOKEN')}`, {
+      withCredentials: true
+    })
     .map(res => {
       return User.initFromObject(res.json());
     })
@@ -116,8 +121,6 @@ export class UserService {
     })
     .map(res => {
       let data = res.json();
-      let token = data['xsrf-token'];
-      if (token) { this.cookieService.put('XSRF-TOKEN', token); }
       this._user = User.initFromObject(data);
       this.onDeliverableUserSource.next(this._user);
       return data;
@@ -175,3 +178,9 @@ export class UserService {
   }
   
 }
+
+// eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyIjp7InV1aWQiOiI0YWFhZmI1Yy1hNmY3LTQ3ODktYjIzOS0xNTIxYjcwYTdlZWMiLCJsYXN0bmFtZSI6IkJsYWNrYnVybiIsImZpcnN0bmFtZSI6IkNyYWlnIiwicGljdHVyZVVybCI6Imh0dHA6Ly9yZXMuY2xvdWRpbmFyeS5jb20vc2hpbmdvL2ltYWdlL3VwbG9hZC92MTQxNDg3NDI0My9zaWxob3VldHRlX3Z6dWdlYy5wbmciLCJlbWFpbCI6ImNyYWlnLmJsYWNrYnVybkB1c3UuZWR1Iiwicm9sZSI6InN5c3RlbUFkbWluIiwicmVwdXRhdGlvbiI6MCwiYWNjb3VudElzQWN0aXZlIjp0cnVlLCJsYXN0TG9naW4iOiIyMDE3LTA2LTIxVDE3OjQ2OjA4LjQzMVoiLCJjcmVhdGVkQXQiOiIyMDE3LTA2LTIwVDIzOjU2OjUwLjE5MFoiLCJ1cGRhdGVkQXQiOiIyMDE3LTA2LTIxVDE3OjQzOjI1LjQ3MFoiLCJpc0FkbWluIjp0cnVlLCJuYW1lIjoiQ3JhaWcgQmxhY2tidXJuIn0sImlhdCI6MTQ5ODA2NzE2OCwiYXVkIjoidGVhY2hpbmdsZWFuLm9yZyJ9.iIbhk3CDBz6cnt9vP4uRE_TMNiICmdEV17nA_rsE2Ls
+
+// eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyIjp7InV1aWQiOiI0YWFhZmI1Yy1hNmY3LTQ3ODktYjIzOS0xNTIxYjcwYTdlZWMiLCJsYXN0bmFtZSI6IkJsYWNrYnVybiIsImZpcnN0bmFtZSI6IkNyYWlnIiwicGljdHVyZVVybCI6Imh0dHA6Ly9yZXMuY2xvdWRpbmFyeS5jb20vc2hpbmdvL2ltYWdlL3VwbG9hZC92MTQxNDg3NDI0My9zaWxob3VldHRlX3Z6dWdlYy5wbmciLCJlbWFpbCI6ImNyYWlnLmJsYWNrYnVybkB1c3UuZWR1Iiwicm9sZSI6InN5c3RlbUFkbWluIiwicmVwdXRhdGlvbiI6MCwiYWNjb3VudElzQWN0aXZlIjp0cnVlLCJsYXN0TG9naW4iOiIyMDE3LTA2LTIxVDE3OjQ2OjA4LjQzMVoiLCJjcmVhdGVkQXQiOiIyMDE3LTA2LTIwVDIzOjU2OjUwLjE5MFoiLCJ1cGRhdGVkQXQiOiIyMDE3LTA2LTIxVDE3OjQzOjI1LjQ3MFoiLCJpc0FkbWluIjp0cnVlLCJuYW1lIjoiQ3JhaWcgQmxhY2tidXJuIn0sImlhdCI6MTQ5ODA2NzE2OCwiYXVkIjoidGVhY2hpbmdsZWFuLm9yZyJ9.iIbhk3CDBz6cnt9vP4uRE_TMNiICmdEV17nA_rsE2Ls
+
+// eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyIjp7InV1aWQiOiI0YWFhZmI1Yy1hNmY3LTQ3ODktYjIzOS0xNTIxYjcwYTdlZWMiLCJsYXN0bmFtZSI6IkJsYWNrYnVybiIsImZpcnN0bmFtZSI6IkNyYWlnIiwicGljdHVyZVVybCI6Imh0dHA6Ly9yZXMuY2xvdWRpbmFyeS5jb20vc2hpbmdvL2ltYWdlL3VwbG9hZC92MTQxNDg3NDI0My9zaWxob3VldHRlX3Z6dWdlYy5wbmciLCJlbWFpbCI6ImNyYWlnLmJsYWNrYnVybkB1c3UuZWR1Iiwicm9sZSI6InN5c3RlbUFkbWluIiwicmVwdXRhdGlvbiI6MCwiYWNjb3VudElzQWN0aXZlIjp0cnVlLCJsYXN0TG9naW4iOiIyMDE3LTA2LTIxVDE3OjA2OjExLjg1NloiLCJjcmVhdGVkQXQiOiIyMDE3LTA2LTIwVDIzOjU2OjUwLjE5MFoiLCJ1cGRhdGVkQXQiOiIyMDE3LTA2LTIxVDE3OjA2OjExLjk2NFoiLCJpc0FkbWluIjp0cnVlLCJuYW1lIjoiQ3JhaWcgQmxhY2tidXJuIn0sImlhdCI6MTQ5ODA2NDc5MCwiYXVkIjoidGVhY2hpbmdsZWFuLm9yZyJ9.aXRsXmiC-8SKHRHHIv1gANfXM-4Nd0aH4c1fmaCZx4U
