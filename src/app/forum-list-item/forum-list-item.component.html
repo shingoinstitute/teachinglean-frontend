@@ -4,9 +4,9 @@
 
   
 
-  <p *ngIf="answers.length === 0">This question has not been answered yet.</p>
+  <p *ngIf="!answers || answers && answers.length === 0">This question has not been answered yet.</p>
 
-  <p class="flow-text" *ngIf="answers.length > 0">{{ answers.length }} Answer{{ answers.length > 1 ? 's' : '' }}</p>
+  <p class="flow-text" *ngIf="answers && answers.length > 0">{{ answers.length }} Answer{{ answers.length > 1 ? 's' : '' }}</p>
 
   <app-entry-card *ngFor="let answer of answers" 
   [entry]="answer" 

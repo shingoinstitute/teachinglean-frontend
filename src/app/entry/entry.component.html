@@ -1,4 +1,4 @@
-<p class="flow-text text-center md-margin-top" *ngIf="entries.length === 0">{{ noEntryMsg }}</p>
+<p class="flow-text text-center md-margin-top" *ngIf="!entries || entries && entries.length === 0">{{ noEntryMsg }}</p>
 
 <ul class="entry-list-wrapper">
 	<li *ngFor="let entry of entries">

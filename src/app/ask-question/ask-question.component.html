@@ -14,7 +14,7 @@
               type="text"
               required='true'
               placeholder="title">
-        <md-error *ngIf="title.length === 0">This field is required.</md-error>
+        <md-error *ngIf="title && title.length === 0">This field is required.</md-error>
       </md-input-container>
 
     </div>

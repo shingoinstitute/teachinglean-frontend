@@ -10,12 +10,7 @@
     "experimentalDecorators": true,
     "target": "es5",
     "typeRoots": [
-      "./node_modules/@types",
-      "./typings/globals/jquery/index.d.ts"
-    ],
-    "types":[
-      "node",
-      "jquery"
+      "./typings"
     ],
     "lib": [
       "es2016",

@@ -94,11 +94,11 @@ export class Entry {
 	}
 
   downvoteCount() {
-    return this.usersDidDownvote.length;
+    return this.usersDidDownvote ? this.usersDidDownvote.length : 0;
   }
 
   upvoteCount() {
-    return this.usersDidUpvote.length;
+    return this.usersDidUpvote ? this.usersDidUpvote.length : 0;
   }
 
   userDidVote(userId: string) {

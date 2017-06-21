@@ -11,7 +11,7 @@ import { UserService } from '../services/user.service';
 import { Entry } from '../entry/entry';
 import { User } from '../user/user';
 
-declare const tinymce: any;
+// declare const tinymce: any;
 
 @Component({
   selector: 'forum-list-item',
@@ -69,8 +69,10 @@ export class ForumListItemComponent implements OnInit {
         this.tinyMceEditor.on('keyup', () => {
 
           this.zone.run(() => {
-            let characterCount = this.tinyMceEditor.getContent({format: 'text'}).length;
-
+            let characterCount = 0;
+            if (this.tinyMceEditor) {
+              characterCount = this.tinyMceEditor.getContent({format: 'text'}).length;
+            }
             this.characterCountMessage = characterCount > this.minCharacterCount ? `${500 - characterCount} characters left` : `Enter ${this.minCharacterCount - characterCount} more characters`;
 
             // A user can submit an answer if their anwer is at least 25 characters in length

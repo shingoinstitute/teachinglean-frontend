@@ -26,7 +26,7 @@ import { User } from '../user/user';
 import { Entry } from '../entry/entry';
 import { AppRoutingService } from '../services/app-routing.service';
 
-declare const tinymce: any;
+// declare const tinymce: any;
 
 @Component({
   selector: 'ask-question',
