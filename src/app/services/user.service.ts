@@ -57,9 +57,7 @@ export class UserService {
     }
 
     // Get logged in user if XSRF-TOKEN is present
-    return this.http.get(this.baseApiUrl + `/me?xsrf-token=${this.cookieService.get('XSRF-TOKEN')}`, {
-      withCredentials: true
-    })
+    return this.http.get(this.baseApiUrl + `/me?xsrf-token=${this.cookieService.get('XSRF-TOKEN')}`)
     .map(res => {
       return User.initFromObject(res.json());
     })
