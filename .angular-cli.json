@@ -22,9 +22,7 @@
         "styles.css",
         "app-theme.scss"
       ],
-      "scripts": [
-        "assets/js/tinymce.bundle.js"
-      ],
+      "scripts": [],
       "environmentSource": "environments/environment.ts",
       "environments": {
         "dev": "environments/environment.ts",
