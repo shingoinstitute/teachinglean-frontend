@@ -48,12 +48,10 @@ export class AdminPanelComponent implements OnInit {
   }
 
   updateUser(user: User) {
-    this.userService.updateUserAsync(user)
-    .then((user: User) => {
-      user = user;
+    this.userService.updateUser(user).subscribe(user => {
+      user = User.initFromObject(user);
       this.snackbar.open('Succesfully Updated User.', null, { duration: 2500 })
-    })
-    .catch(err => console.error(err));
+    }, err => console.error(err));
   }
 
   onClickStatus(user: User) {
