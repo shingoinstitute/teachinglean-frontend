@@ -1,41 +1,28 @@
+<div fxLayout="column" fxLayout.gt-sm="row">
 
-
-<div fxLayout="column" fxLayout.gt-sm class="container" >
-
-  <div fxFlexOrder.lt-md="2" fxFlex fxLayout="column" class="search-wrapper">
-
-    <!--<i class="material-icons">search</i>
-    <md-input-container>
-      <input mdInput placeholder="Search...">
-    </md-input-container>-->
-
-    <md-tab-group [dynamicHeight]="true" [selectedIndex]="0">
-      <md-tab label="Top Questions">
-        <ul class="entry-list-wrapper">
-          <li *ngFor="let question of topResults">
-            <p><a class="text-md" routerLink="/forum/{{ question.id }}">{{ question.title }}</a></p>
-            <p class="text-xs grey-text">Asked on {{ question.createdAtToString() }}</p>
-          </li>
-        </ul>
-      </md-tab>
-      <md-tab label="Recent Questions">
-        <ul class="entry-list-wrapper">
-          <li *ngFor="let question of recentQuestions">
-            <p><a class="text-md" routerLink="/forum/{{ question.id }}">{{ question.title }}</a></p>
-            <p class="text-xs grey-text">Asked on {{ question.createdAtToString() }}</p>
-          </li>
-        </ul>
-      </md-tab>
-    </md-tab-group>
-
-    
-
-  </div>
-
-  <div fxFlexOrder.lt-md="1" fxFlex fxLayout="column" class="md-margin" *ngIf="questionFormEnabled">
-    <ask-question></ask-question>
-  </div>
-
-
+  <md-tab-group fxFlex fxFlexOrder.gt-sm="1" fxFlexOrder="2">
+    <md-tab label="Top Questions">
+      <ul class="entry-list-wrapper">
+        <li *ngFor="let question of topResults">
+          <p><a class="text-md" routerLink="/forum/{{ question.id }}">{{ question.title }}</a></p>
+          <p class="text-xs grey-text">Asked on {{ question.createdAtToString() }}</p>
+        </li>
+      </ul>
+    </md-tab>
+    <md-tab label="Recent Questions">
+      <ul class="entry-list-wrapper">
+        <li *ngFor="let question of recentQuestions">
+          <p><a class="text-md" routerLink="/forum/{{ question.id }}">{{ question.title }}</a></p>
+          <p class="text-xs grey-text">Asked on {{ question.createdAtToString() }}</p>
+        </li>
+      </ul>
+    </md-tab>
+  </md-tab-group>
+  
+  <ask-question fxLayout="column" 
+                class="md-margin" 
+                *ngIf="questionFormEnabled" 
+                fxFlex 
+                fxFlexOrder.gt-sm="2"></ask-question>
 
 </div>
