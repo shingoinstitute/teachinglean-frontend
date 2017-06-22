@@ -3,7 +3,6 @@ import {
     MdCardModule, 
     MdButtonModule, 
     MdInputModule,
-    MdButtonToggleModule,
     MdSnackBarModule ,
     MdTabsModule,
     MdMenuModule,
@@ -12,19 +11,15 @@ import {
     MdIconModule,
     MdSidenavModule,
     MdProgressSpinnerModule,
-    MdCoreModule,
     MdToolbarModule,
-    MdLineModule,
-    MdCommonModule
+    MaterialModule
 } from '@angular/material';
 
 @NgModule({
     imports: [
-        MdCardModule,
+        MaterialModule,
         MdButtonModule,
-        MdInputModule,
         MdSnackBarModule,
-        MdButtonToggleModule,
         MdTabsModule,
         MdMenuModule,
         MdDialogModule,
@@ -32,17 +27,12 @@ import {
         MdIconModule,
         MdSidenavModule,
         MdProgressSpinnerModule,
-        MdCoreModule,
-        MdToolbarModule,
-        MdLineModule,
-        MdCommonModule
+        MdToolbarModule
     ],
     exports: [
-        MdCardModule,
+        MaterialModule,
         MdButtonModule,
-        MdInputModule,
         MdSnackBarModule,
-        MdButtonToggleModule,
         MdTabsModule,
         MdMenuModule,
         MdDialogModule,
@@ -50,11 +40,8 @@ import {
         MdIconModule,
         MdSidenavModule,
         MdProgressSpinnerModule,
-        MdCoreModule,
-        MdToolbarModule,
-        MdLineModule,
-        MdCommonModule
+        MdToolbarModule
     ],
     providers: []
 })
-export class MaterialDesignModule { }
+export class MaterialDesignImports { }

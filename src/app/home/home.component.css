@@ -15,3 +15,13 @@ h3.header-title {
       font-weight: 700;
    }
 }
+
+.page-section-child {
+   margin: 8px;
+}
+
+@media only screen and (min-width: 960px) {
+   .page-section-child {
+      width: 50%;
+   }
+}

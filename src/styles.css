@@ -148,8 +148,12 @@ h3.mat-headline {
   text-align: right;
 }
 
-/* Helpers */
+/* Content Blocks */
+.page-section {
+  margin: 8px 0 16px;
+}
 
+/* Helpers */
 .md-margin {
   margin: 16px 8px 16px 8px;
 }
@@ -215,6 +219,11 @@ h3.mat-headline {
 
 .mat-primary {
   background-color: #607d8b !important;
+}
+
+md-spinner.mat-primary,
+md-progress-spinner.mat-primary {
+  background-color: transparent !important;
 }
 
 .mat-primary-text {
@@ -347,44 +356,4 @@ h3.mat-headline {
 .text-lg,
 .fs-16pt {
   font-size: 16pt;
-}
-
-.mb-0 {
-  margin-bottom: 0;
-}
-
-.mb-1 {
-  margin-bottom: 8px;
-}
-
-.mb-2 {
-  margin-bottom: 16px;
-}
-
-.ml-0 {
-  margin-left: 0;
-}
-
-.ml-1 {
-  margin-left: 8px;
-}
-
-.ml-2 {
-  margin-left: 16px;
-}
-
-.mt-0 {
-  margin-top: 0;
-}
-
-.mt-1 {
-  margin-top: 8px;
-}
-
-.mt-2 {
-  margin-top: 16px;
-}
-
-.vspacer {
-  height: 16px;
 }

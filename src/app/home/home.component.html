@@ -7,7 +7,7 @@
     <img src="assets/images/logos/LEAN-logo-lg.png" class="responsive-img" />
   </div>
 
-  <div fxLayout.gt-sm="row" fxLayout="column" fxLayoutGap="16px">
+  <div class="page-section" fxLayout.gt-sm="row" fxLayout="column" fxLayoutGap="16px">
 
     <md-card fxFlex class="mat-primary darken-1">
       <h4 class="white-text">Community Forum</h4>
@@ -15,37 +15,36 @@
     </md-card>
 
     <md-card fxFlex>
-      <h4 class="md-margin-left">Stay Informed</h4>
+      <h4>Stay Informed</h4>
       <p class="flow-text">Maximize customer value and minimize waste through Lean education. Join the <a href="https://teachinglean.org/about">Lean Education Academic Network</a>.</p>
-      <md-card-actions>
-        <button md-raised-button class="mat-accent" ng-href="/createAccount">CREATE A FREE ACCOUNT</button>
+      <md-card-actions [style.margin]="'0'">
+        <a md-raised-button class="mat-accent" routerLink="/signup">CREATE A FREE ACCOUNT</a>
       </md-card-actions>
     </md-card>
 
     <md-card fxFlex class="mat-primary darken-1">
-      <h4 class="white-text md-margin-left">Are you an educator?</h4>
-      <p class="flow-text white-text md-margin-left">Use our online <a href="/teachingCurriculum" class="orange-text">teaching resources</a> to put together a presentation
+      <h4 class="white-text">Are you an educator?</h4>
+      <p class="flow-text white-text">Use our online <a href="/teachingCurriculum" class="orange-text">teaching resources</a> to put together a presentation
         using current, up-to-date teaching material.</p>
     </md-card>
 
   </div>
 
-  <div class="vspacer"></div>
   <md-divider></md-divider>
 
-  <div fxLayout="column" class="mb-2">
+  <div fxLayout="column" class="page-section">
     <div>
       <h4 class="bold-text"><a href="https://pomsmeetings.org/conf-2017">ANNUAL POMS 2017 CONFERENCE</a></h4>
 
       <p>May 5th - 8th, 2017 | Seattle, Washington</p>
     </div>
 
-    <div fxLayout="column" fxLayout.gt-md class="mb-2">
+    <div fxLayout="column" fxLayout.gt-md md-margin="bottom" class="page-section">
       <div fxFlex>
         <img src="assets/images/Space_Needle002.png" [style.max-width]="'100%'" />
       </div>
 
-      <div class="ml-1" fxFlex>
+      <div md-margin="left" fxFlex>
         <h5 class="bold-text mt-0">OUR NEXT MEETING</h5>
 
         <p class="fs-14pt">
@@ -59,34 +58,28 @@
       </div>
 
     </div>
+  </div>
 
-    <md-divider></md-divider>
+  <div fxLayout="column" fxLayout.gt-sm="row" class="page-section">
 
-    <div fxLayout.gt-sm fxLayout="column" class="md-padding md-margin">
-
-      <div fxLayout="column" fxFlex>
-        <p class="flow-text center-align orange-text text-darken-3"><strong>GET IN ON THE GROUND FLOOR</strong></p>
-        <a md-raised-button class="mat-accent mat-button" href="https://pomsmeetings.org/conf-2017/">REGISTER FOR CONFERENCE</a>
-        <p class="flow-text">If you are interested in getting in on the ground floor and providing input and direction, we would like to see you there. Just register at the POMS website.</p>
-      </div>
-
-      <div class="beige md-margin md-padding" fxFlex>
-        <p class="fs-16pt">The primary objective of the <strong>COE</strong> is to build a community focused on operational excellence to</p>
-        <ul class="disc aside blue-grey-text text-darken-2">
-          <li class="fs-14pt bold-text">Foster creation and dissemination of scholarly knowledge.</li>
-          <li class="fs-14pt bold-text">Share teaching and pedagogical material.</li>
-          <li class="fs-14pt bold-text">Exchange information about undergraduate, graduate and other specialized educational programs.</li>
-          <li class="fs-14pt bold-text">Interact with leading practitioners to enrich research and teaching.</li>
-        </ul>
-      </div>
-
+    <div fxLayout="column" class="page-section-child">
+      <p class="flow-text center-align orange-text text-darken-3"><strong>GET IN ON THE GROUND FLOOR</strong></p>
+      <a md-raised-button class="mat-accent" href="https://pomsmeetings.org/conf-2017/">REGISTER FOR CONFERENCE</a>
+      <p class="flow-text">If you are interested in getting in on the ground floor and providing input and direction, we would like to see you there. Just register at the POMS website.</p>
     </div>
 
-    <p class="fs-14pt md-padding">
-      <span class="flow-text">Questions?</span> Contact <a href="mailto:eolsen@calpoly.edu">Eric Olsen</a>, <a href="mailto:shahx024@umn.edu">Rachna Shah</a>,
-      or <a href="mailto:ward.1@osu.edu">Peter Ward</a>
-    </p>
-
+    <div class="beige md-padding page-section-child">
+      <p class="fs-16pt">The primary objective of the <strong>COE</strong> is to build a community focused on operational excellence to</p>
+      <ul class="disc aside blue-grey-text text-darken-2">
+        <li class="fs-14pt bold-text">Foster creation and dissemination of scholarly knowledge.</li>
+        <li class="fs-14pt bold-text">Share teaching and pedagogical material.</li>
+        <li class="fs-14pt bold-text">Exchange information about undergraduate, graduate and other specialized educational programs.</li>
+        <li class="fs-14pt bold-text">Interact with leading practitioners to enrich research and teaching.</li>
+      </ul>
+    </div>
 
   </div>
+
+  <md-divider></md-divider>
+
 </div>

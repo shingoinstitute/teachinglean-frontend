@@ -88,13 +88,12 @@ export class UserService {
     });
   }
 
-  updateUserAsync(user: User) {
+  updateUser(user: User) {
     let params = user.toObject();
     delete params.uuid;
     if (user.role != 'systemAdmin' || user.role != 'admin') delete params.role;
     return this.http.put(this.baseApiUrl + '/user/' + user.uuid, params)
-    .toPromise()
-    .then(res => {
+    .map(res => {
       let data = res.json();
       return User.initFromObject(data);
     })

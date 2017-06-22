@@ -19,8 +19,8 @@
       "testTsconfig": "tsconfig.spec.json",
       "prefix": "app",
       "styles": [
-        "app-theme.css",
-        "styles.css"
+        "styles.css",
+        "app-theme.scss"
       ],
       "scripts": [
         "assets/js/tinymce.bundle.js"

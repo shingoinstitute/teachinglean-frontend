@@ -35,13 +35,12 @@ export class UserProfileComponent {
   }
   
   onclickSave() {
-    this.userService.updateUserAsync(this.user)
-    .then((user: User) => {
-      this.user = user;
+    this.userService.updateUser(this.user).subscribe(user => {
+      this.user = User.initFromObject(user);
       this.snackbar.open('Profile saved.', null, { duration: 2000 });
-    })
-    .catch(err => {
-      console.error(err);
+    }, err => { 
+      this.snackbar.open('Error, Profile Failed to Save.', 'Okay');
+      console.error(err); 
     });
   }
 
