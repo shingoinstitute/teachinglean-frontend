@@ -41,7 +41,7 @@ import { Entry }        from '../entry/entry';
     ]),
   ]
 })
-export class ModeratorComponent implements OnInit {
+export class ModeratorComponent implements OnInit, AfterViewInit {
 
   @Output() onClickQuestionTab$   = new EventEmitter<any>();
   @Output() onClickAnswerTab$     = new EventEmitter<any>();
@@ -65,18 +65,30 @@ export class ModeratorComponent implements OnInit {
   elementState: string = 'hide';
   userState:    string = 'inactive';
 
+  private _shouldLoadData: boolean;
+
   constructor(private userService: UserService, private forumService: ForumService, private cookies: CookieService) {
     this.windowWidth = window.innerWidth;
+    this.selectedModeratorTab = +this.cookies.get('selectedModeratorTab') || 0;
+    let index = +cookies.get('selectedDashboardTab') || -1;
+    this._shouldLoadData = index === 3;
   }
 
   ngOnInit() {
-    this.selectedModeratorTab = +this.cookies.get('selectedModeratorTab') || 0;
-    this.loadDataForTab({ index: this.selectedModeratorTab });
+    
+  }
+
+  ngAfterViewInit() {
+    this._shouldLoadData && this.loadDataForTab({ index: this.selectedModeratorTab });
   }
 
   @HostListener('window:resize', ['$event'])
   onResize(e) {
     this.windowWidth = window.innerWidth;
+  }
+
+  loadData() {
+    this.loadDataForTab({ index: this.selectedModeratorTab });
   }
 
   loadDataForTab($ev) {

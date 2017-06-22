@@ -1,5 +1,5 @@
-import { Component, OnInit } from '@angular/core';
-
+import { Component, OnInit, AfterViewInit } from '@angular/core';
+import { CookieService } from 'ngx-cookie';
 import { MdDialog, MdDialogRef, MdSnackBar } from '@angular/material';
 import { DisableUserDialog } from './disable-user.dialog';
 import { UserService } from '../services/user.service';
@@ -11,10 +11,11 @@ import { User } from '../user/user';
   templateUrl: './admin-panel.component.html',
   styleUrls: ['./admin-panel.component.css']
 })
-export class AdminPanelComponent implements OnInit {
+export class AdminPanelComponent implements AfterViewInit {
 
   users: User[];
   admin: User;
+  private _shouldLoadData;
 
   roles = [
     { value: "systemAdmin", displayValue: "System Admin" },
@@ -25,9 +26,16 @@ export class AdminPanelComponent implements OnInit {
     { value: "user", displayValue: "Member" }
   ]
 
-  constructor(private userService: UserService, public dialog: MdDialog, private snackbar: MdSnackBar) {}
+  constructor(private userService: UserService, public dialog: MdDialog, private snackbar: MdSnackBar, cookieService: CookieService) {
+    let index = +cookieService.get('selectedDashboardTab');
+    this._shouldLoadData = index && index === 2;
+  }
 
-  ngOnInit() {
+  ngAfterViewInit() {
+    this._shouldLoadData && this.loadData();
+  }
+
+  loadData() {
     this.getAdminUser();
     this.getUsers();
   }

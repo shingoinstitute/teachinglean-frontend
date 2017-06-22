@@ -1,6 +1,7 @@
 import { 
   Component, 
   AfterViewInit,
+  ViewChild,
   OnDestroy, 
   OnInit
 } from '@angular/core';
@@ -10,6 +11,8 @@ import { Observable } from 'rxjs/Observable';
 import { CookieService } from 'ngx-cookie';
 import { UserService } from "../services/user.service";
 import { ForumService } from '../services/forum.service';
+import { AdminPanelComponent } from '../admin-panel/admin-panel.component'
+import { ModeratorComponent } from '../moderator/moderator.component';
 import { User } from "../user/user";
 import { Entry } from '../entry/entry';
 
@@ -19,6 +22,8 @@ import { Entry } from '../entry/entry';
   styleUrls: ['./dashboard.component.css'],
 })
 export class DashboardComponent implements OnInit {
+  @ViewChild(AdminPanelComponent) adminPanel: AdminPanelComponent;
+  @ViewChild(ModeratorComponent) moderatorPanel: ModeratorComponent;
 
   spinnerEnabled = true;
   selectedDashboardTab = 0;
@@ -76,8 +81,15 @@ export class DashboardComponent implements OnInit {
   }
 
   onclickMainTabGroup(e) {
+    let index = e.index;
     // selected tab from main tab group
-    this.cookies.put('selectedDashboardTab', `${e.index}`);
+    this.cookies.put('selectedDashboardTab', `${index}`);
+    if (this.adminPanel && index === 2) {
+      console.log('loading admin data.');
+      this.adminPanel.loadData();
+    } else if (this.moderatorPanel && index == 3) {
+      this.moderatorPanel.loadData()
+    }
   }
 
 }
