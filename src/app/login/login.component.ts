@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, HostListener } from '@angular/core';
 import { UserService } from '../services/user.service';
 
 import { Globals } from '../globals';
@@ -10,7 +10,7 @@ import { Router } from "@angular/router";
   templateUrl: './login.component.html',
   styleUrls: ['./login.component.css']
 })
-export class LoginComponent implements OnInit {
+export class LoginComponent {
 
   spinnerEnabled = false;
   showCreateAccount = false;
@@ -23,7 +23,11 @@ export class LoginComponent implements OnInit {
     this.baseUrl = Globals.baseApiUrl;
   }
 
-  ngOnInit() {
+  @HostListener('window:keyup.enter', ['$event'])
+  keyupHandler(ev: KeyboardEvent) {
+    if (this.username.length > 0 && this.password.length > 0) {
+      this.onClickLogin();
+    }
   }
 
   onClickLogin() {

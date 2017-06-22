@@ -10,7 +10,7 @@
 				<img src="assets/images/logos/lkin-login-form-btn.png">
 			</button>
 
-			<div id="login-spinner" fxLayout="row" fxLayoutAlign="space-around">
+			<div class="md-spinner-wrapper md-margin">
 				<md-spinner *ngIf="spinnerEnabled"></md-spinner>
 			</div>
 
@@ -28,13 +28,11 @@
 					<input mdInput required (change)="password=$event.target.value" type="password" placeholder="Password">
 				</md-input-container>
 
+				<div>
+					<button type="submit" md-raised-button class="mat-primary" (click)="onClickLogin($event)">LOGIN</button>
+				</div>
       </form>
 
-
-			<!--<div><button md-raised-button class="md-primary" ng-click="vm.authenticateLocal(username, password)">Login</button></div>-->
-      <div>
-        <button md-raised-button class="mat-primary" (click)="onClickLogin()">LOGIN</button>
-      </div>
 
 			<p><a href="/reset">forgot password?</a></p>
 

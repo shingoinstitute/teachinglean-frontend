@@ -31,8 +31,15 @@
   margin-top: 16px;
 }
 
-#login-spinner {
-  margin-top: 24px;
+.md-spinner-wrapper {
+  width: 100%;
+  height: 50px;
+}
+
+md-spinner {
+  margin: 0 auto;
+  width: 100%;
+  height: 50px;
 }
 
 .input-container {
