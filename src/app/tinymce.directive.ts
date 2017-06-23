@@ -11,7 +11,7 @@ export class TinyMceDirective implements OnDestroy {
    @Input() height: number;
    @Input() selector;
    @Output() onKeyup = new EventEmitter<string>();
-   editor;
+   public editor;
 
    constructor(private el: ElementRef, private model: NgModel) {}
 
@@ -19,6 +19,13 @@ export class TinyMceDirective implements OnDestroy {
 
    ngOnDestroy() {
       tinymce.remove(this.editor);
+   }
+
+   clear() {
+      if (this.editor) {
+         this.editor.setContent('');
+         this.model.update.next('');
+      }
    }
 
    initTinyMce() {

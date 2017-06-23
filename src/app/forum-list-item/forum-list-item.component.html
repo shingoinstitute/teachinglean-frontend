@@ -12,6 +12,7 @@
   [entry]="answer" 
   [parentDidSelectEntry]="didMarkAnswerCorrect"
   (onclickMarkAnswer)="onMarkAnswerHandler($event)"
+  (onDestroyEntry)="onDeleteHandler($event)" 
   (onclickDemarkAnswer)="onDemarkAnswerHandler($event)"></app-entry-card>
 
   

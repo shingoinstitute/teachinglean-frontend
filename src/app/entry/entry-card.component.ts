@@ -17,6 +17,7 @@ import { Subscription } from 'rxjs';
 export class EntryCardComponent implements OnInit, OnDestroy {
    @Output() onclickMarkAnswer = new EventEmitter<Entry>();
    @Output() onclickDemarkAnswer = new EventEmitter<Entry>();
+   @Output() onDestroyEntry = new EventEmitter<any>();
    @Input() entry: Entry;
    @Input() parentDidSelectEntry: boolean;
    get canComment(): boolean { return !!this.user }
@@ -76,6 +77,14 @@ export class EntryCardComponent implements OnInit, OnDestroy {
       }, err => {
          console.error(err);
       });
+   }
+
+   onclickDelete() {
+     this.forumService.destroyEntry(this.entry.id).subscribe(data => {
+       this.onDestroyEntry.emit(this.entry.id);
+     }, err => {
+       console.error(err);
+     });
    }
 
    onclickCancel() {

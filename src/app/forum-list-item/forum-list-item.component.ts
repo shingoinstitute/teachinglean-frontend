@@ -25,11 +25,15 @@ export class ForumListItemComponent implements OnInit {
   set editor(view: TinyMceDirective) {
     view && view.initTinyMce();
     if (view) {
+      this._editor = view;
       view.onKeyup.subscribe(value => {
         this.onEditorChange(value);
       });
     }
   }
+
+  private _editor;
+
   questionContent = "";
   @Output() onEditorKeyup = new EventEmitter();
   minCharacterCount = 15;
@@ -116,10 +120,11 @@ export class ForumListItemComponent implements OnInit {
       title: null
     })
     .subscribe(data => {
-        this.loadData();
+      this._editor.clear();
+      this.questionContent = '';
+      this.loadData();
     });
 
-    this.questionContent = '';
   }
 
   onMarkAnswerHandler(answer: Entry) {
@@ -134,6 +139,10 @@ export class ForumListItemComponent implements OnInit {
     .subscribe(data => {
       answer.markedCorrect = this.didMarkAnswerCorrect = false;
     });
+  }
+
+  onDeleteHandler(entryId) {
+    this.loadData();
   }
 
 }
