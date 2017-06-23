@@ -3,6 +3,7 @@ import {
   OnInit,
   EventEmitter, 
   Output,
+  ViewChild,
   NgZone
 } from '@angular/core';
 import { ActivatedRoute, Params } from '@angular/router';
@@ -11,7 +12,7 @@ import { UserService } from '../services/user.service';
 import { Entry } from '../entry/entry';
 import { User } from '../user/user';
 
-// declare const tinymce: any;
+import { TinyMceDirective } from '../tinymce.directive';
 
 @Component({
   selector: 'forum-list-item',
@@ -20,10 +21,19 @@ import { User } from '../user/user';
 })
 export class ForumListItemComponent implements OnInit {
 
+  @ViewChild(TinyMceDirective)
+  set editor(view: TinyMceDirective) {
+    view && view.initTinyMce();
+    if (view) {
+      view.onKeyup.subscribe(value => {
+        this.onEditorChange(value);
+      });
+    }
+  }
+  questionContent = "";
   @Output() onEditorKeyup = new EventEmitter();
   minCharacterCount = 15;
   hasUser = false;
-  tinyMceEditor;
   entry                = new Entry();
   didMarkAnswerCorrect = false;
   answers: Entry[]     = [];
@@ -52,36 +62,17 @@ export class ForumListItemComponent implements OnInit {
     });
   }
 
-  ngOnInit() {
-    tinymce.init({
-      selector: '#question-textarea',
-      plugins: [
-        'advlist autolink lists link charmap print preview anchor',
-        'searchreplace visualblocks code fullscreen',
-        'table paste code'
-      ],
-      menubar: false,
-      height: "300px",
-      toolbar: 'undo redo | bold italic | alignleft aligncenter alignright alignjustify | bullist numlist outdent indent | link',
-      skin_url: '../assets/skins/lightgray',
-      setup: editor => {
-        this.tinyMceEditor = editor;
-        this.tinyMceEditor.on('keyup', () => {
+  ngOnInit() { }
 
-          this.zone.run(() => {
-            let characterCount = 0;
-            if (this.tinyMceEditor) {
-              characterCount = this.tinyMceEditor.getContent({format: 'text'}).length;
-            }
-            this.characterCountMessage = characterCount > this.minCharacterCount ? `${500 - characterCount} characters left` : `Enter ${this.minCharacterCount - characterCount} more characters`;
+  onEditorChange(value) {
+    this.zone.run(() => {
+      let characterCount = value.length || 0;
+      this.characterCountMessage = characterCount > this.minCharacterCount ? `${500 - characterCount} characters left` : `Enter ${this.minCharacterCount - characterCount} more characters`;
 
-            // A user can submit an answer if their anwer is at least 25 characters in length
-            // and they are logged in. If `this.canComment` is true, then we know a user is
-            // logged in without needing to check again using the UserService.
-            this.canSubmitAnswer = characterCount > this.minCharacterCount && !!this.userService.user;
-          })
-        });
-      },
+      // A user can submit an answer if their anwer is at least 25 characters in length
+      // and they are logged in. If `this.canComment` is true, then we know a user is
+      // logged in without needing to check again using the UserService.
+      this.canSubmitAnswer = characterCount > this.minCharacterCount && !!this.userService.user;
     });
   }
 
@@ -119,7 +110,7 @@ export class ForumListItemComponent implements OnInit {
     }
 
     this.forumService.createEntry({
-      content: this.tinyMceEditor.getContent(),
+      content: this.questionContent,
       parent: this.entry.id,
       owner: this.userService.user.uuid,
       title: null
@@ -128,7 +119,7 @@ export class ForumListItemComponent implements OnInit {
         this.loadData();
     });
 
-    this.tinyMceEditor.setContent('');
+    this.questionContent = '';
   }
 
   onMarkAnswerHandler(answer: Entry) {

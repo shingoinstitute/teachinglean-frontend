@@ -23,9 +23,9 @@
   <p class="md-margin-top"><strong>Have an answer?</strong></p>
     <div class="md-margin-top" id="qa-answer-wrapper">
 
-      <textarea id="question-textarea"
+      <textarea tinyMce id="question-textarea"
                 required
-                form="ask-question-form"
+                [(ngModel)]="questionContent"
                 maxlength="500"
                 name="Question text"></textarea>
 

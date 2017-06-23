@@ -3,8 +3,6 @@ import { NgModel } from '@angular/forms';
 import { Subject } from 'rxjs/Subject';
 import { Observable } from 'rxjs/Observable';
 
-// declare const tinymce: any;
-
 @Directive({
    selector: '[tinyMce]',
    providers: [NgModel]
@@ -12,7 +10,8 @@ import { Observable } from 'rxjs/Observable';
 export class TinyMceDirective implements OnDestroy {
    @Input() height: number;
    @Input() selector;
-   @Input() editor;
+   @Output() onKeyup = new EventEmitter<string>();
+   editor;
 
    constructor(private el: ElementRef, private model: NgModel) {}
 
@@ -41,6 +40,7 @@ export class TinyMceDirective implements OnDestroy {
             this.editor.on('keyup', () => {
                // Inform ngModel of udpates
                this.model.update.next(this.editor.getContent());
+               this.onKeyup.emit(this.editor.getContent({format: 'text'}));
             });
             this.editor.on('change', () => {
                // Inform ngModel of udpates for actions not detected by the 'keyup' event (such as clicking the `underline` button)
