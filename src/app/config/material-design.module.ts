@@ -11,13 +11,11 @@ import {
     MdIconModule,
     MdSidenavModule,
     MdProgressSpinnerModule,
-    MdToolbarModule,
-    MaterialModule
+    MdToolbarModule
 } from '@angular/material';
 
 @NgModule({
     imports: [
-        MaterialModule,
         MdButtonModule,
         MdSnackBarModule,
         MdTabsModule,
@@ -30,7 +28,6 @@ import {
         MdToolbarModule
     ],
     exports: [
-        MaterialModule,
         MdButtonModule,
         MdSnackBarModule,
         MdTabsModule,

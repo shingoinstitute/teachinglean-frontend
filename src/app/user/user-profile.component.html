@@ -1,7 +1,6 @@
 <md-tab-group (selectChange)="onclickTab($event)" [selectedIndex]="0">
 
-   <md-tab label="Profile">
-
+   <md-tab [label]="'Profile'">
       <div class="profile-content-wrapper" fxLayout>
 
          <!--Profile Picture-->
@@ -51,7 +50,7 @@
 
    </md-tab>
 
-   <md-tab label="Edit Profile">
+   <md-tab [label]="'Edit Profile'">
 
       <div class="profile-content-wrapper" fxLayout="column">
 

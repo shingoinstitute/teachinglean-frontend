@@ -31,7 +31,18 @@ export class UserProfileComponent {
   shouldShowTinyEditor = false;
   
   onclickTab(event) {
-    this.shouldShowTinyEditor = (event.index === 1);
+    /**
+     * When the `Edit Profile` tab is selected, TinyMceDirective loads a wyziwig that 
+     * is performance intensive. Using setTimeout() allows tab transition animations to 
+     * complete before loading extra stuff into the view, thus improving the UX.
+     */
+    if (event.index === 1) {
+      setTimeout(() => {
+        this.shouldShowTinyEditor = (event.index === 1);
+      }, 400);
+    } else {
+      this.shouldShowTinyEditor = false;
+    }
   }
   
   onclickSave() {

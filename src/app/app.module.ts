@@ -11,7 +11,8 @@ import 'rxjs/add/operator/distinct';
 import 'rxjs/add/operator/distinctUntilChanged';
 
 // Material Design
-import { MaterialDesignImports }    from './config/material-design.module';
+import { MaterialModule }          from '@angular/material';
+import { MaterialDesignImports }   from './config/material-design.module';
 import { FlexLayoutModule }        from '@angular/flex-layout';
 
 // App Components
@@ -54,11 +55,12 @@ import { UserService }             from './services/user.service';
     BrowserModule,
     BrowserAnimationsModule,
     FormsModule,
-    CookieModule.forRoot(),
     ReactiveFormsModule,
+    MaterialModule,
+    MaterialDesignImports,
+    CookieModule.forRoot(),
     HttpModule,
     JsonpModule,
-    MaterialDesignImports,
     FlexLayoutModule,
     AppRoutingModule
   ],
