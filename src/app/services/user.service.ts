@@ -3,17 +3,17 @@ import {
   Response, 
   ResponseContentType
 } from '@angular/http';
-import { Injectable }    from '@angular/core';
-import { Observable }    from 'rxjs/Observable';
-import { Subject }       from 'rxjs/Subject';
-import { CookieService } from 'ngx-cookie';
-import 'rxjs/add/operator/catch';
+import { ActivatedRoute, Params } from '@angular/router';
+import { Injectable }     from '@angular/core';
+import { Observable }     from 'rxjs/Observable';
+import { Subject }        from 'rxjs/Subject';
+import { CookieService }  from 'ngx-cookie';
+import { User }           from '../user/user';
+import { Globals }        from '../globals';
+import { environment }    from '../../environments/environment';
+
 import 'rxjs/add/operator/map';
-
-import { environment } from '../../environments/environment';
-
-import { User }    from '../user/user';
-import { Globals } from '../globals';
+import 'rxjs/add/operator/catch';
 
 @Injectable()
 export class UserService {
@@ -35,39 +35,41 @@ export class UserService {
   
   baseApiUrl: string;
   
-  constructor(private http: Http, private cookieService: CookieService) {
+  constructor(private http: Http, private cookieService: CookieService, private route: ActivatedRoute) {
     this.baseApiUrl = Globals.baseApiUrl;
-
-    this.getAuthUser().subscribe((user: User) => {
-      this._user = user;
-      this.onDeliverableUserSource.next(this._user);
-    }, err => {
-      this.onDeliverableUserSource.next(null);
-      return this.handleError(err);
+    this.getAuthUser().subscribe({
+      error: (err) => {}
     });
   }
 
   /**
-   * Returns an authenticated user based on an XSRF-TOKEN stored in cookies
+   * Returns an authenticated user based on an XSRF-TOKEN stored in cookies or provided in args
    */
-  getAuthUser(): Observable<User> {
+  getAuthUser(token?: string): Observable<User> {
+    if (token) {
+      this.cookieService.put('XSRF-TOKEN', token);
+    } else {
+      token = this.cookieService.get('XSRF-TOKEN') || null;
+    }
+
     // Throw error if client browser does not have xsrf-token
-    if (!this.cookieService.get('XSRF-TOKEN')) {
+    if (!token) {
       return Observable.throw('missing xsrf-token');
     }
 
     // Get logged in user if XSRF-TOKEN is present
-    return this.http.get(this.baseApiUrl + `/me?xsrf-token=${this.cookieService.get('XSRF-TOKEN')}`)
+    return this.http.get(`${this.baseApiUrl}/me?xsrf-token=${token}`)
     .map(res => {
-      return User.initFromObject(res.json());
+      let user = User.initFromObject(res.json());
+      this._user = user;
+      this.onDeliverableUserSource.next(this._user);
+      return user;
     })
-    .catch(err => {
-      return this.handleError(err);
-    });
+    .catch(this.handleError);
   }
 
   getUserAsync(uuid: string): Promise<any> {
-    return this.http.get(this.baseApiUrl + '/user/' + uuid)
+    return this.http.get(`${this.baseApiUrl}/user/${uuid}`)
     .toPromise()
     .then(res => {
       return User.initFromObject(res.json());
@@ -77,7 +79,7 @@ export class UserService {
 
   // Gets all users if client can authenticate using a JWT
   getUsersAsync(): Promise<any> {
-    return this.http.get(this.baseApiUrl + '/user')
+    return this.http.get(`${this.baseApiUrl}/user`)
     .toPromise()
     .then(res => {
       let data = res.json();
@@ -92,7 +94,7 @@ export class UserService {
     let params = user.toObject();
     delete params.uuid;
     if (user.role != 'systemAdmin' || user.role != 'admin') delete params.role;
-    return this.http.put(this.baseApiUrl + '/user/' + user.uuid, params)
+    return this.http.put(`${this.baseApiUrl}/user/${user.uuid}`, params)
     .map(res => {
       let data = res.json();
       return User.initFromObject(data);
@@ -103,7 +105,7 @@ export class UserService {
   uploadPhotoAsync(file) {
     let data = new FormData();
     data.append('profile', file);
-    return this.http.post(this.baseApiUrl + '/user/photoUpload', data)
+    return this.http.post(`${this.baseApiUrl}/user/photoUpload`, data)
     .toPromise()
     .then(data => {
       return data;
@@ -112,7 +114,7 @@ export class UserService {
   }
 
   localLogin(username, password) {
-    return this.http.post(this.baseApiUrl + '/auth/local', {
+    return this.http.post(`${this.baseApiUrl}/auth/local`, {
       username: username,
       password: password
     })
@@ -127,7 +129,7 @@ export class UserService {
   }
   
   authenticateLinkedin() {
-    window.location.href = this.baseApiUrl + '/auth/linkedin';
+    window.location.href = `${this.baseApiUrl}/auth/linkedin`;
   }
 
   logoutUser(): Observable<any> {
@@ -138,7 +140,7 @@ export class UserService {
     this.onUserLogoutSource.next();
     this.onDeliverableUserSource.next(null);
 
-    return this.http.get(this.baseApiUrl + '/auth/logout')
+    return this.http.get(`${this.baseApiUrl}/auth/logout`)
     .map((res) => {
       return res.json();
     })
@@ -146,7 +148,7 @@ export class UserService {
   }
   
   create(user: {firstname: string, lastname: string, email: string}, password: string): Observable<any> {
-    return this.http.post(this.baseApiUrl + '/user', {
+    return this.http.post(`${this.baseApiUrl}/user`, {
       email: user.email,
       password: password,
       firstname: user.firstname,

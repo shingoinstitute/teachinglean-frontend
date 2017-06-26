@@ -1,16 +1,16 @@
-import { Component, HostListener } from '@angular/core';
+import { Component, HostListener, OnInit } from '@angular/core';
 import { UserService } from '../services/user.service';
 
 import { Globals } from '../globals';
 import { User } from '../user/user';
-import { Router } from "@angular/router";
+import { Router, ActivatedRoute, Params } from "@angular/router";
 
 @Component({
   selector: 'app-login',
   templateUrl: './login.component.html',
   styleUrls: ['./login.component.css']
 })
-export class LoginComponent {
+export class LoginComponent implements OnInit {
 
   spinnerEnabled = false;
   showCreateAccount = false;
@@ -19,8 +19,24 @@ export class LoginComponent {
   password = '';
   baseUrl;
 
-  constructor(private userService: UserService, private router: Router) {
+  constructor(private userService: UserService, private router: Router, private activeRoute: ActivatedRoute) {
     this.baseUrl = Globals.baseApiUrl;
+  }
+
+  ngOnInit() {
+    this.router.url === '/auth/linkedin/callback' && this.linkedinCallbackHanlder();
+  }
+
+  linkedinCallbackHanlder() {
+    let observer = this.activeRoute.queryParams.subscribe((params: Params) => {
+      this.userService.getAuthUser(params['xsrf-token']).subscribe(user => {
+        this.router.navigateByUrl('/dashboard');
+      }, err => {
+        console.error(err);
+      }, () => {
+        console.log('done');
+      })
+    });
   }
 
   @HostListener('window:keyup.enter', ['$event'])

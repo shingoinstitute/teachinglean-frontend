@@ -19,7 +19,8 @@ const appRoutes: Routes = [
     { path: 'teaching', component: TeachingComponent },
     { path: 'forum', component: ForumComponent },
     { path: 'forum/:id', component: ForumListItemComponent },
-    { path: 'signup', component: SignupComponent }
+    { path: 'signup', component: SignupComponent },
+    { path: 'auth/linkedin/callback', component: LoginComponent }
 ];
 
 @NgModule({
