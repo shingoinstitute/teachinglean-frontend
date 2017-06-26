@@ -24,7 +24,9 @@ export class LoginComponent implements OnInit {
   }
 
   ngOnInit() {
-    this.router.url === '/auth/linkedin/callback' && this.linkedinCallbackHanlder();
+    if (this.router.url.includes('auth/linkedin/callback')) {
+      this.linkedinCallbackHanlder();
+    }
   }
 
   linkedinCallbackHanlder() {
@@ -33,6 +35,7 @@ export class LoginComponent implements OnInit {
         this.router.navigateByUrl('/dashboard');
       }, err => {
         console.error(err);
+        this.router.navigateByUrl('/login');
       }, () => {
         console.log('done');
       })
