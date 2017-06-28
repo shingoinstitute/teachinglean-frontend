@@ -58,7 +58,10 @@ export class AppComponent implements OnInit {
     iconRegistry.addSvgIcon('comment', sanitizer.bypassSecurityTrustResourceUrl('assets/images/icons/ic_comment_black_18px.svg'));
     iconRegistry.addSvgIcon('delete', sanitizer.bypassSecurityTrustResourceUrl('assets/images/icons/ic_delete_black_18px.svg'));
     iconRegistry.addSvgIcon('save', sanitizer.bypassSecurityTrustResourceUrl('assets/images/icons/ic_save_black_18px.svg'));
+    iconRegistry.addSvgIcon('save-white', sanitizer.bypassSecurityTrustResourceUrl('assets/images/icons/ic_save_white_18px.svg'));
     iconRegistry.addSvgIcon('undo', sanitizer.bypassSecurityTrustResourceUrl('assets/images/icons/ic_undo_black_18px.svg'));
+    iconRegistry.addSvgIcon('done', sanitizer.bypassSecurityTrustResourceUrl('assets/images/icons/ic_done_green_18px.svg'));
+    iconRegistry.addSvgIcon('clear', sanitizer.bypassSecurityTrustResourceUrl('assets/images/icons/ic_clear_red_18px.svg'));
 
     let toggleListener = sidenavService
     .toggleSidenavNotification$

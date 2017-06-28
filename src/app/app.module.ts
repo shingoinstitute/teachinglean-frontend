@@ -49,6 +49,8 @@ import { MdMarginDirective }       from './directives/md-margin.directive';
 import { SidenavService }          from './services/sidenav.service';
 import { ForumService }            from './services/forum.service';
 import { UserService }             from './services/user.service';
+import { ResetPasswordLinkComponent } from './reset-password-link/reset-password-link.component';
+import { ResetPasswordComponent } from './reset-password/reset-password.component';
 
 @NgModule({
   imports: [
@@ -89,7 +91,9 @@ import { UserService }             from './services/user.service';
     UserInfoCardComponent,
     UserProfileComponent,
     TinyMceDirective,
-    MdMarginDirective
+    MdMarginDirective,
+    ResetPasswordLinkComponent,
+    ResetPasswordComponent
   ],
   entryComponents: [ DisableUserDialog ],
   providers: [

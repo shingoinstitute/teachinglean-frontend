@@ -101,14 +101,40 @@ h3.mat-headline {
 }
 
 /* Buttons */
-.btn-warn {
+button.btn-warn {
   color: #EF5350 !important;
   -webkit-font-smoothing: antialiased;
 }
 
-.btn-success {
+button.btn-success {
   color: #66BB6A !important;
   -webkit-font-smoothing: antialiased;
+}
+
+button.btn-show-hide {
+   display: flex;
+   align-items: center;
+   margin-top: 8px;
+   margin-bottom: 8px;
+   text-transform: uppercase;
+   color: #6f6f6f;
+   font-weight: 600;
+   background: none;
+   border: 1px solid transparent;
+   border-radius: 4px;
+   cursor: pointer;
+}
+
+button.btn-show-hide > span {
+   margin-right: 4px;
+}
+
+button.btn-show-hide:focus {
+   outline: none;
+}
+
+button.btn-show-hide:hover {
+   background: #f0f0f0;
 }
 
 /* Input stylings */
@@ -193,6 +219,8 @@ h3.mat-headline {
   background-color: #000000 !important;
 }
 
+/* color stylings for backgrounds and text */
+
 .black-text {
   color: #000000 !important;
 }
@@ -219,6 +247,14 @@ h3.mat-headline {
 
 .mat-primary {
   background-color: #607d8b !important;
+}
+
+.mat-warn {
+  background-color: #f44336 !important;
+}
+
+.mat-warn-text {
+  color: #f44336 !important;
 }
 
 md-spinner.mat-primary,

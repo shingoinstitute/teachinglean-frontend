@@ -148,6 +148,7 @@ export class UserService {
   }
   
   create(user: {firstname: string, lastname: string, email: string}, password: string): Observable<any> {
+    this.cookieService.removeAll();
     return this.http.post(`${this.baseApiUrl}/user`, {
       email: user.email,
       password: password,
@@ -160,6 +161,43 @@ export class UserService {
       return response.json();
     })
     .catch(this.handleError);
+  }
+
+  checkEmailCollisions(email: string): Observable<any> {
+    return this.http.get(`${this.baseApiUrl}/emailDoesExist?email=${email}`)
+    .map(res => {
+      return res.json();
+    })
+    .catch(this.handleError);
+  }
+
+  checkUsernameCollisions(username: string): Observable<any> {
+    return this.http.get(`${this.baseApiUrl}/usernameDoesExist?username=${username}`)
+    .map(res => {
+      return res.json();
+    })
+    .catch(this.handleError);
+  }
+
+  sendPasswordResetLink(email: string) {
+    return this.http.post(`${this.baseApiUrl}/reset`, {
+      email: email
+    })
+    .map(res => {
+      return res.json();
+    })
+    .catch(this.handleError);
+  }
+
+  updatePassword(password: string, id: string, token: string): Observable<any> {
+    return this.http.put(`${this.baseApiUrl}/reset/${id}`, {
+      password: password,
+      token: token
+    })
+    .map(res => {
+      return res.json();
+    })
+    .catch(this.handleError)
   }
 
   private extractData(res: Response): Observable<any> {

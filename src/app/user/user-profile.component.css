@@ -66,6 +66,7 @@
 }
 
 button#save-button {
+   align-items: center;
    color: white;
    background: #66BB6A;
    font-weight: 300;

@@ -10,6 +10,8 @@ import { ForumComponent } from "../forum-home/forum.component";
 import { AskQuestionComponent } from "../ask-question/ask-question.component";
 import { ForumListItemComponent } from '../forum-list-item/forum-list-item.component';
 import { SignupComponent } from '../signup/signup.component';
+import { ResetPasswordLinkComponent } from '../reset-password-link/reset-password-link.component';
+import { ResetPasswordComponent } from '../reset-password/reset-password.component';
 
 const appRoutes: Routes = [
     { path: '', component: HomeComponent },
@@ -20,7 +22,9 @@ const appRoutes: Routes = [
     { path: 'forum', component: ForumComponent },
     { path: 'forum/:id', component: ForumListItemComponent },
     { path: 'signup', component: SignupComponent },
-    { path: 'auth/linkedin/callback', component: LoginComponent }
+    { path: 'auth/linkedin/callback', component: LoginComponent },
+    { path: 'reset', component: ResetPasswordLinkComponent },
+    { path: 'reset/:id', component: ResetPasswordComponent }
 ];
 
 @NgModule({

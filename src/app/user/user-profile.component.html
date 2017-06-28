@@ -22,24 +22,16 @@
                <p class='' [innerHTML]="user.email"></p>
             </div>
 
-            <div class="info-group" *ngIf="user && user.organization">
+            <div class="info-group">
                <p><b>Organization</b></p>
-               <p [innerHTML]="user.organization"></p>
+               <p [style.color]="'grey'" [innerHTML]="user.organization || '<em>None</em>'"></p>
             </div>
 
             <div class="panel">
                <!--Biography-->
                <div class="panel-heading">About Me</div>
                <div class="panel-body">
-                  <style>
-                     ul {
-                        list-style-position: outside !important;
-                     }
-                     li {
-                        list-style-type: disc !important;
-                        margin-left: 20px !important;
-                     }
-                  </style>
+                  <style>ul{list-style-position:outside!important;}li{list-style-type:disc!important;margin-left:20px!important;}</style>
                   <span [innerHTML]="user.biography" class="default-style"></span>
                </div>
             </div>
@@ -62,6 +54,7 @@
                <input (change)="uploadPhoto()" type="file" #fileUpload role="profile-picture-upload">
             </div>
          </div>
+
 
          <div class="info-group" fxLayout="column">
 
@@ -107,13 +100,17 @@
          </div>
 
          <!--Actions-->
-         <div class="info-group">
+         <div class="info-group" fxLayoutGap="12px">
             <button md-button id="save-button" (click)="onclickSave()">
-               <span><i class="material-icons">save</i> Save</span>
+               <md-icon svgIcon="save-white"></md-icon> Save
             </button>
+
             <div *ngIf="didClickSave">
                <p>Save Successful!</p>
             </div>
+
+            <button fxFlex md-raised-button (click)="onclickReset($event)">Reset Password</button>
+            
          </div>
 
       </div>

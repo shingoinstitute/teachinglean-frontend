@@ -10,28 +10,3 @@ md-input-container {
    pointer-events: none;
 }
 
-button.show-pword-btn {
-   display: flex;
-   align-items: center;
-   margin-top: 8px;
-   margin-bottom: 8px;
-   text-transform: uppercase;
-   color: #6f6f6f;
-   font-weight: 600;
-   background: none;
-   border: 1px solid transparent;
-   border-radius: 4px;
-   cursor: pointer;
-}
-
-button.show-pword-btn > span {
-   margin-right: 4px;
-}
-
-button.show-pword-btn:focus {
-   outline: none;
-}
-
-button.show-pword-btn:hover {
-   background: #f0f0f0;
-}

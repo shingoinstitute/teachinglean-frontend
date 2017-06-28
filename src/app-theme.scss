@@ -1,4 +1,4 @@
-@import '../node_modules/@angular/material/theming';
+@import '~@angular/material/theming';
 // Plus imports for other components in your app.
 
 // Include the common styles for Angular Material. We include this here so that you only
@@ -18,7 +18,17 @@ $app-warn:    mat-palette($mat-red);
 // Create the theme object (a Sass map containing all of the palettes).
 $app-theme: mat-light-theme($app-primary, $app-accent, $app-warn);
 
+@mixin button($app-theme) {
+   .mat-primary.mat-raised-button {
+      font-weight: 300;
+   }
+   .mat-accent.mat-raised-button {
+      font-weight: 400;
+   }
+}
+
 // Include theme styles for core and each component used in your app.
 // Alternatively, you can import and @include the theme mixins for each component
 // that you are using.
 @include angular-material-theme($app-theme);
+@include button($app-theme);
