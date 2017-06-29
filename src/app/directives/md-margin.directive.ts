@@ -4,12 +4,11 @@ import { Directive, OnInit, Input, ElementRef, Renderer } from '@angular/core';
    selector: '[md-margin]'
 })
 export class MdMarginDirective implements OnInit {
-   @Input('md-margin') type: any;
+   @Input('md-margin') type: any = "";
 
    constructor(private el: ElementRef, private renderer: Renderer) {}
 
    ngOnInit() {
-      if (!this.type) { return; }
       if (this.type.includes('[') && this.type.includes(']')) {
          var attrs = this.type.toString() .replace(/\'/g, '\"');
          this.addAttributes(JSON.parse(attrs));

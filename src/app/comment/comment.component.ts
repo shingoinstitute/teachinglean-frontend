@@ -28,13 +28,10 @@ export class CommentComponent implements OnChanges {
    }
 
    getOwner() {
-    this.userService.getUserAsync(this.comment.ownerId)
-    .then(user => {
+    this.userService.getUser(this.comment.ownerId)
+    .subscribe(user => {
       this.comment.owner = user;
-    })
-    .catch(err => {
-      console.error(err);
-    });
+    }, err => console.error(err));
    }
 
 }

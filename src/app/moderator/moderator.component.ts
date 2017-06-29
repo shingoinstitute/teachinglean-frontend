@@ -106,13 +106,12 @@ export class ModeratorComponent implements OnInit, AfterViewInit {
   }
 
   loadUsers() {
-    this.userService.getUsersAsync()
-    .then(users => {
+    this.userService.getUsers()
+    .subscribe(users => {
       this.users = users.sort((a, b) => {
         return a.lastname > b.lastname ? 1: -1;
       });
-    })
-    .catch(err => console.error(err));
+    }, err => console.error(err));
   }
 
   loadAllQuestions() {

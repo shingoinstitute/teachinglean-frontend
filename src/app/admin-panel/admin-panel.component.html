@@ -1,3 +1,6 @@
+<div md-margin>
+  <p>Total Users: {{ stats && stats.size }}</p>
+</div>
 <table class="user-admin-wrapper">
   <tr class="user-admin-header">
     <th>Name</th>
@@ -39,3 +42,8 @@
 
   </tr>
 </table>
+<div [style.margin]="'0 0 12px 8px'">
+  <button class="mat-primary pagination-icon" (click)="paginateBack()"><md-icon svgIcon="arrow_back"></md-icon></button>
+  <button class="mat-primary pagination-icon" (click)="paginateForward()"><md-icon svgIcon="arrow_forward"></md-icon></button>
+  <p md-margin>Page {{ page }} of {{ maxPage }}</p>
+</div>

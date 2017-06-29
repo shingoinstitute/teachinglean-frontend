@@ -51,7 +51,10 @@
                <img src="{{ user.pictureUrl }}">
             </div>
             <div>
-               <input (change)="uploadPhoto()" type="file" #fileUpload role="profile-picture-upload">
+               <input (change)="onSelectPhoto()" type="file" #fileUpload role="profile-picture-upload" accept="image/*">
+            </div>
+            <div *ngIf="uploadPhotoEnabled">
+               <button md-button class="mat-primary white-text" (click)="uploadPhoto()">Upload</button>
             </div>
          </div>
 
@@ -102,7 +105,7 @@
          <!--Actions-->
          <div class="info-group" fxLayoutGap="12px">
             <button md-button id="save-button" (click)="onclickSave()">
-               <md-icon svgIcon="save-white"></md-icon> Save
+               <md-icon svgIcon="save_white"></md-icon> Save
             </button>
 
             <div *ngIf="didClickSave">

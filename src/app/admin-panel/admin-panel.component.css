@@ -12,3 +12,22 @@ th.user-admin-header {
 tr.user-admin-item {
 	padding: 4px 4px;
 }
+
+button.pagination-icon {
+	box-shadow: 0 3px 5px -1px rgba(0,0,0,.2), 0 6px 10px 0 rgba(0,0,0,.14), 0 1px 4px 0 rgba(0,0,0,.12);
+	min-width: 0;
+	border-radius: 50%;
+	width: 40px;
+	height: 40px;
+	padding: 0;
+	border: none;
+	transform: translate3d(0,0,0);
+	transition: background .4s cubic-bezier(.25,.8,.25,1),box-shadow 280ms cubic-bezier(.4,0,.2,1);
+	cursor: pointer;
+	display: inline-block;
+	outline: none;
+	text-decoration: none;
+	/*-webkit-transition: background .4s cubic-bezier(.25,.8,.25,1),box-shadow 280ms;
+	-moz-transition: background .4s cubic-bezier(.25,.8,.25,1),box-shadow 280ms;
+	transition: background .4s cubic-bezier(.25,.8,.25,1),box-shadow 280ms;*/
+}

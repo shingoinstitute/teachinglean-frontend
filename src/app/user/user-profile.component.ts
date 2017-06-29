@@ -76,6 +76,11 @@ export class UserProfileComponent {
     }
   }
 
+  uploadPhotoEnabled: boolean;
+  onSelectPhoto() {
+    this.uploadPhotoEnabled = !!this.photoUpload.nativeElement.files.item(0);
+  }
+
   /**
    * @desc :: sends a password reset link to the 
    * currently authenticated user's email

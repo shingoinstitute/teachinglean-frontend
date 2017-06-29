@@ -68,26 +68,26 @@ export class UserService {
     .catch(this.handleError);
   }
 
-  getUserAsync(uuid: string): Promise<any> {
+  // Gets a single user given the requesting user is authenticated
+  getUser(uuid: string): Observable<any> {
     return this.http.get(`${this.baseApiUrl}/user/${uuid}`)
-    .toPromise()
-    .then(res => {
+    .map(res => {
       return User.initFromObject(res.json());
     })
     .catch(this.handleError);
   }
 
-  // Gets all users if client can authenticate using a JWT
-  getUsersAsync(): Promise<any> {
-    return this.http.get(`${this.baseApiUrl}/user`)
-    .toPromise()
-    .then(res => {
-      let data = res.json();
-      return data.map(User.initFromObject);
+  /**
+   * Gets all users if the requesting user is authenticated
+   * @param limit :: the max number of users to retrieve
+   * @param page :: the number of records to skip, calculated by `page * limit`
+   */
+  getUsers(limit?: number, page?: number): Observable<any> {
+    return this.http.get(`${this.baseApiUrl}/user?where={sort:'lastname'}` + (limit && page ? `&limit=${limit}&skip=${page*limit}` : ''))
+    .map(res => {
+      return res.json()
     })
-    .catch(err => {
-      this.handleError(err);
-    });
+    .catch(this.handleError);
   }
 
   updateUser(user: User) {
@@ -212,6 +212,20 @@ export class UserService {
       return res.json();
     })
     .catch(this.handleError)
+  }
+
+  /**
+   * @description :: Gets user stats from server including
+   * size, number active, number disabled/inactive, number 
+   * of admins, moderators, authors, editors, members, and
+   * number of users with verified emails.
+   */
+  getStats(): Observable<any> {
+    return this.http.get(`${this.baseApiUrl}/user/stats`)
+    .map(res => {
+      return res.json();
+    })
+    .catch(this.handleError);
   }
 
   private extractData(res: Response): Observable<any> {
