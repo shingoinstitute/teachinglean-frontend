@@ -1,7 +1,40 @@
-<div md-margin>
-  <p>Total Users: {{ stats && stats.size }}</p>
+<div class="admin-panel container"> 
+  <h5 md-margin="bottom">User Management</h5>
+  <table class="user-list-container">
+    <thead>
+      <tr class="user-list-header-row">
+        <th [style.text-align]="'center'">#</th>
+        <th>Full Name</th>
+        <th>Email</th>
+        <th>Username</th>
+        <th>User Type</th>
+        <th>Actions</th> 
+      </tr>
+    </thead>
+    <tbody>
+      <tr class="user-list-row" 
+          admin-user-list-item 
+          *ngFor="let user of users; let i = index" 
+          [user]="user" 
+          [id]="i+1+((page-1)*limit)"
+          (selectUser)="onSelectUser($event)"></tr>
+    </tbody>
+  </table>
+  <div fxLayout="row" class="pagination-container">
+    <p md-margin>Showing {{ ((page-1)*limit)+1 }}-{{ ((page-1)*limit)+limit }} of {{ stats.size }}</p>
+    <span fxFlex></span>
+    <div class="pagination-buttons">
+      <button class="pagination-button" (click)="paginateBack()">&#8592; Previous</button>
+      <button class="pagination-button">{{ btn1 }}</button>
+      <button class="pagination-button">{{ btn2 }}</button>
+      <button class="pagination-button">{{ btn3 }}</button>
+      <button class="pagination-button">{{ btn4 }}</button>
+      <button class="pagination-button">{{ btn5 }}</button>
+      <button class="pagination-button" (click)="paginateForward()">Next &#8594;</button>
+    </div>
+  </div>
 </div>
-<table class="user-admin-wrapper">
+<!--<table class="user-admin-wrapper">
   <tr class="user-admin-header">
     <th>Name</th>
     <th>Email</th>
@@ -41,9 +74,4 @@
     </td>
 
   </tr>
-</table>
-<div [style.margin]="'0 0 12px 8px'">
-  <button class="mat-primary pagination-icon" (click)="paginateBack()"><md-icon svgIcon="arrow_back"></md-icon></button>
-  <button class="mat-primary pagination-icon" (click)="paginateForward()"><md-icon svgIcon="arrow_forward"></md-icon></button>
-  <p md-margin>Page {{ page }} of {{ maxPage }}</p>
-</div>
+</table>-->

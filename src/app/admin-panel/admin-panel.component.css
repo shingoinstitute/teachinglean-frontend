@@ -2,32 +2,60 @@ md-select {
 	background-color: transparent !important;
 }
 
-table.user-admin-wrapper {
-	margin: 8px;
+div.pagination-container {
+	margin-top: 8px;
+	margin-bottom: 8px;
 }
 
-th.user-admin-header {
-	padding: 8px 4px;
-}
-tr.user-admin-item {
-	padding: 4px 4px;
+div.pagination-buttons {
+	display: inline-table;
+	height: 38px;
 }
 
-button.pagination-icon {
-	box-shadow: 0 3px 5px -1px rgba(0,0,0,.2), 0 6px 10px 0 rgba(0,0,0,.14), 0 1px 4px 0 rgba(0,0,0,.12);
-	min-width: 0;
-	border-radius: 50%;
-	width: 40px;
-	height: 40px;
-	padding: 0;
-	border: none;
-	transform: translate3d(0,0,0);
-	transition: background .4s cubic-bezier(.25,.8,.25,1),box-shadow 280ms cubic-bezier(.4,0,.2,1);
+button.pagination-button {
+	display: table-cell;
+	height: inherit;
+	margin-right: 0;
+	font-size: 14px;
+	color: steelblue;
+	background-color: transparent;
+	border: 1px solid lightgrey;
+	border-right: 0;
 	cursor: pointer;
-	display: inline-block;
 	outline: none;
 	text-decoration: none;
-	/*-webkit-transition: background .4s cubic-bezier(.25,.8,.25,1),box-shadow 280ms;
-	-moz-transition: background .4s cubic-bezier(.25,.8,.25,1),box-shadow 280ms;
-	transition: background .4s cubic-bezier(.25,.8,.25,1),box-shadow 280ms;*/
+}
+
+div.pagination-buttons button:last-child {
+	border-right: 1px solid lightgrey;
+}
+
+div.pagination-buttons button:not(:last-child),
+div.pagination-buttons button:not(:first-child) {
+	padding-right: 12px;
+	padding-left: 12px;
+}
+
+table.user-list-container {
+	width: 100%;
+	padding-top: 12px;
+	padding-bottom: 8px;
+	border: 1px solid lightgrey;
+}
+
+tr.user-list-header-row th {
+	padding: 8px;
+	border-right: 1px solid lightgrey;
+}
+
+tr.user-list-header-row {
+	border-bottom: 2px solid lightgrey;
+}
+
+tr.user-list-row td {
+	border-radius: 0;
+}
+
+table.user-list-container tbody tr:nth-child(odd) {
+	background-color: #f0f0f0;
 }

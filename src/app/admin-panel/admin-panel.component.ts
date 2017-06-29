@@ -151,6 +151,11 @@ export class AdminPanelComponent implements AfterViewInit {
     this.updatePaginationBtns();
   }
 
+  btn1 = 1;
+  btn2 = 2;
+  btn3 = 3;
+  btn4 = 4;
+  btn5 = 5;
   updatePaginationBtns() {
     this.cdref.detectChanges();
   }
@@ -192,6 +197,12 @@ export class AdminPanelComponent implements AfterViewInit {
     }
     return "unassigned";
   }
+
+  onSelectUser(user) {
+    console.log('recieved user', user);
+  }
+
+
 
 
 
