@@ -67,7 +67,13 @@ export class UserProfileComponent {
    */
   uploadPhoto() {
     let file = this.photoUpload.nativeElement.files.item(0);
-    file && this.userService.uploadPhotoAsync(file);
+    if (file) {
+      this.userService.uploadPhotoAsync(file).subscribe(data => {
+        console.log(data);
+      }, err => {
+        console.error(err);
+      });
+    }
   }
 
   /**

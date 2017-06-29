@@ -2,8 +2,6 @@
   
   <app-entry-card [entry]="entry" [style.margin-bottom]="'24px'"></app-entry-card>
 
-  
-
   <p *ngIf="!answers || answers && answers.length === 0">This question has not been answered yet.</p>
 
   <p class="flow-text" *ngIf="answers && answers.length > 0">{{ answers.length }} Answer{{ answers.length > 1 ? 's' : '' }}</p>

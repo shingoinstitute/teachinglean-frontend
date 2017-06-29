@@ -102,15 +102,29 @@ export class UserService {
     .catch(this.handleError);
   }
 
-  uploadPhotoAsync(file) {
-    let data = new FormData();
-    data.append('profile', file);
-    return this.http.post(`${this.baseApiUrl}/user/photoUpload`, data)
-    .toPromise()
-    .then(data => {
-      return data;
-    })
-    .catch(this.handleError);
+  uploadPhotoAsync(file): Observable<any> {
+    if (!this.user) {
+      return Observable.throw('user must be logged in to upload profile picture.');
+    }
+    return Observable.create(observer => {
+      let data = new FormData();
+      let xhr: XMLHttpRequest = new XMLHttpRequest();
+      data.append('profile', file, `${this.user.uuid}`);
+
+      xhr.onreadystatechange = () => {
+        if (xhr.readyState === 4) {
+          if (xhr.status === 200) {
+            observer.next(JSON.parse(xhr.response));
+            observer.complete();
+          } else {
+            observer.error(xhr.response);
+          }
+        }
+      }
+
+      xhr.open('POST', `${this.baseApiUrl}/user/photoUpload`, true);
+      xhr.send(data);
+    });
   }
 
   localLogin(username, password) {
