@@ -5,10 +5,14 @@
    <p>{{ user.name }}</p>
    <div fxLayout="column">
       <p [style.font-size]="'9px'" [style.color]="'grey'">Account Status: 
-         <span class="green lighten-1"
+         <span *ngIf="user.accountIsActive" class="green lighten-1"
                [style.font-weight]="'200'"
                [style.color]="'white'"
-               [style.padding]="'2px'">{{ user.accountIsActive ? 'Enabled' : 'Blocked' }}</span>
+               [style.padding]="'2px'">Enabled</span>
+         <span *ngIf="!user.accountIsActive" class="red lighten-1"
+               [style.font-weight]="'200'"
+               [style.color]="'white'"
+               [style.padding]="'2px'">Blocked</span>
       </p>
    </div>
 </td>
@@ -19,10 +23,10 @@
    {{user.username}}
 </td>
 <td class="admin-user-list-item" id="usertype">
-   <p>{{user.role}}</p>
+   <p>{{roles[user.role] || "Member"}}</p>
 </td>
 <td class="admin-user-list-item" id="actions">
    <button md-raised-button class="blue-grey lighten-1 white-text" [style.font-weight]="'300'" (click)="selectUserEventEmitter.emit(user)">View</button>
-   <button md-raised-button class="mat-accent" (click)="selectBlockEventEmitter.emit(user)" *ngIf="user.accountIsActive">Block</button>
-   <button md-raised-button class="mat-accent" (click)="selectUnBlockEventEmitter.emit(user)" *ngIf="!user.accountIsActive">Unblock</button>
+   <button md-raised-button class="mat-accent" (click)="onSelectBlock()" *ngIf="user.accountIsActive">Block</button>
+   <button md-raised-button class="mat-accent" (click)="onSelectUnblock()" *ngIf="!user.accountIsActive">Unblock</button>
 </td>

@@ -1,5 +1,4 @@
 import { Component, OnInit, EventEmitter, Input, Output } from '@angular/core';
-import { Router } from '@angular/router';
 import { User } from '../../user/user';
 
 @Component({
@@ -9,16 +8,32 @@ import { User } from '../../user/user';
 })
 export class AdminUserListItemComponent implements OnInit {
 
-   @Output('selectUser') selectUserEventEmitter = new EventEmitter<User>();
-   @Output('onBlock') selectBlockEventEmitter = new EventEmitter<User>();
-   @Output('unBlock') selectUnBlockEventEmitter = new EventEmitter<User>();
    @Input('user') user: User;
    @Input('id') id: any;
+   @Output('onSelect') selectUserEventEmitter = new EventEmitter<User>();
+   @Output('onChange') onUpdateUserEventEmitter = new EventEmitter<User>();
+   @Output('onSelectBlock') onSelectBlockEventEmitter = new EventEmitter<User>();
 
-   constructor(private router: Router) {}
+   constructor() {}
 
-   ngOnInit() {
+   ngOnInit() {}
 
+   onSelectBlock() {
+      this.onSelectBlockEventEmitter.emit(this.user);
+   }
+
+   onSelectUnblock() {
+      this.user.accountIsActive = true;
+      this.onUpdateUserEventEmitter.emit(this.user);
+   }
+
+   roles = {
+      systemAdmin: "System Admin",
+      admin: "Admin",
+      editor: "Editor",
+      author: "Author",
+      moderator: "Moderator",
+      user: "Member"
    }
 
 }

@@ -1,13 +1,14 @@
-import { Component, OnInit, AfterViewInit, NgZone, ChangeDetectorRef } from '@angular/core';
+import { Component, OnInit, AfterViewInit, NgZone, ChangeDetectorRef, ViewChild, ElementRef } from '@angular/core';
 
 // Delete me
 import { Http } from '@angular/http';
 
 import { CookieService } from 'ngx-cookie';
-import { MdDialog, MdDialogRef, MdSnackBar } from '@angular/material';
+import { MdSnackBar, MdDialog } from '@angular/material';
 import { DisableUserDialog } from './disable-user.dialog';
 import { UserService } from '../services/user.service';
 import { Observable, Subscription, Subject } from 'rxjs';
+import 'rxjs/add/operator/toPromise';
 import { User } from '../user/user';
 
 @Component({
@@ -16,16 +17,14 @@ import { User } from '../user/user';
   styleUrls: ['./admin-panel.component.css']
 })
 export class AdminPanelComponent implements AfterViewInit {
+
+  private isDevEnv = true;
+
   private getUserSubscriptionSource = new Subject<number>();
-  getUserSubscription$: Observable<any> = this.getUserSubscriptionSource.asObservable();
 
   users: User[];
   admin: User;
-  // stats: { size: number };
-
-  // DELETE AFTER TESTING
-     stats: {size:number} = { size: 300 };
-  //---------------------
+  stats: { size: number } = { size: 0 };
 
   private _shouldLoadData;
 
@@ -34,31 +33,29 @@ export class AdminPanelComponent implements AfterViewInit {
     return this._page;
   }
   set page(prevVal: number) {
-    console.log(prevVal);
     if (prevVal < 1) { this._page = 1;
     } else if (prevVal > this.maxPage) { this._page = this.maxPage;
     } else { this._page = prevVal; }
-    console.log('page: ' + this._page);
+    this.updatePaginationBtns();
     this.getUserSubscriptionSource.next(this._page);
   }
+
+  currPage: number = this.page;
+
   get maxPage(): number {
     if (!this.stats) return 1;
     return Math.ceil(this.stats.size / this.limit);
   }
-  private limit: number = 10;
-
-  roles = [
-    { value: "systemAdmin", displayValue: "System Admin" },
-    { value: "admin", displayValue: "Admin" },
-    { value: "editor", displayValue: "Editor" },
-    { value: "author", displayValue: "Author" },
-    { value: "moderator", displayValue: "Moderator" },
-    { value: "user", displayValue: "Member" }
-  ]
-
+  private _limit: number = 10;
+  get limit(): number { return this._limit; }
+  set limit(val: number) {
+    this._limit = val;
+    this.getUserSubscriptionSource.next();
+  }
+  
   constructor(private userService: UserService, 
-              public dialog: MdDialog, 
-              private snackbar: MdSnackBar, 
+              private snackbar: MdSnackBar,
+              public dialog: MdDialog,
               cookieService: CookieService, 
               private zone: NgZone,
               private cdref: ChangeDetectorRef,
@@ -69,86 +66,54 @@ export class AdminPanelComponent implements AfterViewInit {
 
   ngAfterViewInit() {
     /** Prevent data from loading prematurely since this component can be loaded before it appears on screen */
-    if (this._shouldLoadData) { this.loadData(); }
+    if (this._shouldLoadData) {
+        this.admin = this.userService.user;
+        this.getStats().then((stats) => {
+          this.stats = { size: stats.size };
+          this.loadData();
+        }).catch(err => {
+          console.error(err);
+        });
+    }
   }
 
   loadData() {
-    this.getAdminUser();
-
-    /** use zone.run() to achieve synchronous execution */
-    this.zone.run(() => {
-      // this.getStats();
-      this.getUsers();
-    });
-
     /*** run outside angular to avoid rapid change detection (performance issues) */
     this.zone.runOutsideAngular(() => {
       /*** Add debounce time to protect against rapid pagination clicks */
       this.getUserSubscriptionSource.debounceTime(500)
       .distinctUntilChanged()
+      /** .subscribe().next() triggered on value changes of `this.page`, causing an update to `this.users` */
       .subscribe(() => {
-        console.log(`page #${this.page}`);
-        this.getUsersDev(this.limit, this._page)
-        .subscribe(data => {
-          let users = data.users;
-          this.users = users.map(User.initFromObject);
-        });
-        // this.userService.getUsers(this.limit, this.page)
-        // .subscribe(users => {
-        //   this.users = users.map(User.initFromObject);
-        //   this.cdref.detectChanges(); // explicitly tell angular to run change detection
-        // }, err => {
-        //   console.error(err);
-        // });
+        this.getUsers();
       });
+      this.getUserSubscriptionSource.next();
     });
   }
-
-  /** Gets currently authenticated user as the admin */
-  private getAdminUser(): void {
-    this.admin = this.userService.user;
-    if (!this.admin) {
-      this.userService.getAuthUser().subscribe(user => {
-        this.admin = user;
-      });
-    }
-  }
+  
 /** 
  * @desc :: Gets users to display. `this.limit` and `this.page` are used together
  * to create a pagination system, where a "skip" value is calculated using
  * `this.limit * this.page`.
  */
   private getUsers(): void {
-    // this.userService.getUsers(this.limit, this.page)
-    // .subscribe(users => {
-    //   this.users = users.map(User.initFromObject);
-    // }, err => console.error(err));
-    this.getUsersDev(this.limit, this._page)
-    .subscribe(data => {
-      let users = data.users;
+    this.userService.getUsers(this.limit, this.page, this.isDevEnv)
+    .subscribe(users => {
       this.users = users.map(User.initFromObject);
+      this.currPage = this.page;
+      this.cdref.detectChanges(); // explicitly tell angular to run change detection
     }, err => console.error(err));
   }
 
-  /** Gets user-base statitics to use for pagination */
-  private getStats(): void {
-    this.userService.getStats().subscribe(stats => {
-      this.stats = { size: stats.size };
-    }, err => {
-      console.error(err);
-    });
-  }
-
-  paginateForward() {
-    this.page = this.page + 1;
-    // this.getUsers();
-    this.updatePaginationBtns();
-  }
-
-  paginateBack() {
-    this.page = this.page - 1;
-    // this.getUsers();
-    this.updatePaginationBtns();
+  /** Gets user-base statitics (used for pagination) */
+  private getStats(): Promise<any> {
+    return new Promise((resolve, reject) => {
+      this.userService.getStats(this.isDevEnv).subscribe(stats => {
+        return resolve(stats);
+      }, err => {
+        return reject(err);
+      });
+    })
   }
 
   btn1 = 1;
@@ -157,68 +122,52 @@ export class AdminPanelComponent implements AfterViewInit {
   btn4 = 4;
   btn5 = 5;
   updatePaginationBtns() {
-    this.cdref.detectChanges();
+    if (this.page == 1 || this.page == 2) {
+      this.btn1 = 1;
+      this.btn2 = this.btn1+1;
+      this.btn3 = this.btn2+1;
+      this.btn4 = this.btn3+1;
+      this.btn5 = this.btn4+1;
+    } else if (this.page > 2 && this.page < this.maxPage - 1) {
+      this.btn1 = this.page - 2;
+      this.btn2 = this.btn1+1;
+      this.btn3 = this.btn2+1;
+      this.btn4 = this.btn3+1;
+      this.btn5 = this.btn4+1;
+    } else if (this.page == this.maxPage - 1 || this.page == this.maxPage){
+      this.btn1 = this.btn2-1;
+      this.btn2 = this.btn3-1;
+      this.btn3 = this.btn4-1;
+      this.btn4 = this.btn5-1;
+      this.btn5 = this.maxPage;
+    }
+    
   }
 
   updateUser(user: User) {
-    this.userService.updateUser(user).subscribe(user => {
+    !this.isDevEnv && this.userService.updateUser(user).subscribe(user => {
       user = User.initFromObject(user);
       this.snackbar.open('Succesfully Updated User.', null, { duration: 2500 })
     }, err => console.error(err));
   }
 
-  onClickStatus(user: User) {
-    if (!user.accountIsActive) {
-      user.accountIsActive = true;
-      this.updateUser(user);
-    } else {
-      let dialogRef = this.dialog.open(DisableUserDialog);
-      dialogRef.afterClosed().subscribe( result => {
-        user.accountIsActive = result;
+
+  onSelectBlock(user: User) {
+    let dialogRef = this.dialog.open(DisableUserDialog);
+    dialogRef.afterClosed().subscribe( result => {
+      console.log(result);
+      user.accountIsActive = result;
+      if (result && !this.isDevEnv) {
         this.updateUser(user);
-      });
-    }
+      }
+    });
   }
+  
 
-  parseRole(user: User) {
-    switch (user.role) {
-      case "systemAdmin":
-        return "System Admin";
-      case "admin":
-        return "Admin";
-      case "author":
-        return "Author";
-      case "editor":
-        return "Editor";
-      case "moderator":
-        return "Moderator";
-      case "user": 
-        return "Member";
-    }
-    return "unassigned";
-  }
-
+  //TODO:: Show user details on click
   onSelectUser(user) {
     console.log('recieved user', user);
   }
-
-
-
-
-
-  getUsersDev(limit: number, page: number) {
-    return this.http.get(`http://localhost:3000/backend/user/randUsers?limit=${limit}&skip=${limit*page}`)
-    .map(res => {
-      let data = res.json();
-      console.log(data);
-      return data;
-    })
-    .catch(err => {
-      return Observable.throw(err);
-    });
-  }
-
-
 
 }
 

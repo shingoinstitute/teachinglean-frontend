@@ -1,5 +1,23 @@
 <div class="admin-panel container"> 
   <h5 md-margin="bottom">User Management</h5>
+  <div fxLayout="row" class="pagination-container">
+    <p md-margin>Records per page</p>
+    <md-select [(ngModel)]="this.limit" selected="this.limit">
+      <md-option [value]="10">10</md-option>
+      <md-option [value]="25">25</md-option>
+      <md-option [value]="50">50</md-option>
+    </md-select>
+    <span fxFlex></span>
+    <div class="pagination-buttons" *ngIf="maxPage > 1">
+      <button class="pagination-button" (click)="page = page - 1">&#8592; Previous</button>
+      <button class="pagination-button" (click)="page = btn1" [class.active-page-btn]="page === btn1">{{ btn1 }}</button>
+      <button class="pagination-button" (click)="page = btn2" [class.active-page-btn]="page === btn2" *ngIf="maxPage > 2">{{ btn2 }}</button>
+      <button class="pagination-button" (click)="page = btn3" [class.active-page-btn]="page === btn3" *ngIf="maxPage > 3">{{ btn3 }}</button>
+      <button class="pagination-button" (click)="page = btn4" [class.active-page-btn]="page === btn4" *ngIf="maxPage > 4">{{ btn4 }}</button>
+      <button class="pagination-button" (click)="page = btn5" [class.active-page-btn]="page === btn5" *ngIf="maxPage > 5">{{ btn5 }}</button>
+      <button class="pagination-button" (click)="page = page + 1">Next &#8594;</button>
+    </div>
+  </div>
   <table class="user-list-container">
     <thead>
       <tr class="user-list-header-row">
@@ -16,62 +34,12 @@
           admin-user-list-item 
           *ngFor="let user of users; let i = index" 
           [user]="user" 
-          [id]="i+1+((page-1)*limit)"
-          (selectUser)="onSelectUser($event)"></tr>
+          [id]="i+1+((currPage-1)*limit)"
+          (onSelectBlock)="onSelectBlock($event)"
+          (onChange)="updateUser($event)"
+          (onSelect)="onSelectUser($event)"></tr>
     </tbody>
   </table>
-  <div fxLayout="row" class="pagination-container">
-    <p md-margin>Showing {{ ((page-1)*limit)+1 }}-{{ ((page-1)*limit)+limit }} of {{ stats.size }}</p>
-    <span fxFlex></span>
-    <div class="pagination-buttons">
-      <button class="pagination-button" (click)="paginateBack()">&#8592; Previous</button>
-      <button class="pagination-button">{{ btn1 }}</button>
-      <button class="pagination-button">{{ btn2 }}</button>
-      <button class="pagination-button">{{ btn3 }}</button>
-      <button class="pagination-button">{{ btn4 }}</button>
-      <button class="pagination-button">{{ btn5 }}</button>
-      <button class="pagination-button" (click)="paginateForward()">Next &#8594;</button>
-    </div>
-  </div>
+  <p md-margin *ngIf="maxPage > 1">Page {{ currPage }} of {{ maxPage }}</p>
+  <p md-margin>Showing <span *ngIf="maxPage > 1">{{ 1+((currPage-1)*limit) }}-{{ ((currPage-1)*limit)+limit }} of </span>{{ stats.size }} users</p>
 </div>
-<!--<table class="user-admin-wrapper">
-  <tr class="user-admin-header">
-    <th>Name</th>
-    <th>Email</th>
-    <th>Last Login</th>
-    <th>Role</th>
-    <th>Status</th>
-  </tr>
-  <tr class="user-admin-item" *ngFor="let user of users">
-    <td role="name">
-      {{ user.name }}
-    </td>
-
-    <td role="email address">
-      {{ user.email }}
-    </td>
-
-    <td role="last login">
-      {{ user.lastLoginToString() }}
-    </td>
-
-    <td role="role">
-      <md-select name='userRole'
-                 (change)="updateUser(user)" 
-                 [(ngModel)]="user.role" 
-                 [floatPlaceholder]="never">
-        <md-option *ngFor="let role of roles" [value]="role.value">{{ role.displayValue }}</md-option>
-      </md-select>
-    </td>
-
-    <td role="account status">
-      <button md-button
-      class="mat-accent"
-      (click)="onClickStatus(user)"
-      [disabled]="user.isAdmin">
-        {{ user.accountIsActive ? "Active" : "Disabled" }}
-      </button>
-    </td>
-
-  </tr>
-</table>-->

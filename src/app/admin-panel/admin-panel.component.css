@@ -8,12 +8,13 @@ div.pagination-container {
 }
 
 div.pagination-buttons {
-	display: inline-table;
+	display: inline-flex;
+	align-items: stretch;
+	width: 375px;
 	height: 38px;
 }
 
 button.pagination-button {
-	display: table-cell;
 	height: inherit;
 	margin-right: 0;
 	font-size: 14px;
@@ -26,14 +27,22 @@ button.pagination-button {
 	text-decoration: none;
 }
 
+.active-page-btn {
+	background-color: #E5EDFB !important;
+}
+
 div.pagination-buttons button:last-child {
 	border-right: 1px solid lightgrey;
 }
 
 div.pagination-buttons button:not(:last-child),
 div.pagination-buttons button:not(:first-child) {
-	padding-right: 12px;
-	padding-left: 12px;
+	flex-grow: 1;
+}
+
+div.pagination-buttons button:last-child,
+div.pagination-buttons button:first-child {
+	flex-shrink: 1;
 }
 
 table.user-list-container {
