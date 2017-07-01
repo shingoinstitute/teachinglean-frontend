@@ -1,8 +1,5 @@
 import { Component, OnInit, AfterViewInit, NgZone, ChangeDetectorRef, ViewChild, ElementRef } from '@angular/core';
 
-// Delete me
-import { Http } from '@angular/http';
-
 import { CookieService } from 'ngx-cookie';
 import { MdSnackBar, MdDialog } from '@angular/material';
 import { DisableUserDialog } from './disable-user.dialog';
@@ -18,12 +15,14 @@ import { User } from '../user/user';
 })
 export class AdminPanelComponent implements AfterViewInit {
 
-  private isDevEnv = true;
+  /** When `isDevEnv` to true to load a fake set of 300 users */
+  private isDevEnv = false;
 
-  private getUserSubscriptionSource = new Subject<number>();
+  private getUserSubscriptionSource = new Subject<void>();
 
   users: User[];
   admin: User;
+  selectedUser: User;
   stats: { size: number } = { size: 0 };
 
   private _shouldLoadData;
@@ -37,29 +36,31 @@ export class AdminPanelComponent implements AfterViewInit {
     } else if (prevVal > this.maxPage) { this._page = this.maxPage;
     } else { this._page = prevVal; }
     this.updatePaginationBtns();
-    this.getUserSubscriptionSource.next(this._page);
+    this.getUserSubscriptionSource.next();
   }
 
   currPage: number = this.page;
 
   get maxPage(): number {
     if (!this.stats) return 1;
-    return Math.ceil(this.stats.size / this.limit);
+    return Math.ceil(this.stats.size / this.currLimit);
   }
   private _limit: number = 10;
   get limit(): number { return this._limit; }
   set limit(val: number) {
     this._limit = val;
-    this.getUserSubscriptionSource.next();
+    let firstIndex = (this.currPage*this.currLimit) - this.currLimit + 1;
+    this.page = Math.ceil(firstIndex / val);
   }
+
+  currLimit: number = this.limit;
   
   constructor(private userService: UserService, 
               private snackbar: MdSnackBar,
               public dialog: MdDialog,
               cookieService: CookieService, 
               private zone: NgZone,
-              private cdref: ChangeDetectorRef,
-              private http: Http) {
+              private cdref: ChangeDetectorRef) {
     let index = +cookieService.get('selectedDashboardTab');
     this._shouldLoadData = index && index === 2;
   }
@@ -82,7 +83,6 @@ export class AdminPanelComponent implements AfterViewInit {
     this.zone.runOutsideAngular(() => {
       /*** Add debounce time to protect against rapid pagination clicks */
       this.getUserSubscriptionSource.debounceTime(500)
-      .distinctUntilChanged()
       /** .subscribe().next() triggered on value changes of `this.page`, causing an update to `this.users` */
       .subscribe(() => {
         this.getUsers();
@@ -101,7 +101,9 @@ export class AdminPanelComponent implements AfterViewInit {
     .subscribe(users => {
       this.users = users.map(User.initFromObject);
       this.currPage = this.page;
-      this.cdref.detectChanges(); // explicitly tell angular to run change detection
+      this.currLimit = this.limit;
+      /** this call is run outside of angular's zone, so change detection must be explicitly invoked */
+      this.cdref.detectChanges();
     }, err => console.error(err));
   }
 
@@ -162,11 +164,14 @@ export class AdminPanelComponent implements AfterViewInit {
       }
     });
   }
-  
 
-  //TODO:: Show user details on click
-  onSelectUser(user) {
-    console.log('recieved user', user);
+  //TODO:: Show user details on handling of event
+  selectUserHandler(user) {
+    this.selectedUser = user;
+  }
+
+  deselectUser() {
+    this.selectedUser = null;
   }
 
 }

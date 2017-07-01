@@ -89,6 +89,10 @@ export class User implements UserInterface {
       return "n/a"
     }
 
+    getLastLogin() {
+      return this.lastLoginToString();
+    }
+
     toObject() {
       return {
         uuid: this.uuid,

@@ -1,0 +1,65 @@
+<div fxLayout="column">
+
+   <!--Back Button-->
+   <div class="md-margin-bottom">
+      <button md-raised-button class="mat-primary" (click)="backEventEmitter.emit()">
+         <md-icon svgIcon="arrow_back"></md-icon>
+      </button>
+   </div>
+
+   <md-card md-margin="bottom" *ngIf="user">
+      <md-card-title>
+         User Details
+      </md-card-title>
+      <md-card-content>
+         <div class="detail-block">
+            <div class="detail-item">
+               <p>Name</p>
+               <p>{{ user.name }}</p>
+            </div>
+
+            <div class="detail-item">
+               <p>Email</p>
+               <p>{{ user.email }}</p>
+            </div>
+
+            <div class="detail-item">
+               <p>Last Login</p>
+               <p>{{ user.getLastLogin() }}</p>
+            </div>
+         </div>
+         <div class="detail-block">
+            <div class="detail-item">
+               <p>Account Role</p>
+               <p></p>
+            </div>
+
+            <div class="detail-item">
+               <p>Email</p>
+               <input>
+            </div>
+
+            <div class="detail-item">
+               <p>Username</p>
+               <input>
+            </div>
+            <div class="detail-item">
+               <p>Email Verified</p>
+               <div>
+                  <form>
+                     <input type="checkbox" id="emailverified" value="true" checked>
+                  </form>
+               </div> 
+            </div>
+         </div>
+
+      </md-card-content>
+      <md-card-actions>
+         <button md-button (click)="resetPassword()">Reset Password</button>
+         <button md-button (click)="emailPassword()">Email Password</button>
+         <button md-button (click)="block()">Block Account</button>
+         <button md-button (click)="unBlock()">Unblock Account</button>
+      </md-card-actions>
+   </md-card>
+
+</div>

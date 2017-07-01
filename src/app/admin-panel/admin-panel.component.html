@@ -1,8 +1,9 @@
 <div class="admin-panel container"> 
   <h5 md-margin="bottom">User Management</h5>
+  <admin-user-card [user]="selectedUser"></admin-user-card>
   <div fxLayout="row" class="pagination-container">
-    <p md-margin>Records per page</p>
-    <md-select [(ngModel)]="this.limit" selected="this.limit">
+    <p class="md-margin-right md-margin-top" *ngIf="stats.size > 10">Records per page</p>
+    <md-select md-margin="top" [(ngModel)]="this.limit" selected="this.limit" *ngIf="stats.size > 10">
       <md-option [value]="10">10</md-option>
       <md-option [value]="25">25</md-option>
       <md-option [value]="50">50</md-option>
@@ -37,9 +38,9 @@
           [id]="i+1+((currPage-1)*limit)"
           (onSelectBlock)="onSelectBlock($event)"
           (onChange)="updateUser($event)"
-          (onSelect)="onSelectUser($event)"></tr>
+          (onSelect)="selectUserHandler($event)"></tr>
     </tbody>
   </table>
   <p md-margin *ngIf="maxPage > 1">Page {{ currPage }} of {{ maxPage }}</p>
-  <p md-margin>Showing <span *ngIf="maxPage > 1">{{ 1+((currPage-1)*limit) }}-{{ ((currPage-1)*limit)+limit }} of </span>{{ stats.size }} users</p>
+  <p md-margin>Showing <span *ngIf="maxPage > 1">{{ 1+((currPage-1)*currLimit) }}-{{ ((currPage-1)*currLimit)+currLimit }} of </span>{{ stats.size }} users</p>
 </div>

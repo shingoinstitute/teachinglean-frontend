@@ -27,6 +27,6 @@
 </td>
 <td class="admin-user-list-item" id="actions">
    <button md-raised-button class="blue-grey lighten-1 white-text" [style.font-weight]="'300'" (click)="selectUserEventEmitter.emit(user)">View</button>
-   <button md-raised-button class="mat-accent" (click)="onSelectBlock()" *ngIf="user.accountIsActive">Block</button>
-   <button md-raised-button class="mat-accent" (click)="onSelectUnblock()" *ngIf="!user.accountIsActive">Unblock</button>
+   <button md-raised-button class="mat-accent" (click)="onSelectBlock()" *ngIf="user.accountIsActive && !user.isAdmin">Block</button>
+   <button md-raised-button class="mat-accent" (click)="onSelectUnblock()" *ngIf="!user.accountIsActive && !user.isAdmin">Unblock</button>
 </td>

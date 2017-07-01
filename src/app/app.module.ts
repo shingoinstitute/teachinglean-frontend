@@ -40,6 +40,7 @@ import { EntryCardComponent }      from './entry/entry-card.component';
 import { UserInfoCardComponent }   from './entry/user-info-card.component';
 import { UserProfileComponent }    from './user/user-profile.component';
 import { AdminUserListItemComponent } from './admin-panel/admin-user-list-item/admin-user-list-item.component';
+import { AdminUserCardComponent }  from './admin-panel/admin-user-card/admin-user-card.component';
 
 // App Directives
 import { ForumDetailDirective }    from './directives/forum-detail.directive';
@@ -95,7 +96,8 @@ import { ResetPasswordComponent } from './reset-password/reset-password.componen
     MdMarginDirective,
     ResetPasswordLinkComponent,
     ResetPasswordComponent,
-    AdminUserListItemComponent
+    AdminUserListItemComponent,
+    AdminUserCardComponent
   ],
   entryComponents: [ DisableUserDialog ],
   providers: [

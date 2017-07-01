@@ -9,6 +9,10 @@ export class MdMarginDirective implements OnInit {
    constructor(private el: ElementRef, private renderer: Renderer) {}
 
    ngOnInit() {
+      /** You can pass an array as the argument to include multi sided margins
+       * Follows the pattern `side name, value[, side name, value]`
+       * Example: `<div md-margin="[top, 8, left, 12, bottom, 8]"></div>`
+       */
       if (this.type.includes('[') && this.type.includes(']')) {
          var attrs = this.type.toString() .replace(/\'/g, '\"');
          this.addAttributes(JSON.parse(attrs));
