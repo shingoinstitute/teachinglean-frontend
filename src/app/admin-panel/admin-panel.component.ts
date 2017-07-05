@@ -1,10 +1,9 @@
-import { Component, OnInit, AfterViewInit, NgZone, ChangeDetectorRef, ViewChild, ElementRef } from '@angular/core';
-
+import { Component, AfterViewInit, NgZone, ChangeDetectorRef } from '@angular/core';
 import { CookieService } from 'ngx-cookie';
 import { MdSnackBar, MdDialog } from '@angular/material';
 import { DisableUserDialog } from './disable-user.dialog';
 import { UserService } from '../services/user.service';
-import { Observable, Subscription, Subject } from 'rxjs';
+import { Subject } from 'rxjs/Subject';
 import 'rxjs/add/operator/toPromise';
 import { User } from '../user/user';
 

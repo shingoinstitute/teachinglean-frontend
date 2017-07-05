@@ -56,7 +56,7 @@
       <div fxLayoutAlign="start start" id="comment-wrapper">
          <!--Comment Button-->
          <button md-button id="comment-button"
-         (click)="onClickAddComment($event, entry)"
+         (click)="onClickAddComment()"
          [class.disabled]="!commentText"
          [disabled]="!commentText">
             <i class="material-icons">comment</i> Comment
@@ -73,7 +73,7 @@
 
       </div>
 
-      <div *ngIf="isOwner(entry)">
+      <div *ngIf="isOwner()">
          <!--Edit Button-->
          <button md-button id="edit-button" (click)="onclickEdit($event)">
             <i class="material-icons">edit</i> Edit

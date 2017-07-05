@@ -1,5 +1,5 @@
 import { Component, NgZone } from '@angular/core';
-import { MdDialogRef, MdDialog } from '@angular/material';
+import { MdDialogRef } from '@angular/material';
 
 @Component({
   selector: 'disable-user-dialog',

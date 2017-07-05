@@ -1,4 +1,4 @@
-import { Component, ElementRef, AfterViewInit, NgZone, ChangeDetectorRef } from '@angular/core';
+import { Component, AfterViewInit, NgZone, ChangeDetectorRef } from '@angular/core';
 import {
   trigger,
   state,
@@ -7,7 +7,7 @@ import {
   transition
 } from '@angular/animations';
 import { UserService } from '../services/user.service';
-import { Subject, Subscription } from 'rxjs';
+import { Subject } from 'rxjs';
 
 @Component({
   selector: 'app-reset-password-link',
@@ -47,13 +47,13 @@ export class ResetPasswordLinkComponent implements AfterViewInit {
     }
   }
 
-  constructor(private elementRef: ElementRef, private zone: NgZone, private cdref: ChangeDetectorRef, private userservice: UserService) {}
+  constructor(private zone: NgZone, private cdref: ChangeDetectorRef, private userservice: UserService) {}
 
   didClickRequestButton: boolean;
   onSuccessMsg: string;
   formState: string = "";
   completeState: string = "";
-  onSubmit(ev) {
+  onSubmit() {
     this.didClickRequestButton = true;
     this.isSearching = true;
     this.userservice.sendPasswordResetLink(this.email).subscribe(data => {
@@ -67,7 +67,7 @@ export class ResetPasswordLinkComponent implements AfterViewInit {
   }
 
   showForm: boolean = true;
-  animationDone(ev) {
+  animationDone() {
     let ctrl = this;
     if (ctrl.formState === 'out') {
       setTimeout(() => {

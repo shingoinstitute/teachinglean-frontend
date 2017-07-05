@@ -17,10 +17,8 @@ export class AdminUserCardComponent {
    }
 
    ngAfterViewInit() {
-      this.userService.getAuthUser().subscribe(user => {
-         this.user = User.initFromObject(user);
-      }, err => {
-         console.error(err);
+      this.userService.userSource.subscribe(user => {
+         this.user = user;
       });
    }
    

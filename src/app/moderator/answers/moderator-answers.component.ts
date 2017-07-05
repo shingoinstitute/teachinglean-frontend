@@ -1,9 +1,7 @@
 import {
-   AfterViewInit,
    OnChanges,
    Input,
    OnInit,
-   NgZone,
    Component
 } from '@angular/core';
 
@@ -20,7 +18,7 @@ export class ModeratorAnswerTab implements OnInit, OnChanges {
   @Input('answers') entries: Entry[];
   answers: Answer[];  
   
-  constructor(private service: ForumService, private zone: NgZone) {}
+  constructor(private service: ForumService) {}
 
   ngOnInit() {}
 

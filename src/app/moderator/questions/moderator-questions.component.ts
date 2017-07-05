@@ -42,7 +42,7 @@ export class ModeratorQuestionTab implements OnInit {
     }
   }
 
-  onclickDelete(e) {
+  onclickDelete() {
 
     let observable = Observable.create(observer => {
       for (let key in this.selectedQuestions) {

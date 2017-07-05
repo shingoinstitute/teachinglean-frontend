@@ -1,11 +1,3 @@
-// Angular imports
-import { Injectable, ReflectiveInjector } from '@angular/core';
-import { Http } from '@angular/http';
-
-// Services
-// import { EntryService } from '../services/entry.service';
-
-// Misc imports
 import { User } from '../user/user';
 import { Comment } from '../comment/comment';
 

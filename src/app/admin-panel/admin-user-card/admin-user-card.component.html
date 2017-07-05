@@ -36,29 +36,44 @@
 
             <div class="detail-item">
                <p>Email</p>
-               <input>
+               <form class="form-group">
+                  <input type="text" id="user-email">
+               </form>
             </div>
 
             <div class="detail-item">
                <p>Username</p>
-               <input>
+               <form class="form-group">
+                  <input type="text" id="user-username">
+               </form>
             </div>
             <div class="detail-item">
                <p>Email Verified</p>
                <div>
-                  <form>
-                     <input type="checkbox" id="emailverified" value="true" checked>
+                  <form class="form-group">
+                     <input type="checkbox" id="emailverified" value="true" checked="false">
                   </form>
                </div> 
             </div>
          </div>
 
       </md-card-content>
-      <md-card-actions>
-         <button md-button (click)="resetPassword()">Reset Password</button>
-         <button md-button (click)="emailPassword()">Email Password</button>
-         <button md-button (click)="block()">Block Account</button>
-         <button md-button (click)="unBlock()">Unblock Account</button>
+      <md-card-actions fxLayoutGap="4px">
+         <button md-raised-button class="mat-success" (click)="saveChanges()">
+            <md-icon [style.width]="'20px'" svgIcon="save_white"></md-icon><span [style.margin-left]="'4px'">Save Changes</span>
+         </button>
+
+         <button md-button class="mat-primary" (click)="resetPassword()">Reset Password</button>
+
+         <button md-button class="mat-primary" (click)="emailPassword()">Email Password</button>
+
+         <button md-button class="mat-warn" (click)="user.accountIsActive = false" *ngIf="user.accountIsActive">
+            <md-icon [style.width]="'20px'" svgIcon="lock_black"></md-icon><span [style.margin-left]="'4px'">Block Account</span>
+         </button>
+
+         <button md-button class="mat-warn" (click)="user.accountIsActive = true" *ngIf="!user.accountIsActive">
+            <md-icon [style.width]="'20px'" svgIcon="unlock_black"></md-icon><span [style.margin-left]="'4px'">Unblock Account</span>
+         </button>
       </md-card-actions>
    </md-card>
 

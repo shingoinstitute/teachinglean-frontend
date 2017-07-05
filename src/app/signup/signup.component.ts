@@ -1,5 +1,5 @@
-import { Component, EventEmitter, OnInit, Output } from '@angular/core';
-import { FormGroup, FormControl, FormBuilder, Validators } from '@angular/forms';
+import { Component, OnInit } from '@angular/core';
+import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 
 import { User } from '../user/user';
@@ -70,12 +70,12 @@ export class SignupComponent implements OnInit {
       ]]
     });
 
-    this.signupForm.valueChanges.subscribe(changes => {
-      this.onValueChanged(changes);
+    this.signupForm.valueChanges.subscribe(() => {
+      this.onValueChanged();
     });
   }
 
-  onValueChanged(data?: any) {
+  onValueChanged() {
     if (!this.signupForm) { return; }
     const form = this.signupForm;
     let control;
@@ -108,7 +108,7 @@ export class SignupComponent implements OnInit {
     this.formIsValid = this.signupForm.valid;
   }
 
-  onclickShowBtn(e) {
+  onclickShowBtn() {
     this.passwordType = this.passwordType === 'password' ? 'text' : 'password';
   }
 
@@ -120,6 +120,7 @@ export class SignupComponent implements OnInit {
     }
     this.userService.create(user, this.password).subscribe(result => {
       this.router.navigate(['dashboard']);
+      console.log(result);
     }, error => {
       let errMsg = error;
       if (error.toString) { errMsg = error.toString(); }

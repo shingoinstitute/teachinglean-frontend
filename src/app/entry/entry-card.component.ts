@@ -1,5 +1,4 @@
 import { Component, Input, OnDestroy, EventEmitter, Output, OnInit } from '@angular/core';
-import { trigger, state, style, animate, transition } from '@angular/animations';
 import { User } from '../user/user';
 import { Entry } from './entry';
 import { Comment } from '../comment/comment';
@@ -30,9 +29,9 @@ export class EntryCardComponent implements OnInit, OnDestroy {
 
    constructor(private forumService: ForumService, private userService: UserService) {
       this.user = userService.user;
-      this.userSubscription = userService.onDeliverableUser$.subscribe(user => {
-         this.user = user;
-      }, err => {return;});
+      this.userService.userSource.subscribe(user => {
+        this.user = user;
+      })
    }
 
    ngOnInit() { }
@@ -41,7 +40,7 @@ export class EntryCardComponent implements OnInit, OnDestroy {
       this.userSubscription.unsubscribe();
    }
 
-   isOwner(entry: Entry) {
+   isOwner() {
      if (this.entry && this.user) {
        return !!this.entry.owner && this.entry.owner.uuid === this.user.uuid;
      }
@@ -82,6 +81,7 @@ export class EntryCardComponent implements OnInit, OnDestroy {
    onclickDelete() {
      this.forumService.destroyEntry(this.entry.id).subscribe(data => {
        this.onDestroyEntry.emit(this.entry.id);
+       console.log(`Deleted entry`, data);
      }, err => {
        console.error(err);
      });
@@ -92,12 +92,12 @@ export class EntryCardComponent implements OnInit, OnDestroy {
       tinymce.remove(this.editor);
    }
 
-   onClickAddComment(event, entry) {
+   onClickAddComment() {
     let user = this.userService.user;
     let content = this.commentText;
-    if (content && user && entry) {
+    if (content && user && this.entry) {
       this.forumService.createComment({
-        parent: entry.id,
+        parent: this.entry.id,
         owner: user.uuid,
         content: content
       }).subscribe(data => {
@@ -105,7 +105,8 @@ export class EntryCardComponent implements OnInit, OnDestroy {
          let comment: Comment = Comment.initFromObject(data);
          this.entry.comments.push(comment);
       }, err => {
-         this.errMsg = "An error occured, please try again."
+         this.errMsg = "An error occured, please try again.";
+         console.error(err);
       });
     } else {
       this.errMsg = "You cannot submit an empty comment!";

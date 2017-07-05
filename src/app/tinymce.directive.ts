@@ -1,7 +1,5 @@
 import { Directive, Input, Output, EventEmitter, ElementRef, OnDestroy } from '@angular/core';
 import { NgModel } from '@angular/forms';
-import { Subject } from 'rxjs/Subject';
-import { Observable } from 'rxjs/Observable';
 
 @Directive({
    selector: '[tinyMce]',

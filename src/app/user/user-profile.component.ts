@@ -5,11 +5,9 @@ import {
   ElementRef
 } from '@angular/core';
 import { MdSnackBar } from '@angular/material';
-import { Router } from '@angular/router';
 
 import { TinyMceDirective } from '../tinymce.directive';
 import { UserService } from '../services/user.service';
-import { Subject } from 'rxjs/Subject';
 import { User } from './user';
 
 @Component({
@@ -85,12 +83,14 @@ export class UserProfileComponent {
    * @desc :: sends a password reset link to the 
    * currently authenticated user's email
    */
-  onclickReset(ev) {
+  onclickReset() {
     this.userService.sendPasswordResetLink(this.user.email)
     .subscribe(data => {
       this.snackbar.open('Password reset link sent, please check your email for a message from shingo.it@usu.edu.', 'Okay');
+      console.log(data);
     }, err => {
       this.snackbar.open('Server Error, please try again later.', 'Okay', { duration: 3000 });
+      console.error(err);
     });
   }
 

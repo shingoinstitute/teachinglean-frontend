@@ -16,11 +16,13 @@ import {
 
 @NgModule({
     imports: [
+        MdCardModule, 
         MdButtonModule,
         MdSnackBarModule,
         MdTabsModule,
         MdMenuModule,
         MdDialogModule,
+        MdInputModule,
         MdListModule,
         MdIconModule,
         MdSidenavModule,

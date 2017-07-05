@@ -1,7 +1,7 @@
 <div>
 
-  <div fxLayout="row" fxLayoutAlign="center" *ngIf="spinnerEnabled">
-    <md-spinner></md-spinner>
+  <div fxLayout="row" fxLayoutAlign="center" *ngIf="!user">
+    <md-spinner [style.height]="'48px'"></md-spinner>
   </div>
 
   <!--Main Tab Group-->

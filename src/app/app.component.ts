@@ -1,15 +1,12 @@
 import {
   Component, 
-  EventEmitter, 
   OnInit, 
-  Output, 
   ViewChild, 
   HostListener
 } from '@angular/core';
 import { MdIconRegistry } from '@angular/material';
 import { DomSanitizer } from '@angular/platform-browser';
 import { MdSidenav } from '@angular/material';
-import { Observable } from 'rxjs/Observable';
 import { Subject } from 'rxjs/Subject';
 
 import { UserService } from './services/user.service';
@@ -66,10 +63,14 @@ export class AppComponent implements OnInit {
     iconRegistry.addSvgIcon('arrow_down', sanitizer.bypassSecurityTrustResourceUrl('assets/images/icons/ic_arrow_downward_white_18px.svg'));
     iconRegistry.addSvgIcon('arrow_forward', sanitizer.bypassSecurityTrustResourceUrl('assets/images/icons/ic_arrow_forward_white_18px.svg'));
     iconRegistry.addSvgIcon('arrow_back', sanitizer.bypassSecurityTrustResourceUrl('assets/images/icons/ic_arrow_back_white_18px.svg'));
+    iconRegistry.addSvgIcon('lock_white', sanitizer.bypassSecurityTrustResourceUrl('assets/images/icons/ic_lock_open_white_18px.svg'));
+    iconRegistry.addSvgIcon('unlock_white', sanitizer.bypassSecurityTrustResourceUrl('assets/images/icons/ic_lock_outline_white_18px.svg'));
+    iconRegistry.addSvgIcon('lock_black', sanitizer.bypassSecurityTrustResourceUrl('assets/images/icons/ic_lock_outline_black_18px.svg'));
+    iconRegistry.addSvgIcon('unlock_black', sanitizer.bypassSecurityTrustResourceUrl('assets/images/icons/ic_lock_open_black_18px.svg'));
 
-    let toggleListener = sidenavService
+    sidenavService
     .toggleSidenavNotification$
-    .subscribe(onNext => {
+    .subscribe(() => {
       this.toggleSidenav();
     });
 
@@ -99,7 +100,8 @@ export class AppComponent implements OnInit {
   }
 
   @HostListener('window:resize', ['$event'])
-  onResize(event) {
+  // onResize(event) {
+  onResize() {
     this.onWindowResizeEventSource.next(window.innerWidth);
   }
 

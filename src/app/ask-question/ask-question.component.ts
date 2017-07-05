@@ -5,9 +5,7 @@ import {
   AfterViewInit,
   OnDestroy,
   Output,
-  Input,
   NgZone,
-  ElementRef
 } from '@angular/core';
 
 import {
@@ -56,7 +54,6 @@ export class AskQuestionComponent implements OnInit, AfterViewInit, OnDestroy {
   questionState = 'active';
   constructor(
     private userService: UserService, 
-    private appRouter: AppRoutingService, 
     private zone: NgZone,
     private snackbar: MdSnackBar,
     private forumService: ForumService) {
@@ -99,7 +96,7 @@ export class AskQuestionComponent implements OnInit, AfterViewInit, OnDestroy {
     tinymce.remove(this.editor);
   }
 
-  onClickSubmitQuestion(e) {
+  onClickSubmitQuestion() {
     // If the title and question content are not empty, allow question to be submitted.
     if (this.title.length > 0 && this.content.length > 0) {
       this.forumService.createEntry({

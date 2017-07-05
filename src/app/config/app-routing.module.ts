@@ -7,7 +7,6 @@ import { DashboardComponent } from '../dashboard/dashboard.component';
 import { LoginComponent } from '../login/login.component';
 import { TeachingComponent } from '../teaching/teaching.component';
 import { ForumComponent } from "../forum-home/forum.component";
-import { AskQuestionComponent } from "../ask-question/ask-question.component";
 import { ForumListItemComponent } from '../forum-list-item/forum-list-item.component';
 import { SignupComponent } from '../signup/signup.component';
 import { ResetPasswordLinkComponent } from '../reset-password-link/reset-password-link.component';

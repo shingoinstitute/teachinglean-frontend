@@ -1,19 +1,20 @@
+import { Injectable }     from '@angular/core';
 import {
   Http, 
   Response, 
   ResponseContentType
 } from '@angular/http';
-import { ActivatedRoute, Params } from '@angular/router';
-import { Injectable }     from '@angular/core';
 import { Observable }     from 'rxjs/Observable';
 import { Subject }        from 'rxjs/Subject';
+import { Subscription }   from 'rxjs/Subscription';
+import { Observer }       from 'rxjs/Observer';
 import { CookieService }  from 'ngx-cookie';
 import { User }           from '../user/user';
 import { Globals }        from '../globals';
-import { environment }    from '../../environments/environment';
 
 import 'rxjs/add/operator/map';
 import 'rxjs/add/operator/catch';
+import 'rxjs/add/operator/toPromise';
 
 @Injectable()
 export class UserService {
@@ -26,46 +27,58 @@ export class UserService {
   onUserLogout$ = this.onUserLogoutSource.asObservable();
   onDeliverableUser$ = this.onDeliverableUserSource.asObservable();
 
-  // User object
+  user$: Observer<User>;
+  userSource: Observable<User>;
+
   private _user: User;
-  
   get user(): User {
     return this._user || null;
   }
+  set user(val: User) {
+    this._user = val;
+    this.onDeliverableUserSource.next(val);
+  }
+
+  baseApiUrl: string = Globals.baseApiUrl;
   
-  baseApiUrl: string;
-  
-  constructor(private http: Http, private cookieService: CookieService, private route: ActivatedRoute) {
-    this.baseApiUrl = Globals.baseApiUrl;
-    this.getAuthUser().subscribe({
-      error: (err) => {}
+  constructor(private http: Http, private cookieService: CookieService) {
+    this.userSource = Observable.create(observer => {
+      this.user$ = observer
+      if (!this._user) { this.requestAuthUser(); }
     });
+    this.userSource.subscribe(user => {
+      this.user = user;
+    }, err => this.handleError(err));
+    this.requestAuthUser();
   }
 
   /**
-   * Returns an authenticated user based on an XSRF-TOKEN stored in cookies or provided in args
+   * Gets an authenticated user based on an XSRF-TOKEN stored in cookies or provided in args
    */
-  getAuthUser(token?: string): Observable<User> {
-    if (token) {
+  requestAuthUser(token?: string): Subscription {
+    /** Check if `this.user` is already present */
+    if (!!this.user) {
+      this.user$.next(this.user);
+      return;
+    }
+
+    if (token) 
       this.cookieService.put('XSRF-TOKEN', token);
-    } else {
-      token = this.cookieService.get('XSRF-TOKEN') || null;
+
+    if (!this.cookieService.get('XSRF-TOKEN')) {
+      return Observable.throw(new Error('missing xsrf-token')).subscribe();
     }
 
-    // Throw error if client browser does not have xsrf-token
-    if (!token) {
-      return Observable.throw('missing xsrf-token');
-    }
-
-    // Get logged in user if XSRF-TOKEN is present
-    return this.http.get(`${this.baseApiUrl}/me?xsrf-token=${token}`)
+    return Observable.fromPromise(this.http.get(`${this.baseApiUrl}/me?xsrf-token=${this.cookieService.get('XSRF-TOKEN')}`).toPromise())
+    .debounceTime(300)
     .map(res => {
-      let user = User.initFromObject(res.json());
-      this._user = user;
-      this.onDeliverableUserSource.next(this._user);
-      return user;
+      return User.initFromObject(res.json());
     })
-    .catch(this.handleError);
+    .catch(this.handleError)
+    .subscribe((user: User) => {
+      this.user = user;
+      this.user$.next(user);
+    });
   }
 
   // Gets a single user given the requesting user is authenticated
@@ -139,8 +152,7 @@ export class UserService {
     .map(res => {
       let data = res.json();
       this.cookieService.put('XSRF-TOKEN', data['xsrf-token']);
-      this._user = User.initFromObject(data);
-      this.onDeliverableUserSource.next(this._user);
+      this.user = User.initFromObject(data);
       return data;
     })
     .catch(this.handleError);
@@ -231,10 +243,6 @@ export class UserService {
       return res.json();
     })
     .catch(this.handleError);
-  }
-
-  private extractData(res: Response): Observable<any> {
-    return res.json();
   }
   
   private handleError(error: Response | any) {

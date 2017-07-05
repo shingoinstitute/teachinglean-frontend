@@ -10,7 +10,6 @@ import { ActivatedRoute, Params } from '@angular/router';
 import { ForumService } from '../services/forum.service';
 import { UserService } from '../services/user.service';
 import { Entry } from '../entry/entry';
-import { User } from '../user/user';
 
 import { TinyMceDirective } from '../tinymce.directive';
 
@@ -48,7 +47,9 @@ export class ForumListItemComponent implements OnInit {
     this.hasUser = !!userService.user;
     userService.onDeliverableUser$.subscribe(user => {
       this.hasUser = !!user;
-    }, err => {});
+    }, err => {
+      console.error(err);
+    });
     this.loadData();
   }
 
@@ -108,7 +109,7 @@ export class ForumListItemComponent implements OnInit {
     });
   }
 
-  onClickSubmitAnswer(event) {
+  onClickSubmitAnswer() {
     if (!this.userService.user) {
       return;
     }
@@ -123,6 +124,7 @@ export class ForumListItemComponent implements OnInit {
       this._editor.clear();
       this.questionContent = '';
       this.loadData();
+      console.log(data);
     });
 
   }
@@ -131,6 +133,7 @@ export class ForumListItemComponent implements OnInit {
     this.forumService.markCorrect(answer.id)
     .subscribe(data => {
       answer.markedCorrect = this.didMarkAnswerCorrect = true;
+      console.log(data);
     });
   }
 
@@ -138,10 +141,12 @@ export class ForumListItemComponent implements OnInit {
     this.forumService.markIncorrect(answer.id)
     .subscribe(data => {
       answer.markedCorrect = this.didMarkAnswerCorrect = false;
+      console.log(data);
     });
   }
 
   onDeleteHandler(entryId) {
+    console.log(`deleted entry ${entryId}.`);
     this.loadData();
   }
 

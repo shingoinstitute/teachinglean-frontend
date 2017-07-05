@@ -220,130 +220,108 @@ button.btn-show-hide:hover {
 }
 
 /* color stylings for backgrounds and text */
-
 .black-text {
   color: #000000 !important;
 }
-
-.white {
+.white:not(button) {
   background-color: #FFFFFF !important;
 }
-
 .white-text {
   color: #FFFFFF !important;
 }
-
 .transparent {
   background-color: transparent !important;
 }
-
 .transparent-text {
   color: transparent !important;
 }
-
-.mat-primary.darken-3 {
+.mat-primary.darken-3:not(button) {
   background-color: #37474f !important;
 }
-
-.mat-primary {
+.mat-primary:not(button) {
   background-color: #607d8b !important;
 }
-
-.mat-warn {
+.mat-warn:not(button) {
   background-color: #f44336 !important;
 }
-
 .mat-warn-text {
   color: #f44336 !important;
 }
-
+.mat-success {
+  background-color: #66bb6a;
+}
+button.mat-success {
+  align-items: center;
+  color: #fefefe;
+  background-color: #66BB6A;
+  font-weight: 300;
+}
 md-spinner.mat-primary,
 md-progress-spinner.mat-primary {
   background-color: transparent !important;
 }
-
 .mat-primary-text {
   color: #607d8b !important;
 }
-
 .mat-primary.lighten-5 {
   background-color: #eceff1 !important;
 }
-
 .mat-primary-text.text-lighten-5 {
   color: #eceff1 !important;
 }
-
 .mat-primary.lighten-4 {
   background-color: #cfd8dc !important;
 }
-
 .mat-primary-text.text-lighten-4 {
   color: #cfd8dc !important;
 }
-
 .mat-primary.lighten-3 {
   background-color: #b0bec5 !important;
 }
-
 .mat-primary-text.text-lighten-3 {
   color: #b0bec5 !important;
 }
-
 .mat-primary.lighten-2 {
   background-color: #90a4ae !important;
 }
-
 .mat-primary-text.text-lighten-2 {
   color: #90a4ae !important;
 }
-
 .mat-primary.lighten-1 {
   background-color: #78909c !important;
 }
-
 .mat-primary-text.text-lighten-1 {
   color: #78909c !important;
 }
-
 .mat-primary.darken-1 {
   background-color: #546e7a !important;
 }
-
 .mat-primary-text.text-darken-1 {
   color: #546e7a !important;
 }
-
 .mat-primary.darken-2 {
   background-color: #455a64 !important;
 }
-
 .mat-primary-text.text-darken-2 {
   color: #455a64 !important;
 }
-
 .mat-primary.darken-3 {
   background-color: #37474f !important;
 }
-
 .mat-primary-text.text-darken-3 {
   color: #37474f !important;
 }
-
 .mat-primary.darken-4 {
   background-color: #263238 !important;
 }
-
 .mat-primary-text.text-darken-4 {
   color: #263238 !important;
 }
-
 @media screen and (max-width: 1279px){
   .show-gt-md {
     display: none;
   }
 }
-
 @media screen and (max-width: 959px){
   .show-gt-sm {
     display: none;
@@ -352,15 +330,12 @@ md-progress-spinner.mat-primary {
     width: 100%;
     margin: 0 auto;
   }
-
 }
-
 @media screen and (min-width: 1281px) {
   .hide-gt-md {
     display: none;
   }
 }
-
 @media screen and (min-width: 961px){
   .hide-gt-sm {
     display: none;
@@ -370,30 +345,21 @@ md-progress-spinner.mat-primary {
     margin: 0 auto;
   }
 }
-
 .bold-text {
   font-weight: bold;
 }
-
 .text-xs {
   font-size: 8pt;
 }
-
-.text-sm,
-.fs-12pt {
+.text-sm {
   font-size: 10pt;
 }
-
-.text-md,
-.fs-14pt {
+.text-md {
   font-size: 14pt;
 }
-
-.text-lg,
-.fs-16pt {
+.text-lg {
   font-size: 16pt;
 }
-
 /* Material Design Icons */
 .material-icons.md-18 { font-size: 18px; }
 .material-icons.md-24 { font-size: 24px; }

@@ -3,7 +3,6 @@ import {
    Input
 } from '@angular/core';
 
-import { ForumService } from '../../services/forum.service';
 import { Entry } from '../../entry/entry';
 
 @Component({
@@ -14,6 +13,6 @@ import { Entry } from '../../entry/entry';
 export class ModeratorCommentTab {
   @Input() comments: Entry[];
 
-  constructor(service: ForumService) {}
+  constructor() {}
 
 }

@@ -3,8 +3,6 @@ import {
   HostListener
 } from '@angular/core';
 import { Router } from '@angular/router';
-import { MdIconRegistry } from '@angular/material';
-import { DomSanitizer } from '@angular/platform-browser';
 import { Subscription } from 'rxjs/Subscription';
 
 import { UserService } from '../services/user.service';
@@ -40,7 +38,8 @@ export class ToolbarComponent {
   }
 
   @HostListener('window:resize', ['$event'])
-  resize(event) {
+  // resize(event) {
+  resize() {
     this.windowWidth = window.innerWidth;
   }
 
@@ -51,6 +50,7 @@ export class ToolbarComponent {
   onClickLogout() {
     this.userService.logoutUser().subscribe(data => {
       this.router.navigate(['/']);
+      console.log(data);
     }, err => {
       console.error(err);
     });

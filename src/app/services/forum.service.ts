@@ -103,21 +103,21 @@ export class ForumService {
     .catch(this.handleError);
   }
 
-  readEntry(id) {
+  // readEntry(id) {
     // return $http({
     //   method: 'get',
     //   dataType: 'json',
     //   url: '/entry/' + id + '?populate=answers,owner,comments,parent,users_did_upvote,users_did_downvote'
     // });
-  }
+  // }
 
-  readComment(id) {
+  // readComment(id) {
     // return $http({
     //   method: 'get',
     //   dataType: 'json',
     //   url: '/comment/' + id + '?populate=owner,parent'
     // });
-  }
+  // }
 
   createEntry(entry: {content: any, owner: any, parent: any, title: any}) {
     return this.http.post(this.baseUrl + '/entry', entry, {
@@ -157,33 +157,33 @@ export class ForumService {
     .catch(this.handleError);
   }
 
-  save(entry) {
+  // save(entry) {
     // return $http({
     //   method: 'put',
     //   dataType: 'json',
     //   url: '/entry/' + entry.id,
     //   data: entry
     // });
-  }
+  // }
 
-  saveComment(comment) {
+  // saveComment(comment) {
     // return $http({
     //   method: 'put',
     //   dataType: 'json',
     //   url: '/comment/' + comment.id,
     //   data: comment
     // });
-  }
+  // }
 
-  upvoteEntry(entry) {
+  // upvoteEntry(entry) {
     // return $http.put('/entry/upvote/' + entry.id);
-  }
+  // }
 
-  downvoteEntry(entry) {
+  // downvoteEntry(entry) {
     // return $http.put('/entry/downvote/' + entry.id);
-  }
+  // }
 
-  query(queryString) {
+  // query(queryString) {
     // let query = {
     //   'or': [{
     //     'title': {
@@ -203,7 +203,7 @@ export class ForumService {
     //   dataType: 'json',
     //   url: url
     // })
-  }
+  // }
 
   markIncorrect(entryId: string) {
     return this.markCorrect(entryId, false);

@@ -1,8 +1,6 @@
 import { Component, HostListener, OnInit } from '@angular/core';
 import { UserService } from '../services/user.service';
-
 import { Globals } from '../globals';
-import { User } from '../user/user';
 import { Router, ActivatedRoute, Params } from "@angular/router";
 
 @Component({
@@ -30,20 +28,21 @@ export class LoginComponent implements OnInit {
   }
 
   linkedinCallbackHanlder() {
-    let observer = this.activeRoute.queryParams.subscribe((params: Params) => {
-      this.userService.getAuthUser(params['xsrf-token']).subscribe(user => {
-        this.router.navigateByUrl('/dashboard');
-      }, err => {
-        console.error(err);
-        this.router.navigateByUrl('/login');
-      }, () => {
-        console.log('done');
-      })
+    this.userService.userSource.subscribe(user => {
+      this.router.navigateByUrl('/dashboard');
+      console.log(`reroute to dashboard for user ${user.uuid}`);
+    }, err => {
+      console.error(err);
+      this.router.navigateByUrl('/login');
+    });
+
+    this.activeRoute.queryParams.subscribe((params: Params) => {
+      this.userService.requestAuthUser(params['xsrf-token']);
     });
   }
 
   @HostListener('window:keyup.enter', ['$event'])
-  keyupHandler(ev: KeyboardEvent) {
+  keyupHandler() {
     if (this.username.length > 0 && this.password.length > 0) {
       this.onClickLogin();
     }
@@ -54,6 +53,7 @@ export class LoginComponent implements OnInit {
     this.userService.localLogin(this.username, this.password)
     .subscribe((data) => {
       this.router.navigate(['/dashboard']);
+      console.log(data);
     }, (error) => {
       this.spinnerEnabled = false;
       let errMsg;
@@ -71,6 +71,7 @@ export class LoginComponent implements OnInit {
 
   authenticateLinkedin(e) {
     this.userService.authenticateLinkedin();
+    console.log(e);
   }
 
 }

@@ -3,12 +3,9 @@ import {
   Component,
   OnInit,
   HostListener,
-  OnChanges,
   EventEmitter,
   Output,
-  SimpleChange,
-  AfterViewInit,
-  Input } from '@angular/core';
+  AfterViewInit } from '@angular/core';
 import {
   trigger,
   state,
@@ -17,7 +14,6 @@ import {
   transition
 } from '@angular/animations';
 import { CookieService } from 'ngx-cookie';
-import { ModeratorQuestionTab } from './questions/moderator-questions.component';
 
 // Custom Services
 import { UserService }  from '../services/user.service';
@@ -83,7 +79,7 @@ export class ModeratorComponent implements OnInit, AfterViewInit {
   }
 
   @HostListener('window:resize', ['$event'])
-  onResize(e) {
+  onResize() {
     this.windowWidth = window.innerWidth;
   }
 
@@ -176,7 +172,7 @@ export class ModeratorComponent implements OnInit, AfterViewInit {
     }
   }
 
-  animateCompletionHandler(e) {
+  animateCompletionHandler() {
     if (this.userState === 'inactive') {
       delete this.selectedUser;
     } else if (this.nextUser) {

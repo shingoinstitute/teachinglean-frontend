@@ -104,7 +104,7 @@
 
          <!--Actions-->
          <div class="info-group" fxLayoutGap="12px">
-            <button md-button id="save-button" (click)="onclickSave()">
+            <button md-button id="save" class="mat-success" (click)="onclickSave()">
                <md-icon svgIcon="save_white"></md-icon> Save
             </button>
 
@@ -112,7 +112,7 @@
                <p>Save Successful!</p>
             </div>
 
-            <button md-raised-button (click)="onclickReset($event)">Change Password</button>
+            <button md-raised-button (click)="onclickReset()">Change Password</button>
             
          </div>
 

@@ -5,7 +5,6 @@ import { Subject } from 'rxjs/Subject';
 
 const MIN_LENGTH = 8;
 const MAX_LENGTH = 32;
-const PWORD_REGEX = /^(?=.*[\d])(?=.*[!@#$%^&*])[\w!@#$%^&*]{8,32}$/;
 const NUMBER_REGEX = /\d{1}/;
 const SPECIAL_CHAR_REGEX = /[!@#$%^&*]{1}/;
 
@@ -94,9 +93,10 @@ export class ResetPasswordComponent implements AfterViewInit {
    * @desc :: Upon clicking the submit button, sends request 
    * to server to update users current password
    */
-  onSubmit(ev) {
+  onSubmit() {
     this.userService.updatePassword(this.password, this.id, this.token).subscribe(data => {
       this.didUpdate = true;
+      console.log(data);
     }, err => {
       this.updateErrMsg = "Hmm, there was a problem updating your password. Try using the reset link sent to your email again and if the problem persists, please contact our technical support team at shingo.it@usu.edu."
       console.error(err);
@@ -108,7 +108,7 @@ export class ResetPasswordComponent implements AfterViewInit {
    * @desc :: Toggles the password input field between type `password` and type `text`
    * so the user can visibly see what they have typed as their new password.
    */
-  onclickShow(ev) {
+  onclickShow() {
     let type = $(this.passwordInput.nativeElement).attr('type') === 'password' ? 'text' : 'password';
     $(this.passwordInput.nativeElement).get(0).setAttribute('type', type);
   }
