@@ -153,24 +153,27 @@ export class AdminPanelComponent implements AfterViewInit {
   }
 
 
-  onSelectBlock(user: User) {
+  onBlockHandler(user: User) {
     let dialogRef = this.dialog.open(DisableUserDialog);
     dialogRef.afterClosed().subscribe( result => {
       console.log(result);
       user.accountIsActive = result;
-      if (result && !this.isDevEnv) {
+      if (!result) {
         this.updateUser(user);
       }
     });
   }
 
-  //TODO:: Show user details on handling of event
   selectUserHandler(user) {
-    this.selectedUser = user;
+    this.zone.run(() => {
+      this.selectedUser = user;
+    });
   }
 
   deselectUser() {
-    this.selectedUser = null;
+    this.zone.run(() => {
+      this.selectedUser = null;
+    });
   }
 
 }

@@ -6,6 +6,7 @@ export class User implements UserInterface {
     _username;
     pictureUrl;
     email;
+    verifiedEmail;
     biography;
     organization;
     role;
@@ -66,6 +67,7 @@ export class User implements UserInterface {
       user.lastname = data.lastname || "";
       user._username = data.username || "";
       user.email = data.email || "";
+      user.verifiedEmail = !!data.verifiedEmail || false;
       user.role = data.role || "member";
       if (!data.pictureUrl.includes('cloudinary') && !data.pictureUrl.includes('silhouette')) {
         user.pictureUrl = data.pictureUrl || user.pictureUrl;
@@ -100,6 +102,7 @@ export class User implements UserInterface {
         lastname: this.lastname,
         username: this.username,
         email: this.email,
+        verifiedEmail: !!this.verifiedEmail ? this.email : "",
         role: this.role,
         pictureUrl: this.pictureUrl,
         reputation: this.reputation,
@@ -120,6 +123,7 @@ interface UserInterface {
   organization: string;
   pictureUrl: string;
   email: string;
+  verifiedEmail: boolean;
   role: string;
   biography: string;
   reputation: number;

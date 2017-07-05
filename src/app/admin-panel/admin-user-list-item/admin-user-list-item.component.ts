@@ -12,7 +12,7 @@ export class AdminUserListItemComponent implements OnInit {
    @Input('id') id: any;
    @Output('onSelect') selectUserEventEmitter = new EventEmitter<User>();
    @Output('onChange') onUpdateUserEventEmitter = new EventEmitter<User>();
-   @Output('onSelectBlock') onSelectBlockEventEmitter = new EventEmitter<User>();
+   @Output('onBlock') onSelectBlockEventEmitter = new EventEmitter<User>();
 
    constructor() {}
 

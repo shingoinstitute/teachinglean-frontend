@@ -1,6 +1,6 @@
 <div class="admin-panel container"> 
   <h5 md-margin="bottom">User Management</h5>
-  <admin-user-card [user]="selectedUser"></admin-user-card>
+  <admin-user-card [user]="selectedUser" (onBack)="deselectUser()" (onBlock)="onBlockHandler($event)" *ngIf="selectedUser"></admin-user-card>
   <div fxLayout="row" class="pagination-container">
     <p class="md-margin-right md-margin-top" *ngIf="stats.size > 10">Records per page</p>
     <md-select md-margin="top" [(ngModel)]="this.limit" selected="this.limit" *ngIf="stats.size > 10">
@@ -36,7 +36,7 @@
           *ngFor="let user of users; let i = index" 
           [user]="user" 
           [id]="i+1+((currPage-1)*limit)"
-          (onSelectBlock)="onSelectBlock($event)"
+          (onBlock)="onBlockHandler($event)"
           (onChange)="updateUser($event)"
           (onSelect)="selectUserHandler($event)"></tr>
     </tbody>
