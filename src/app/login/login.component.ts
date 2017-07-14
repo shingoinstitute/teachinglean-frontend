@@ -38,7 +38,13 @@ export class LoginComponent implements OnInit {
 
     this.activeRoute.queryParams.subscribe((params: Params) => {
       this.userService.csrfToken = params['xsrf-token'];
-      this.userService.getAuthenticatedUser();
+      this.userService.getAuthenticatedUser().subscribe(user => {
+        /**
+         * @todo Implement... :-/
+         */
+      }, err => {
+        console.error(err);
+      });
     });
   }
 
@@ -54,7 +60,6 @@ export class LoginComponent implements OnInit {
     this.userService.localLogin(this.username, this.password)
     .subscribe((data) => {
       this.router.navigate(['/dashboard']);
-      console.log(data);
     }, (error) => {
       this.spinnerEnabled = false;
       let errMsg;

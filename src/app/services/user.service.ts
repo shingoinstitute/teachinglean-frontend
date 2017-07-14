@@ -134,7 +134,16 @@ export class UserService {
       this.user = User.initFromObject(data);
       return data;
     })
-    .catch(this.handleError);
+    .catch(err => {
+      let errMsg;
+      if (err instanceof Response) {
+        let body = err.json();
+        errMsg = body.error || JSON.stringify(body);
+      } else {
+        errMsg = err.error;
+      }
+      return Observable.throw(errMsg);
+    });
   }
   
   authenticateLinkedin() {
