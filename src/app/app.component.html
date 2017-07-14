@@ -12,12 +12,11 @@
             </md-list-item>
             <hr>
             <md-list-item *ngIf="user">
-                
                 <a md-line class='sidenav-link' routerLink="/dashboard" (click)="toggleSidenav()">
                     <button md-icon-button class='sidenav-link'>
-                        <md-icon svgIcon="dashboard"></md-icon>
+                        <md-icon svgIcon="dashboard"></md-icon><span>Dashboard</span>
                     </button>
-                    Dashboard
+                    
                 </a>
             </md-list-item>
             <md-list-item *ngIf="!user">

@@ -35,7 +35,7 @@ export class DashboardComponent implements OnInit {
     this.selectedDashboardTab = +this.cookies.get('selectedDashboardTab') || 0;
     
     this.user = this.userService.user;
-    this.userService.userSource.subscribe(user => {
+    this.userService.onDeliverableUser$.subscribe(user => {
       this.user = user;
       this.loadRecentActivity();
     }, err => console.error(err));

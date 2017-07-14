@@ -28,7 +28,7 @@ export class LoginComponent implements OnInit {
   }
 
   linkedinCallbackHanlder() {
-    this.userService.userSource.subscribe(user => {
+    this.userService.onDeliverableUser$.subscribe(user => {
       this.router.navigateByUrl('/dashboard');
       console.log(`reroute to dashboard for user ${user.uuid}`);
     }, err => {
@@ -37,7 +37,8 @@ export class LoginComponent implements OnInit {
     });
 
     this.activeRoute.queryParams.subscribe((params: Params) => {
-      this.userService.requestAuthUser(params['xsrf-token']);
+      this.userService.csrfToken = params['xsrf-token'];
+      this.userService.getAuthenticatedUser();
     });
   }
 

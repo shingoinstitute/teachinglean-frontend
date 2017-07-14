@@ -29,9 +29,9 @@ export class EntryCardComponent implements OnInit, OnDestroy {
 
    constructor(private forumService: ForumService, private userService: UserService) {
       this.user = userService.user;
-      this.userService.userSource.subscribe(user => {
+      this.userService.onDeliverableUser$.subscribe(user => {
         this.user = user;
-      })
+      });
    }
 
    ngOnInit() { }

@@ -14,71 +14,50 @@ import { Globals }        from '../globals';
 
 import 'rxjs/add/operator/map';
 import 'rxjs/add/operator/catch';
-import 'rxjs/add/operator/toPromise';
 
 @Injectable()
 export class UserService {
   
-  // Observable sources
   private onUserLogoutSource = new Subject<void>();
   private onDeliverableUserSource = new Subject<User>();
 
-  // Observable streams
   onUserLogout$ = this.onUserLogoutSource.asObservable();
   onDeliverableUser$ = this.onDeliverableUserSource.asObservable();
 
-  user$: Observer<User>;
-  userSource: Observable<User>;
-
-  private _user: User;
-  get user(): User {
-    return this._user || null;
-  }
+  private _user: User | null;
+  get user(): User { return this._user; }
   set user(val: User) {
     this._user = val;
     this.onDeliverableUserSource.next(val);
   }
 
+  get csrfToken(): string { return this.cookieService.get('XSRF-TOKEN'); }
+  set csrfToken(token: string) { this.cookieService.put('XSRF-TOKEN', token); }
+
   baseApiUrl: string = Globals.baseApiUrl;
   
   constructor(private http: Http, private cookieService: CookieService) {
-    this.userSource = Observable.create(observer => {
-      this.user$ = observer
-      if (!this._user) { this.requestAuthUser(); }
-    });
-    this.userSource.subscribe(user => {
+    this.getAuthenticatedUser().subscribe(user => {
       this.user = user;
-    }, err => this.handleError(err));
-    this.requestAuthUser();
+    }, err => {
+      console.error(err);
+    });
   }
 
   /**
-   * Gets an authenticated user based on an XSRF-TOKEN stored in cookies or provided in args
+   * @description Makes an api request to get the currently authenticated user based 
+   * on a CSRF token and sets `this.user` on a successful request.
    */
-  requestAuthUser(token?: string): Subscription {
-    /** Check if `this.user` is already present */
-    if (!!this.user) {
-      this.user$.next(this.user);
-      return;
-    }
-
-    if (token) 
-      this.cookieService.put('XSRF-TOKEN', token);
-
-    if (!this.cookieService.get('XSRF-TOKEN')) {
-      return Observable.throw(new Error('missing xsrf-token')).subscribe();
-    }
-
-    return Observable.fromPromise(this.http.get(`${this.baseApiUrl}/me?xsrf-token=${this.cookieService.get('XSRF-TOKEN')}`).toPromise())
-    .debounceTime(300)
-    .map(res => {
-      return User.initFromObject(res.json());
+  getAuthenticatedUser(): Observable<User> {
+    const token = this.csrfToken || "";
+    return this.http.get(`${this.baseApiUrl}/me?xsrf-token=${token}`)
+    .debounceTime(500)
+    .map((res: Response) => {
+      const data = res.json();
+      this.user = User.initFromObject(data);
+      return this.user;
     })
     .catch(this.handleError)
-    .subscribe((user: User) => {
-      this.user = user;
-      this.user$.next(user);
-    });
   }
 
   // Gets a single user given the requesting user is authenticated
@@ -151,7 +130,7 @@ export class UserService {
     })
     .map(res => {
       let data = res.json();
-      this.cookieService.put('XSRF-TOKEN', data['xsrf-token']);
+      this.csrfToken = data['xsrf-token'];
       this.user = User.initFromObject(data);
       return data;
     })
@@ -163,12 +142,9 @@ export class UserService {
   }
 
   logoutUser(): Observable<any> {
-
-    delete this._user;
     this.cookieService.removeAll();
-
+    this.user = null;
     this.onUserLogoutSource.next();
-    this.onDeliverableUserSource.next(null);
 
     return this.http.get(`${this.baseApiUrl}/auth/logout`)
     .map((res) => {
