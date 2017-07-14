@@ -1,0 +1,50 @@
+
+
+<div fxLayout class="container" [@questionState]="questionState">
+
+  <form fxLayout="column" id="ask-question-form" class="input-container" *ngIf="user">
+    <p class="flow-text">Have a question? Ask the community right here.</p>
+    <div fxLayout class="input-wrapper">
+      <p [style.align-self]="'center'">Question Title</p>
+      <md-input-container fxFlex='grow'>
+        <input mdInput
+              #questionTitle
+              [(ngModel)]="title"
+              name="title"
+              type="text"
+              required='true'
+              placeholder="title">
+        <md-error *ngIf="title && title.length === 0">This field is required.</md-error>
+      </md-input-container>
+
+    </div>
+
+    <p class="md-margin-top">Enter a detailed description of your question.</p>
+    <textarea class="input-question"
+              id="question-textarea-id"
+              required='true'
+              form="ask-question-form"
+              maxlength="500"
+              name="Question text">
+    </textarea>
+
+    <span [style.margin-top]="'24px'"><!--vertical spacer--></span>
+
+    <div>
+
+      <button md-raised-button 
+      class="mat-accent"
+      (click)="onClickSubmitQuestion()">Submit Question</button>
+
+    </div>
+
+  </form>
+
+  <div *ngIf="!user">Have a question? <a routerLink="/login">Sign in</a> to the ask the community.</div>
+
+</div>
+
+<div *ngIf="submittedQuestion" fxLayout="column">
+  <p class="flow-text text-center">Your question has been submitted!</p>
+  <app-entry-card fxFlex="100%" [entry]=submittedQuestion></app-entry-card>
+</div>

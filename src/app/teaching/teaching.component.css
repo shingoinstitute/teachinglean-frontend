@@ -1,0 +1,113 @@
+table {
+  border-collapse: collapse;
+  border: 1px solid lightgrey;
+}
+
+th.md-body-1 {
+  opacity: 0.54;
+  font-family: "Roboto", sans-serif;
+  color: black;
+  font-weight: 700;
+  font-size: 13px;
+}
+td.md-body-1 {
+  opacity: 0.87;
+  color: black;
+  font-family: "Roboto", sans-serif;
+  font-weight: 500;
+  font-size: 12px;
+}
+
+th.numeric, td.numeric {
+  text-align: right;
+}
+.margin-none {
+  margin: 0 auto;
+}
+th, td {
+  text-align: justify;
+  padding-right: 36px;
+  padding-left: 18px;
+  vertical-align: middle;
+}
+.md-cell-checkbox {
+  width: 20px !important;
+  margin: 0 auto !important;
+}
+.table-actions {
+  padding-left: 0;
+  padding-right: 0;
+}
+.md-cell-padding {
+  padding: 6px 12px 6px 12px;
+}
+table.content tr {
+  border-bottom: 16px solid white;
+}
+table.content th {
+  /*padding-right: 0px;*/
+  white-space: nowrap;
+  vertical-align: top;
+}
+table.content,
+table.content * {
+  border: none;
+}
+table.content:hover,
+table.content:hover * {
+  background: none;
+}
+table.file-table {
+  margin-top: 24px;
+  margin-bottom: 24px;
+  border: 1px solid lightgray;
+}
+table.file-table tr:hover {
+  background: none;
+}
+table.file-table td {
+  border-right: 1px solid lightgray;
+}
+.file-btn {
+  background: none;
+  border: none;
+}
+.file-btn:hover {
+  background: none;
+}
+p.table-file {
+  margin: 0 auto;
+}
+table.file-table td,
+table.file-table th {
+  padding-top: 8px;
+  padding-bottom: 8px;
+}
+tr.no-border th,
+td.no-border,
+th.no-border {
+  border: none;
+}
+tr.row-header:hover {
+  background-color: inherit;
+}
+tr:hover {
+  background-color: #EEEEEE;
+}
+td, th {
+  border-bottom: 1px solid lightgrey;
+}
+td.table-row {
+  max-height: 300px;
+}
+td.id-row {
+  text-align: center;
+}
+
+md-checkbox.centered {
+  margin: 0 auto;
+  width: 20px;
+}
+md-icon {
+  color: grey;
+}

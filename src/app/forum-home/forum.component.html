@@ -1,0 +1,28 @@
+<div fxLayout="column" fxLayout.gt-sm="row">
+
+  <md-tab-group fxFlex fxFlexOrder.gt-sm="1" fxFlexOrder="2">
+    <md-tab label="Top Questions">
+      <ul class="entry-list-wrapper">
+        <li *ngFor="let question of topResults">
+          <p><a class="text-md" routerLink="/forum/{{ question.id }}">{{ question.title }}</a></p>
+          <p class="text-xs grey-text">Asked on {{ question.createdAtToString() }}</p>
+        </li>
+      </ul>
+    </md-tab>
+    <md-tab label="Recent Questions">
+      <ul class="entry-list-wrapper">
+        <li *ngFor="let question of recentQuestions">
+          <p><a class="text-md" routerLink="/forum/{{ question.id }}">{{ question.title }}</a></p>
+          <p class="text-xs grey-text">Asked on {{ question.createdAtToString() }}</p>
+        </li>
+      </ul>
+    </md-tab>
+  </md-tab-group>
+  
+  <ask-question fxLayout="column" 
+                class="md-margin" 
+                *ngIf="questionFormEnabled" 
+                fxFlex 
+                fxFlexOrder.gt-sm="2"></ask-question>
+
+</div>

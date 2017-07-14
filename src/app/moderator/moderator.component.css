@@ -1,0 +1,81 @@
+.is-action {
+	cursor: pointer;
+	color: #039BE5;
+	font-weight: 300;
+}
+p {
+	font-weight: 300;
+}
+
+ul > li {
+	padding-left: 4px;
+	border-bottom: 1px solid lightgray;
+}
+
+ul > li:last-child {
+	border-bottom: none;
+}
+
+table {
+	margin-bottom: 12px;
+}
+
+td {
+	padding-top: 4px;
+	padding-bottom: 4px;
+}
+
+tr {
+	padding-right: 12px;
+}
+
+button {
+	margin: 0 4px;
+}
+
+.answer-content-wrapper {
+	padding: 8px;
+	margin-bottom: 8px;
+	background: beige;
+}
+
+.field-name {
+	text-align: right;
+}
+
+ul {
+	border-right: 1px solid lightblue;
+	padding-right: 4px;
+}
+
+#circle {
+	width: 18px;
+	height: 18px; 
+	-webkit-border-radius: 9px;
+	-moz-border-radius: 9px;
+	border-radius: 9px;
+}
+
+.circle-active {
+	background: rgba(0, 128, 0, 0.7);
+
+	-moz-box-shadow: 0 0 1px green;
+	-webkit-box-shadow: 0 0 1px green;
+	box-shadow: 0 0 1px green;
+
+	background-image: -webkit-radial-gradient(12px 12px, circle cover, lightgreen, green);
+}
+
+.circle-disabled {
+	background: rgba(231, 105, 105, 0.7);
+
+	-moz-box-shadow: 0 0 1px red;
+	-webkit-box-shadow: 0 0 1px red;
+	box-shadow: 0 0 1px red;
+
+	background-image: -webkit-radial-gradient(12px 12px, circle cover, orange, red 95%);
+}
+
+table {
+	width: auto;
+}

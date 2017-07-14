@@ -1,0 +1,103 @@
+
+<div fxLayout fxLayoutAlign="center center" class="md-margin">
+
+  <md-card class="md-padding">
+    <p class="flow-text text-center"><b>Sign Up</b></p>
+    <p class="red-text" *ngIf="errMsg">{{ errMsg }}</p>
+
+    <md-divider md-margin="['top', 8, 'bottom', 8]"></md-divider>
+
+    <a href="https://teachinglean.org/auth/linkedin">
+      <img src="/assets/images/logos/lkin-login-form-btn.png">
+    </a>
+
+    <p class="flow-text text-center"></p>
+
+    <md-divider md-margin="['top', 4, 'bottom', 8]"></md-divider>
+
+
+    <form [formGroup]="signupForm" name="newUserForm" fxLayout="column" (ngSubmit)="onSubmit()">
+
+      <!--Email-->
+      <md-input-container>
+        <input mdInput 
+               formControlName="email" 
+              type="email" 
+              [(ngModel)]="user.email" 
+              placeholder="Email address">
+        <md-error>{{ formErrors.email }}</md-error>
+      </md-input-container>
+
+      <!--Firstname-->
+      <md-input-container>
+        <input mdInput 
+                formControlName="firstname" 
+                type="text" 
+                [(ngModel)]="user.firstname" 
+                placeholder="First name">
+        <md-error>{{ formErrors.required }}</md-error>
+      </md-input-container>
+
+      <!--Lastname-->
+      <md-input-container>
+        <input mdInput 
+                formControlName="lastname" 
+                type="text" 
+                [(ngModel)]="user.lastname" 
+                placeholder="Last name">
+        <md-error>{{ formErrors.required }}</md-error>
+      </md-input-container>
+
+      <!--Username-->
+      <md-input-container>
+        <input mdInput 
+               formControlName="username" 
+               type="text" 
+               [(ngModel)]="username"
+               placeholder="Username">
+        <md-error>{{ formErrors.username }}</md-error>
+      </md-input-container>
+
+      <div fxLayout md-margin="bottom">
+        <!--Password-->
+        <md-input-container fxFlex md-margin="right">
+          <input mdInput 
+                formControlName="password"
+                id="password"
+                type="{{ passwordType }}" 
+                [(ngModel)]="password" 
+                minlength="8" 
+                placeholder="Password">
+          <md-error>{{ formErrors.password }}</md-error>
+        </md-input-container>
+
+        <!--hidden input field used to fix issue with lastpass when 
+        the visible input password field's text is set to `show`-->
+        <input hidden formControlName="password" type="password" [(ngModel)]="password">
+
+        <!--Show/hide password button-->
+        <button class="btn-show-hide" type="button" (click)="onclickShowBtn()">
+          <span>SHOW</span>
+          <i class="material-icons">visibility</i>
+        </button>
+
+      </div>
+
+
+      <!--Submit button-->
+      <div [style.margin-bottom]="'16px'">
+        <button md-raised-button 
+                class="mat-primary white-text" 
+                [style.font-weight]="300"
+                [class.disabled]="!formIsValid"
+                type="submit">Sign Up</button>
+      </div>
+  
+    </form>
+
+    <md-divider></md-divider>
+    
+    <p>Have an account? <a routerLink="/login">Log In</a></p>
+  </md-card>
+</div>
+

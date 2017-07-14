@@ -1,0 +1,124 @@
+<md-tab-group (selectChange)="onclickTab($event)" [selectedIndex]="0">
+
+   <md-tab [label]="'Profile'">
+      <div class="profile-content-wrapper" fxLayout>
+
+         <!--Profile Picture-->
+         <div [style.margin-right]="'24px'">
+            <div class="img-wrapper">
+               <img src="{{ user.pictureUrl }} ">
+            </div>
+            <!--Name-->
+            <p class='center-align' [innerHTML]="user.username"></p>
+         </div>
+
+         <!--User Information-->
+         <div fxFlex="calc3Cols" fxLayout="column">
+
+            <div class="info-group">
+               <!--Username-->
+               <p class="flow-text" [innerHTML]="user.name"></p>
+               <!--Email-->
+               <p class='' [innerHTML]="user.email"></p>
+            </div>
+
+            <div class="info-group">
+               <p><b>Organization</b></p>
+               <p [style.color]="'grey'" [innerHTML]="user.organization || '<em>None</em>'"></p>
+            </div>
+
+            <div class="panel">
+               <!--Biography-->
+               <div class="panel-heading">About Me</div>
+               <div class="panel-body">
+                  <style>ul{list-style-position:outside!important;}li{list-style-type:disc!important;margin-left:20px!important;}</style>
+                  <span [innerHTML]="user.biography" class="default-style"></span>
+               </div>
+            </div>
+
+         </div>
+
+      </div>
+
+   </md-tab>
+
+   <md-tab [label]="'Edit Profile'">
+
+      <div class="profile-content-wrapper" fxLayout="column">
+
+         <div class="info-group" fxLayout="column">
+            <div class="img-wrapper">
+               <img src="{{ user.pictureUrl }}">
+            </div>
+            <div>
+               <input (change)="onSelectPhoto()" type="file" #fileUpload role="profile-picture-upload" accept="image/*">
+            </div>
+            <div *ngIf="uploadPhotoEnabled">
+               <button md-button class="mat-primary white-text" (click)="uploadPhoto()">Upload</button>
+            </div>
+         </div>
+
+
+         <div class="info-group" fxLayout="column">
+
+            <div fxLayoutGap="8px" fxLayout.lt-sm="column">
+
+               <md-input-container fxFlex>
+                  <input mdInput placeholder="First name" [(ngModel)]="user.firstname">
+               </md-input-container>
+
+               <md-input-container fxFlex>
+                  <input mdInput placeholder="Last name" [(ngModel)]="user.lastname">
+               </md-input-container>
+               
+            </div>
+
+            <div fxLayoutGap="8px" fxLayout.lt-sm="column">
+
+               <md-input-container fxFlex>
+                  <input mdInput placeholder="Username" [(ngModel)]="user._username">
+               </md-input-container>
+
+               <md-input-container fxFlex>
+                  <input mdInput placeholder="Organization" [(ngModel)]="user.organization">
+               </md-input-container>
+
+            </div>
+
+            <div fxLayout>
+
+               <md-input-container fxFlex.gt-sm="50%" fxFlex="100%">
+                  <input mdInput placeholder="Email" [(ngModel)]="user.email">
+               </md-input-container>
+
+            </div>
+
+
+            <textarea tinyMce 
+            id="bio-editor" 
+            [(ngModel)]="user.biography" 
+            *ngIf="shouldShowTinyEditor"
+            name="biography"></textarea>
+
+         </div>
+
+         <!--Actions-->
+         <div class="info-group" fxLayoutGap="12px">
+            <button md-button id="save" class="mat-success" (click)="onclickSave()">
+               <md-icon svgIcon="save_white"></md-icon> Save
+            </button>
+
+            <div *ngIf="didClickSave">
+               <p>Save Successful!</p>
+            </div>
+
+            <button md-raised-button (click)="onclickReset()">Change Password</button>
+            
+         </div>
+
+      </div>
+
+
+
+   </md-tab>
+</md-tab-group>

@@ -1,3 +1,37 @@
-<!--<h1>
-  {{title}}
-</h1>-->
+
+
+<md-sidenav-container>
+
+    <app-toolbar></app-toolbar>
+
+    <md-sidenav #sidenav mode="{{sidenavMode}}" [opened]="windowWidth > 959">
+        <md-nav-list>
+            <img src="/assets/images/logos/LEAN-logo-sm.png" alt="Teaching LEAN">
+            <md-list-item *ngFor="let link of links">
+                <a md-line class='sidenav-link' routerLink="{{ link.path }}" (click)="toggleSidenav()">{{link.name}}</a>
+            </md-list-item>
+            <hr>
+            <md-list-item *ngIf="user">
+                <a md-line class='sidenav-link' routerLink="/dashboard" (click)="toggleSidenav()">
+                    <button md-icon-button class='sidenav-link'>
+                        <md-icon svgIcon="dashboard"></md-icon><span>Dashboard</span>
+                    </button>
+                    
+                </a>
+            </md-list-item>
+            <md-list-item *ngIf="!user">
+                <a md-line class='sidenav-link' routerLink="/login" (click)="toggleSidenav()">
+                    <button md-icon-button class='sidenav-link'>
+                        <md-icon svgIcon="login"></md-icon>
+                    </button>
+                    Login
+                </a>
+            </md-list-item>
+        </md-nav-list>
+    </md-sidenav>
+
+    <router-outlet class="main-content"></router-outlet>
+
+    
+
+</md-sidenav-container>

@@ -1,0 +1,10 @@
+<div fxLayoutAlign="center center">
+	<md-spinner *ngIf="!comments"></md-spinner>
+	<p class="grey-text text-center md-margin" *ngIf="comments && comments.length === 0">No Activity.</p>
+</div>
+
+<ul class="md-margin" *ngIf="comments">
+	<li *ngFor="let comment of comments">
+		<a routerLink="/forum/{{ comment.id }}">{{ comment.parent }}</a>
+	</li>
+</ul>

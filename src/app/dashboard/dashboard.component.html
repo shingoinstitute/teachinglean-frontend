@@ -1,0 +1,54 @@
+<div>
+
+  <div fxLayout="row" fxLayoutAlign="center" *ngIf="!user">
+    <md-spinner [style.height]="'48px'"></md-spinner>
+  </div>
+
+  <!--Main Tab Group-->
+  <md-tab-group [dynamicHeight]="true" [selectedIndex]="selectedDashboardTab" *ngIf="user" (selectChange)="onclickMainTabGroup($event)">
+
+    <!--Dashboard Tab-->
+    <md-tab label="Dashboard">
+
+      <div fxLayout>
+
+        <!--Inner Dashboard Tab Group-->
+        <md-tab-group fxFlex [dynamicHeight]="true" [selectedIndex]="0">
+          <!--Recent Activity-->
+          <md-tab label="My Recent Activity">
+            <entries [entries]="recent" type="recent"></entries>
+          </md-tab>
+          <!--User Questions-->
+          <md-tab label="My Questions" (click)="loadQuestions()">
+            <entries [entries]="questions" type="question"></entries>
+          </md-tab>
+          <!--User Answers-->
+          <md-tab label="My Answers" (click)="loadAnswers()">
+            <entries [entries]="answers" type="answer"></entries>
+          </md-tab>
+          <!--User Comments-->
+          <md-tab label="My Comments" (click)="loadComments()">
+            <entries [entries]="comments" type="comment"></entries>
+          </md-tab>
+        </md-tab-group><!--END Inner Dashboard Tab Group-->
+
+      </div>
+    </md-tab><!--END Dashboard Tab-->
+
+    <!--Profile Tab-->
+    <md-tab label="Profile">
+      <user-profile [user]="user"></user-profile>
+    </md-tab>
+
+    <!--Admin Tab-->
+    <md-tab *ngIf="user.isAdmin === true" label="Admin">
+      <admin-panel></admin-panel>
+    </md-tab>
+
+    <!--Moderator Tab-->
+    <md-tab *ngIf="user.isAdmin === true || user.role === 'moderator'" label="Moderator">
+      <app-moderator></app-moderator>
+    </md-tab>
+
+  </md-tab-group><!--END Main Tab Group-->
+</div>

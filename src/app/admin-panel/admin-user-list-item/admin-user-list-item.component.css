@@ -1,0 +1,14 @@
+.admin-user-list-item {
+   padding: 2px 8px 2px 8px;
+   border-radius: 0;
+   border-right: 1px solid lightgrey;
+}
+
+#index.admin-user-list-item {
+   text-align: center;
+}
+
+#actions.admin-user-list-item {
+   width: 0.1%; /* set width to 0.1% so cell will shrink to fit content */
+   white-space: nowrap;
+}

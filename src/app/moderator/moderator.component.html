@@ -1,0 +1,83 @@
+
+
+<md-tab-group fxFlex [dynamicHeight]="true" (selectChange)="loadDataForTab($event)" [selectedIndex]="selectedModeratorTab">
+  <md-tab label="Users">
+    <div fxLayout>
+
+
+      <ul class="md-margin" [style.width]="windowWidth > 960 ? '275px' : 'auto'">
+        <li *ngFor="let user of users">
+          <span class="is-action" (click)="onClickUser(user)">{{ user.lastname }}, {{ user.firstname }}</span>
+        </li>
+      </ul>
+
+      <p class="text-md text-center md-margin" [style.width]="'100%'" *ngIf="!selectedUser">Select a user.</p>
+      
+      <div fxLayout="column"
+      fxFlex
+      class="md-margin"
+      id="user-detail"
+      [(ngModel)]="selectedUser" 
+      name="selectedUser" 
+      *ngIf="selectedUser" 
+      [@fadeInOut]="elementState"
+      (@fadeInOut.done)="animateCompletionHandler($event)"
+      ngDefaultControl>
+        
+        <table>
+          <tr>
+            <td class="field-name"><b>Name</b></td>
+            <td>{{selectedUser.name}}</td>
+
+            <td class="field-name"><b>Email</b></td>
+            <td>{{selectedUser.email}}</td>
+          </tr>
+
+          <tr>
+            <td class="field-name"><b>Username</b></td>
+            <td>{{selectedUser.username}}</td>
+
+            <td class="field-name"><b>Role</b></td>
+            <td>{{selectedUser.role}}</td>
+          </tr>
+
+          <tr>
+            <td class="field-name"><b>Status</b></td>
+            <td *ngIf="selectedUser.accountIsActive"><div class="circle-active" id="circle"></div></td>
+            <td *ngIf="!selectedUser.accountIsActive"><div class="circle-disabled" id="circle"></div></td>
+          </tr>
+        </table>
+
+        <md-tab-group [dynamicHeight]="true" (selectChange)="onClickTab($event)">
+          <md-tab label="Questions ({{ selectedUserQuestions.length }})">
+            <moderator-question-tab [questions]="selectedUserQuestions"></moderator-question-tab>
+          </md-tab>
+          <md-tab label="Answers ({{ selectedUserAnswers.length }})">
+            <moderator-answer-tab [answers]="selectedUserAnswers" (onClick)="onClickAnswerTab$($event)"></moderator-answer-tab>
+          </md-tab>
+          <md-tab label="Comments ({{ selectedUserComments.length }})">
+            <moderator-comment-tab [comments]="selectedUserComments"></moderator-comment-tab>
+          </md-tab>
+        </md-tab-group>
+
+      </div>
+
+
+    </div>
+  </md-tab>
+
+  <md-tab label="Questions">
+    <moderator-question-tab [questions]="questions"></moderator-question-tab>
+  </md-tab>
+
+  <md-tab label="Answers">
+    <moderator-answer-tab [answers]="answers"></moderator-answer-tab>
+  </md-tab>
+
+  <md-tab label="Comments">
+    <moderator-comment-tab [comments]="comments"></moderator-comment-tab>
+  </md-tab>
+</md-tab-group>
+
+
+

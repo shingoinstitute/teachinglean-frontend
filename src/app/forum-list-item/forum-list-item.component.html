@@ -1,0 +1,52 @@
+<div fxLayout="column" class="container">
+  
+  <app-entry-card [entry]="entry" [style.margin-bottom]="'24px'"></app-entry-card>
+
+  <p *ngIf="!answers || answers && answers.length === 0">This question has not been answered yet.</p>
+
+  <p class="flow-text" *ngIf="answers && answers.length > 0">{{ answers.length }} Answer{{ answers.length > 1 ? 's' : '' }}</p>
+
+  <app-entry-card *ngFor="let answer of answers" 
+  [entry]="answer" 
+  [parentDidSelectEntry]="didMarkAnswerCorrect"
+  (onclickMarkAnswer)="onMarkAnswerHandler($event)"
+  (onDestroyEntry)="onDeleteHandler($event)" 
+  (onclickDemarkAnswer)="onDemarkAnswerHandler($event)"></app-entry-card>
+
+  
+
+  <p class="md-margin-top" *ngIf="!hasUser"><strong>Have an answer? <a routerLink="/login">Sign in</a> to submit one.</strong></p>
+
+
+  <div fxLayout="column" *ngIf="hasUser">
+  <p class="md-margin-top"><strong>Have an answer?</strong></p>
+    <div class="md-margin-top" id="qa-answer-wrapper">
+
+      <textarea tinyMce id="question-textarea"
+                required
+                [(ngModel)]="questionContent"
+                maxlength="500"
+                name="Question text"></textarea>
+
+      <span class="grey-text">{{ characterCountMessage }}</span>
+    </div>
+
+
+    <div>
+
+      <button id="submit-answer-button" 
+      md-raised-button 
+      class="mat-accent"
+      [style.margin-top]="'8px'"
+      [class.white-text]="canSubmitAnswer" 
+      (click)="onClickSubmitAnswer()" 
+      [disabled]="!canSubmitAnswer">Submit Answer</button>
+
+    </div>
+
+  </div>
+  
+  <span role="vertical-spacer" [style.margin-bottom]="'118px'"></span>
+
+</div>
+

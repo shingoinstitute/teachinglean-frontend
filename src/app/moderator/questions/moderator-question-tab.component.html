@@ -1,0 +1,36 @@
+<div fxLayoutAlign="center center" *ngIf="questions && questions.length === 0">
+	<p class="grey-text text-center md-margin">No Activity.</p>
+</div>
+
+<div fxLayout>
+	<table class="md-margin" *ngIf="questions" fxFlex="nogrow">
+		<thead>
+			<tr>
+				<th>Question Details</th>
+				<td>
+					<button md-button class="btn-warn" (click)="onclickDelete($event)" >Delete</button>
+				</td>			
+				<td>
+					<md-checkbox [id]="-1" (change)="onclickCheckbox($event)"></md-checkbox>
+				</td>
+			</tr>
+		</thead>
+		<tr *ngFor="let question of questions">
+			<td>
+				<div fxLayout="column">
+					<a routerLink="/forum/{{ question.id }}">{{ question && question.title ? question.title : "N/A" }}</a>
+					<p class="text-sm">Asked by {{ question.owner && question.owner.name ? question.owner.name : "loading..." }}</p>
+					<p class="text-sm">Created {{ question.createdAtToString() }}</p>
+				</div>
+			</td>
+			<td></td>
+			<td>
+				<md-checkbox
+				[checked]="selectedQuestions[question.id]"
+				[id]="question.id" 
+				(change)="onclickCheckbox($event)"></md-checkbox>
+			</td>
+
+		</tr>
+	</table>
+</div>

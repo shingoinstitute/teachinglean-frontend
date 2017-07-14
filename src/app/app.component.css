@@ -1,0 +1,45 @@
+/*$break-large: 1920px;
+$break-medium: 1280px;
+$break-small: 960px;
+$break-xsmall: 600px;*/
+
+md-sidenav-container {
+  min-height: 100%;
+}
+
+#main-content-wrapper {
+  width: 100%;
+}
+
+.mat-sidenav-content {
+    width: 100% !important;
+}
+
+md-sidenav {
+    box-shadow: 1px 0 3px rgba(0,0,0,.24);
+}
+
+md-nav-list, img {
+    width: 100%;
+    padding: 4px;
+}
+
+.sidenav-link {
+    font-size: 15px !important;
+    font-weight: 500 !important;
+    -webkit-font-smoothing: antialiased;
+    letter-spacing: .010em;
+    color: #3a3a3a;
+}
+
+button.mat-icon-button {
+    color: #5a5a5a;
+}
+
+button.sidenav-link {
+    width: 0;
+    margin-right: 40px;
+    /* 40px is the default width of svg icons. Setting width 
+    to 0 and adding a right margin correctly positions the 
+    svg and text inside the sidenav */
+}

@@ -1,0 +1,54 @@
+<md-toolbar class="mat-primary darken-3">
+  
+  <span fxFlex *ngIf="windowWidth >= 960"></span>
+
+  <a md-button
+  color="accent" 
+  [style.font-weight]="'400'"
+  aria-label="Sign Up" 
+  routerLink="/signup" 
+  *ngIf="!userDoesExist">SIGN UP</a>
+
+  <a md-raised-button 
+  aria-label="Login"
+  [style.margin-left]="'8px'"
+  routerLink="/login" 
+  *ngIf="!userDoesExist">LOGIN</a>
+
+  <span fxFlex *ngIf="windowWidth < 960"></span>
+
+  <div *ngIf="userDoesExist">
+
+    <!--profile button-->
+    <button md-button aria-label="Account" [mdMenuTriggerFor]="menu">
+      <md-icon svgIcon="accountCircle"></md-icon>
+    </button>
+
+    <!--drop down menu triggered on profile button click-->
+    <md-menu #menu="mdMenu" [overlapTrigger]="false">
+
+
+        <!--<md-icon svgIcon="dashboard"></md-icon>-->
+      <button md-menu-item routerLink="/dashboard">
+        <i class="material-icons blue-grey-text text-darken-2">dashboard</i>
+        <span>Dashboard</span>
+      </button>
+      
+
+        <!--<md-icon svgIcon="logout"></md-icon>-->
+      <button md-menu-item (click)="onClickLogout()">
+        <i class="material-icons blue-grey-text text-darken-2">exit_to_app</i>
+        <span>Logout</span>
+      </button>
+
+
+    </md-menu>
+
+  </div>
+
+  <!--sidenav toggle (only visible on smaller sized screen)-->
+  <button md-button class="md-icon-button" aria-label="Menu" (click)="toggleSidenav()" *ngIf="windowWidth < 960">
+    <md-icon svgIcon="menu"></md-icon>
+  </button>
+
+</md-toolbar>

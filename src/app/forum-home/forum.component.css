@@ -1,0 +1,19 @@
+
+md-input-container {
+  width: 100%;
+}
+
+.input-container {
+  min-width: 500px;
+}
+
+.input-question {
+  background: ghostwhite;
+  margin-bottom: 24px;
+  border: none
+}
+
+md-tab-group,
+ask-question {
+  flex: 1 !important;
+}

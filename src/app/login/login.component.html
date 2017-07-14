@@ -1,0 +1,47 @@
+<div class="login-card-wrapper" fxLayout fxLayoutAlign="center">
+
+	<md-card *ngIf="!showCreateAccount">
+
+		<div fxLayout="column">
+
+			<h5 class="text-center">Sign Into Your Account</h5>
+
+			<button md-button id="linkedin-image" aria-label="linkedin signup" (click)="authenticateLinkedin($event)">
+				<img src="assets/images/logos/lkin-login-form-btn.png">
+			</button>
+
+			<div class="md-spinner-wrapper md-margin">
+				<md-spinner *ngIf="spinnerEnabled"></md-spinner>
+			</div>
+
+			<p class="red-text" *ngIf="loginError">{{loginError}}</p>
+
+      <form id="login-form" fxLayout="column">
+
+				<md-input-container>
+					<input mdInput required (change)="username=$event.target.value" type="email" placeholder="Email">
+				</md-input-container>
+
+				<span fxFlex style="margin-top: 16px;"></span>
+
+				<md-input-container>
+					<input mdInput required (change)="password=$event.target.value" type="password" placeholder="Password">
+				</md-input-container>
+
+				<div>
+					<button type="submit" md-raised-button class="mat-primary" (click)="onClickLogin($event)">LOGIN</button>
+				</div>
+      </form>
+
+
+			<p><a routerLink="/reset">forgot password?</a></p>
+
+			<md-divider style="margin-top: 16px;"></md-divider>
+
+			<p class="">Don't have an account? <a routerLink="/signup">Sign Up</a></p>
+
+
+		</div>
+	</md-card>
+
+</div>

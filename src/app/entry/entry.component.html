@@ -1,0 +1,8 @@
+<p class="flow-text text-center md-margin-top" *ngIf="!entries || entries && entries.length === 0">{{ noEntryMsg }}</p>
+
+<ul class="entry-list-wrapper">
+	<li *ngFor="let entry of entries">
+		<h6><a routerLink="{{ getLink(entry) }}">{{ entry.title }}</a></h6>
+		<p class="text-sm">{{ getDescription(entry) }}</p>
+	</li>
+</ul>

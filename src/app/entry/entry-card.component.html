@@ -1,0 +1,110 @@
+<md-card class="entry-card" [class.entry-card-answer]="!!entry.parent">
+
+   <!--Title-->
+   <md-card-title [innerHTML]="entry.title" *ngIf="!isEditing"></md-card-title>
+
+   <input [(ngModel)]="entry.title" name="questionTitle" [innerHTML]="questionTitle" *ngIf="!entry.parent && isEditing" />
+
+   <md-divider *ngIf="entry.title"></md-divider>
+
+   <div fxLayout>
+      <!--Show checkmark if answer is marked correct-->
+      <img *ngIf="entry.markedCorrect" id="checkmark-img" src="/assets/images/checkmark-64.png" alt="Selected Answer">
+      <!--Entry Content, show if entry is a question-->
+      <md-card-content [innerHTML]="entry.content" *ngIf="!isEditing"></md-card-content>
+      <!--Entry textarea for editing content-->
+      <textarea id="entry-content-{{ entry.id }}"
+                class="entry-content-area"
+                form="entry-content-form"
+                maxlength="500"
+                name="entry-content"></textarea>
+   </div>
+
+   <div fxLayout *ngIf="isEditing" class="md-margin-top">
+      <!--Save Button-->
+      <button md-button id="save-button" (click)="onclickSave()">
+         <i class="material-icons">save</i> Save
+      </button>
+
+      <!--Cancel edit button-->
+      <button md-button id="cancel-button" (click)="onclickCancel()">
+         <i class="material-icons">cancel</i> Cancel
+      </button>
+   </div>
+
+   <!--User information card container-->
+   <div fxLayout="column" fxLayoutAlign.gt-sm="end end">
+      <!--flex to push user info card to the right-->
+      <span fxFlex.gt-sm></span>
+      <!--User info card-->
+      <app-user-info-card [user]="entry.owner" [entry]="entry"></app-user-info-card>
+   </div>
+
+
+
+   <md-divider></md-divider>
+
+   <!--Comments-->
+   <div fxLayout="column" *ngIf="!!entry.comments && entry.comments.length > 0">
+      <p class="comment-header">Comments</p>
+      <app-comment *ngFor="let comment of entry.comments" [comment]="comment"></app-comment>
+   </div>
+
+   <p [style.color]="'red'" [style.font-weight]="200">{{ errMsg }}</p>
+
+   <md-card-actions fxLayout="column" *ngIf="user">
+      <div fxLayoutAlign="start start" id="comment-wrapper">
+         <!--Comment Button-->
+         <button md-button id="comment-button"
+         (click)="onClickAddComment()"
+         [class.disabled]="!commentText"
+         [disabled]="!commentText">
+            <i class="material-icons">comment</i> Comment
+         </button>
+
+         <!--Comment Input Box-->
+         <textarea 
+         fxFlex 
+         [(ngModel)]="commentText" 
+         name="commentText" 
+         class="input-title input-wrapper" 
+         placeholder="start typing to post comment..." 
+         type="text"></textarea>
+
+      </div>
+
+      <div *ngIf="isOwner()">
+         <!--Edit Button-->
+         <button md-button id="edit-button" (click)="onclickEdit($event)">
+            <i class="material-icons">edit</i> Edit
+         </button>
+
+         <!--Delete Button-->
+         <button md-button id="delete-button" (click)="onclickDelete()">
+            <i class="material-icons">delete</i> 
+            <span>Delete</span>
+         </button>
+
+         <!--Accept answer/mark answer correct button-->
+         <button md-button 
+         id="mark-correct-button"
+         (click)="onclickMarkAnswerButton()" 
+         *ngIf="!entry.markedCorrect && !parentDidSelectEntry && !!entry.parent">
+            <i class="material-icons">check</i>
+            Accept Answer
+         </button>
+
+         <!--Undo accept answer/demark answer correct button-->
+         <button md-button
+         id="mark-correct-button"
+         (click)="onclickMarkAnswerButton()" 
+         *ngIf="entry.markedCorrect && !!entry.parent">
+            <i class="material-icons">clear</i>
+            Undo Accept Answer
+         </button>
+
+      </div>
+
+      
+   </md-card-actions>
+</md-card>

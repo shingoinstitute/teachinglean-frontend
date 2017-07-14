@@ -1,0 +1,14 @@
+<div fxLayoutAlign="center center">
+	<md-spinner *ngIf="!answers"></md-spinner>
+	<p class="grey-text text-center md-margin" *ngIf="answers && answers.length === 0">No Activity.</p>
+</div>
+<ul class="md-margin" *ngIf="answers">
+	<li *ngFor="let answer of answers">
+		<p><b>Question:</b> <a routerLink="{{ answer.routerLink }}" class="text-sm">{{ answer.linkTitle }}</a></p>
+		<p><b>Asked by:</b> {{ answer.ownerName }}</p>
+		
+		<p [style.margin-top]="'8px'"><b>Answer</b></p>
+		<div class="answer-content-wrapper" [innerHTML]="answer.content"></div>
+		<p class="text-sm grey-text">Answered on {{ answer.createdAtToString() }}</p>
+	</li>
+</ul>

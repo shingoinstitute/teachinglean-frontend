@@ -1,0 +1,70 @@
+md-select {
+	background-color: transparent !important;
+}
+
+div.pagination-container {
+	margin-top: 8px;
+	margin-bottom: 8px;
+}
+
+div.pagination-buttons {
+	display: inline-flex;
+	align-items: stretch;
+	width: 375px;
+	height: 38px;
+}
+
+button.pagination-button {
+	height: inherit;
+	margin-right: 0;
+	font-size: 14px;
+	color: steelblue;
+	background-color: transparent;
+	border: 1px solid lightgrey;
+	border-right: 0;
+	cursor: pointer;
+	outline: none;
+	text-decoration: none;
+}
+
+.active-page-btn {
+	background-color: #E5EDFB !important;
+}
+
+div.pagination-buttons button:last-child {
+	border-right: 1px solid lightgrey;
+}
+
+div.pagination-buttons button:not(:last-child),
+div.pagination-buttons button:not(:first-child) {
+	flex-grow: 1;
+}
+
+div.pagination-buttons button:last-child,
+div.pagination-buttons button:first-child {
+	flex-shrink: 1;
+}
+
+table.user-list-container {
+	width: 100%;
+	padding-top: 12px;
+	padding-bottom: 8px;
+	border: 1px solid lightgrey;
+}
+
+tr.user-list-header-row th {
+	padding: 8px;
+	border-right: 1px solid lightgrey;
+}
+
+tr.user-list-header-row {
+	border-bottom: 2px solid lightgrey;
+}
+
+tr.user-list-row td {
+	border-radius: 0;
+}
+
+table.user-list-container tbody tr:nth-child(odd) {
+	background-color: #f0f0f0;
+}
