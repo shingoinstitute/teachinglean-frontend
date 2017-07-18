@@ -15,7 +15,6 @@ export class SignupComponent implements OnInit {
   signupForm: FormGroup;
 
   user: User = new User();
-  username = '';
   password = '';
   errMsg: string;
 
@@ -116,16 +115,18 @@ export class SignupComponent implements OnInit {
     let user = {
       firstname: this.user.firstname,
       lastname: this.user.lastname,
-      email: this.user.email
+      email: this.user.email,
+      username: this.user.username
     }
     this.userService.create(user, this.password).subscribe(result => {
       this.router.navigate(['dashboard']);
-      console.log(result);
     }, error => {
       let errMsg = error;
-      if (error.toString) { errMsg = error.toString(); }
-      else if (error.message) { errMsg = error.message; }
-      console.error(errMsg);
+      if (errMsg.toString) 
+        errMsg = errMsg.toString();
+      else if (errMsg.message)
+        errMsg = errMsg.message;
+
       this.errMsg = errMsg;
     });
   }

@@ -150,30 +150,33 @@ export class UserService {
     window.location.href = `${this.baseApiUrl}/auth/linkedin`;
   }
 
-  logoutUser(): Observable<any> {
+  logoutUser(): Observable<void> {
+    delete this.user;
     this.cookieService.removeAll();
-    this.user = null;
-    this.onUserLogoutSource.next();
+    this.onUserLogoutSource.next(null);
 
     return this.http.get(`${this.baseApiUrl}/auth/logout`)
     .map((res) => {
-      return res.json();
+      console.log(res.json());
+      return;
     })
     .catch(this.handleError);
   }
   
-  create(user: {firstname: string, lastname: string, email: string}, password: string): Observable<any> {
+  create(user: {firstname: string, lastname: string, email: string, username: string}, password: string): Observable<any> {
     this.cookieService.removeAll();
     return this.http.post(`${this.baseApiUrl}/user`, {
       email: user.email,
       password: password,
       firstname: user.firstname,
-      lastname: user.lastname
+      lastname: user.lastname,
+      username: user.username
     }, {
       responseType: ResponseContentType.Json
     })
-    .map(response => {
-      return response.json();
+    .map(res => {
+      let data = res.json();
+      return User.initFromObject(data.user);
     })
     .catch(this.handleError);
   }
