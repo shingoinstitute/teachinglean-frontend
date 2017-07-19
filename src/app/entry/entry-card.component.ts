@@ -14,11 +14,11 @@ import { Subscription } from 'rxjs';
   styleUrls: ['./entry.component.css']
 })
 export class EntryCardComponent implements OnInit, OnDestroy {
-  @Output() onclickMarkAnswer = new EventEmitter<Entry>();
-  @Output() onclickDemarkAnswer = new EventEmitter<Entry>();
+  @Output() onClickAcceptButton = new EventEmitter<Entry>();
   @Output() onDestroyEntry = new EventEmitter<any>();
   @Input() entry: Entry;
   @Input() parentDidSelectEntry: boolean;
+  @Input() canAcceptAnswer: boolean = false;
   get canComment(): boolean { return !!this.user }
   user: User;
   commentText: string;
@@ -34,7 +34,12 @@ export class EntryCardComponent implements OnInit, OnDestroy {
     });
   }
 
-  ngOnInit() { }
+  ngOnInit() {
+    console.log('CanAcceptAnswer? ' + this.canAcceptAnswer);
+    setTimeout(() => {
+      this.canAcceptAnswer = this.canAcceptAnswer;
+    });
+  }
 
   ngOnDestroy() {
     if (this.userSubscription && this.userSubscription.unsubscribe)
@@ -115,7 +120,8 @@ export class EntryCardComponent implements OnInit, OnDestroy {
   }
 
   onclickMarkAnswerButton() {
-    this.entry.markedCorrect ? this.onclickDemarkAnswer.emit(this.entry) : this.onclickMarkAnswer.emit(this.entry);
+    this.entry.markedCorrect = !this.entry.markedCorrect;
+    this.onClickAcceptButton.emit(this.entry);
   }
 
 }

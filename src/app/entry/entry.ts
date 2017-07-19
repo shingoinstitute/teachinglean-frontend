@@ -47,7 +47,7 @@ export class Entry {
     entry.title = obj.title || null;
     entry.answers = obj.answers || [];
     entry.comments = obj.comments || [];
-    entry.content = obj.content || null;    
+    entry.content = obj.content || null;
     entry.isFlagged = obj.isFlagged || false;
     entry.markedCorrect = obj.markedCorrect || false;
 
@@ -79,11 +79,11 @@ export class Entry {
 
   // Formats date to 'MMM dd, yyyy, hh:mm a'
   createdAtToString() {
-		if (this.createdAt) {
-			return `${this.createdAt.toLocaleDateString([], {month: "short", day: "numeric", year: "numeric"})}, ${this.createdAt.toLocaleTimeString([], {"hour": "2-digit", "minute": "2-digit", "hour12": true})}`;
-		}
-		return "n/a";
-	}
+    if (this.createdAt) {
+      return `${this.createdAt.toLocaleDateString([], { month: "short", day: "numeric", year: "numeric" })}, ${this.createdAt.toLocaleTimeString([], { "hour": "2-digit", "minute": "2-digit", "hour12": true })}`;
+    }
+    return "n/a";
+  }
 
   downvoteCount() {
     return this.usersDidDownvote ? this.usersDidDownvote.length : 0;

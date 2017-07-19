@@ -1,9 +1,9 @@
-<md-card class="entry-card" [class.entry-card-answer]="!!entry.parent">
+<md-card class="entry-card" [class.entry-card-answer]="entry.parent" *ngIf="!!entry">
 
    <!--Title-->
    <md-card-title [innerHTML]="entry.title" *ngIf="!isEditing"></md-card-title>
 
-   <input [(ngModel)]="entry.title" name="questionTitle" [innerHTML]="questionTitle" *ngIf="!entry.parent && isEditing" />
+   <input [(ngModel)]="entry.title" name="questionTitle" [innerHTML]="questionTitle" *ngIf="entry && !entry.parent && isEditing" />
 
    <md-divider *ngIf="entry.title"></md-divider>
 
@@ -45,7 +45,7 @@
    <md-divider></md-divider>
 
    <!--Comments-->
-   <div fxLayout="column" *ngIf="!!entry.comments && entry.comments.length > 0">
+   <div fxLayout="column" *ngIf="entry && entry.comments && entry.comments.length > 0">
       <p class="comment-header">Comments</p>
       <app-comment *ngFor="let comment of entry.comments" [comment]="comment"></app-comment>
    </div>
@@ -73,14 +73,14 @@
 
       </div>
 
-      <div *ngIf="isOwner()">
+      <div *ngIf="isOwner() || canAcceptAnswer">
          <!--Edit Button-->
-         <button md-button id="edit-button" (click)="onclickEdit($event)">
+         <button md-button id="edit-button" (click)="onclickEdit($event)" *ngIf="isOwner()">
             <i class="material-icons">edit</i> Edit
          </button>
 
          <!--Delete Button-->
-         <button md-button id="delete-button" (click)="onclickDelete()">
+         <button md-button id="delete-button" (click)="onclickDelete()" *ngIf="isOwner()">
             <i class="material-icons">delete</i> 
             <span>Delete</span>
          </button>
@@ -89,7 +89,7 @@
          <button md-button 
          id="mark-correct-button"
          (click)="onclickMarkAnswerButton()" 
-         *ngIf="!entry.markedCorrect && !parentDidSelectEntry && !!entry.parent">
+         *ngIf="canAcceptAnswer && entry && !entry.markedCorrect">
             <i class="material-icons">check</i>
             Accept Answer
          </button>
@@ -98,7 +98,7 @@
          <button md-button
          id="mark-correct-button"
          (click)="onclickMarkAnswerButton()" 
-         *ngIf="entry.markedCorrect && !!entry.parent">
+         *ngIf="entry && entry.markedCorrect && entry.parent && canAcceptAnswer">
             <i class="material-icons">clear</i>
             Undo Accept Answer
          </button>

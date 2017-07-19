@@ -13,7 +13,7 @@ export class ForumService {
 
   baseUrl: string;
 
-  entry: any;
+  entry: Entry;
 
   constructor(public http: Http) {
     this.baseUrl = Globals.baseApiUrl;
@@ -85,11 +85,11 @@ export class ForumService {
       .catch(this.handleError);
   }
 
-  getEntryParent(id: string) {
+  getEntryParent(id: string): Observable<Entry> {
     return this.http.get(this.baseUrl + '/entry/' + id + '?populate=parent')
     .map(res => {
       let data = res.json();
-      return data;
+      return Entry.initFromObject(data);
     })
     .catch(this.handleError);
   }
@@ -102,22 +102,6 @@ export class ForumService {
     .map(res => res.json())
     .catch(this.handleError);
   }
-
-  // readEntry(id) {
-    // return $http({
-    //   method: 'get',
-    //   dataType: 'json',
-    //   url: '/entry/' + id + '?populate=answers,owner,comments,parent,users_did_upvote,users_did_downvote'
-    // });
-  // }
-
-  // readComment(id) {
-    // return $http({
-    //   method: 'get',
-    //   dataType: 'json',
-    //   url: '/comment/' + id + '?populate=owner,parent'
-    // });
-  // }
 
   createEntry(entry: {content: any, owner: any, parent: any, title: any}) {
     return this.http.post(this.baseUrl + '/entry', entry, {
@@ -156,63 +140,12 @@ export class ForumService {
     })
     .catch(this.handleError);
   }
-
-  // save(entry) {
-    // return $http({
-    //   method: 'put',
-    //   dataType: 'json',
-    //   url: '/entry/' + entry.id,
-    //   data: entry
-    // });
-  // }
-
-  // saveComment(comment) {
-    // return $http({
-    //   method: 'put',
-    //   dataType: 'json',
-    //   url: '/comment/' + comment.id,
-    //   data: comment
-    // });
-  // }
-
-  // upvoteEntry(entry) {
-    // return $http.put('/entry/upvote/' + entry.id);
-  // }
-
-  // downvoteEntry(entry) {
-    // return $http.put('/entry/downvote/' + entry.id);
-  // }
-
-  // query(queryString) {
-    // let query = {
-    //   'or': [{
-    //     'title': {
-    //       'like': "%25" + queryString + "%25"
-    //     },
-    //   },
-    //     {
-    //       'content': {
-    //         'like': "%25" + queryString + "%25"
-    //       }
-    //     }
-    //   ]
-    // };
-    // let url = '/entry?where=' + JSON.stringify(query) + '&populate=owner';
-    // return $http({
-    //   method: 'get',
-    //   dataType: 'json',
-    //   url: url
-    // })
-  // }
-
-  markIncorrect(entryId: string) {
-    return this.markCorrect(entryId, false);
-  }
-
-  markCorrect(entryId: string, isCorrect: boolean = true) {
-    return this.http.put(this.baseUrl + '/entry/' + entryId, {markedCorrect: isCorrect}, { responseType: ResponseContentType.Json })
-    .map(this.handleResponse)
-    .catch(this.handleError)
+    
+  setIsCorrect(entry: Entry): Observable<Entry> {
+    return this.http.put(`${this.baseUrl}/entry/${entry.id}/accept`, { accepted: entry.markedCorrect }, { responseType: ResponseContentType.Json })
+      .map(res => {
+        return Entry.initFromObject(res.json());
+      }).catch(this.handleError);
   }
 
   private getRequestHandler(url) {
@@ -226,25 +159,27 @@ export class ForumService {
     return data || {};
   }
 
-  private handleError(error: Response | any) {
+  private handleError(err: Response | any) {
     let errMsg: string;
-    if (error instanceof Response) {
-      const body = error.json();
-      const err = body.error || JSON.stringify(body);
-      errMsg = `${error.status} - ${error.statusText || ''} ${err}`;
-    } else {
-      errMsg = error.message ? error.message : error.toString();
-    }
-    console.error(errMsg);
-    return Observable.throw(errMsg);
-  }
+    if (!err) 
+      return Observable.throw("The request could not be complete, and unkown error occured.");
 
-  static extractEntries(raw: {}[]) {
-    let entries: Entry[] = [];
-    for (let i in raw) {
-      entries.push(Entry.initFromObject(raw[i]));
-    }
-    return entries;
+    if (err instanceof Response) {
+      const body = err.json();
+      if (body)
+        return Observable.throw(body.error || JSON.stringify(body));
+      else
+        return Observable.throw(`Status ${err.status} ${err.statusText}`);
+    }  
+
+    if (err && err.message)
+      errMsg = err.message;
+    else if (err && err.toString)
+      errMsg = err.toString;
+    else
+      errMsg = "Unknown error occured..."; 
+
+    return Observable.throw(errMsg);
   }
 
 }

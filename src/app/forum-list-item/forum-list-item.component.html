@@ -1,17 +1,17 @@
 <div fxLayout="column" class="container">
   
-  <app-entry-card [entry]="entry" [style.margin-bottom]="'24px'"></app-entry-card>
+  <app-entry-card [entry]="question" [style.margin-bottom]="'24px'"></app-entry-card>
 
-  <p *ngIf="!answers || answers && answers.length === 0">This question has not been answered yet.</p>
+  <p *ngIf="question.answers && question.answers.length === 0">This question has not been answered yet.</p>
 
-  <p class="flow-text" *ngIf="answers && answers.length > 0">{{ answers.length }} Answer{{ answers.length > 1 ? 's' : '' }}</p>
+  <p class="flow-text" *ngIf="question.answers && question.answers.length > 0">{{ question.answers.length }} Answer{{ question.answers.length > 1 ? 's' : '' }}</p>
 
-  <app-entry-card *ngFor="let answer of answers" 
+  <app-entry-card *ngFor="let answer of question.answers" 
   [entry]="answer" 
+  [canAcceptAnswer]="canAcceptAnswer(answer)"
   [parentDidSelectEntry]="didMarkAnswerCorrect"
-  (onclickMarkAnswer)="onMarkAnswerHandler($event)"
-  (onDestroyEntry)="onDeleteHandler($event)" 
-  (onclickDemarkAnswer)="onDemarkAnswerHandler($event)"></app-entry-card>
+  (onClickAcceptButton)="setAnswerAccepted($event)"
+  (onDestroyEntry)="onDeleteHandler($event)"></app-entry-card>
 
   
 
