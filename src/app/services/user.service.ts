@@ -11,6 +11,7 @@ import { Observer }       from 'rxjs/Observer';
 import { CookieService }  from 'ngx-cookie';
 import { User }           from '../user/user';
 import { Globals }        from '../globals';
+import { environment }    from '../../environments/environment';
 
 import 'rxjs/add/operator/map';
 import 'rxjs/add/operator/catch';
@@ -20,6 +21,12 @@ export class UserService {
   
   private onUserLogoutSource = new Subject<void>();
   private onDeliverableUserSource = new Subject<User>();
+
+  private readonly cookieDomain = "teachinglean.org";
+  private readonly cookieOptions = {
+    withCredentials: true,
+    domain: this.cookieDomain
+  };
 
   onUserLogout$ = this.onUserLogoutSource.asObservable();
   onDeliverableUser$ = this.onDeliverableUserSource.asObservable();
@@ -32,7 +39,9 @@ export class UserService {
   }
 
   get csrfToken(): string { return this.cookieService.get('XSRF-TOKEN'); }
-  set csrfToken(token: string) { this.cookieService.put('XSRF-TOKEN', token); }
+  set csrfToken(token: string) { 
+    this.cookieService.put('XSRF-TOKEN', token, this.cookieOptions);
+  }
 
   baseApiUrl: string = Globals.baseApiUrl;
   
@@ -134,37 +143,54 @@ export class UserService {
       this.user = User.initFromObject(data);
       return data;
     })
-    .catch(this.handleError);
+    .catch(err => {
+      let errMsg;
+      if (err instanceof Response) {
+        let body = err.json();
+        errMsg = body.error || JSON.stringify(body);
+      } else {
+        errMsg = err.error;
+      }
+      return Observable.throw(errMsg);
+    });
   }
   
   authenticateLinkedin() {
     window.location.href = `${this.baseApiUrl}/auth/linkedin`;
   }
 
-  logoutUser(): Observable<any> {
-    this.cookieService.removeAll();
-    this.user = null;
-    this.onUserLogoutSource.next();
+  logoutUser(): Observable<void> {
+    delete this.user;
+    this.onUserLogoutSource.next(null);
 
     return this.http.get(`${this.baseApiUrl}/auth/logout`)
     .map((res) => {
-      return res.json();
+      console.log("Removing COOKIE!");
+      this.cookieService.remove("XSRF-TOKEN", {
+        domain: this.cookieDomain
+      });
+      console.log(res.json());
+      return;
     })
     .catch(this.handleError);
   }
   
-  create(user: {firstname: string, lastname: string, email: string}, password: string): Observable<any> {
-    this.cookieService.removeAll();
+  create(user: {firstname: string, lastname: string, email: string, username: string}, password: string): Observable<any> {
+    this.cookieService.remove("XSRF-TOKEN", {
+        domain: this.cookieDomain
+      });
     return this.http.post(`${this.baseApiUrl}/user`, {
       email: user.email,
       password: password,
       firstname: user.firstname,
-      lastname: user.lastname
+      lastname: user.lastname,
+      username: user.username
     }, {
       responseType: ResponseContentType.Json
     })
-    .map(response => {
-      return response.json();
+    .map(res => {
+      let data = res.json();
+      return User.initFromObject(data.user);
     })
     .catch(this.handleError);
   }

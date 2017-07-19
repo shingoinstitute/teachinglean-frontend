@@ -7,6 +7,7 @@ import { Subscription } from 'rxjs/Subscription';
 
 import { UserService } from '../services/user.service';
 import { SidenavService } from '../services/sidenav.service';
+import { User } from "app/user/user";
 
 @Component({
   selector: 'app-toolbar',
@@ -24,11 +25,16 @@ export class ToolbarComponent {
     private router: Router,
     private sidenav: SidenavService) {
     
-    this.userDoesExist = userService.user != null
     userService.onDeliverableUser$.subscribe(user => {
-      this.userDoesExist = !!user;
+      this.userDoesExist = user instanceof User;
     }, err => {
-      console.log(err);
+      console.error(err);
+    });
+
+    userService.onUserLogout$.subscribe(() => {
+      this.userDoesExist = false;
+    }, err => {
+      console.error(err);
     });
 
   }
@@ -38,7 +44,6 @@ export class ToolbarComponent {
   }
 
   @HostListener('window:resize', ['$event'])
-  // resize(event) {
   resize() {
     this.windowWidth = window.innerWidth;
   }
@@ -48,9 +53,8 @@ export class ToolbarComponent {
   }
 
   onClickLogout() {
-    this.userService.logoutUser().subscribe(data => {
+    this.userService.logoutUser().subscribe(() => {
       this.router.navigate(['/']);
-      console.log(data);
     }, err => {
       console.error(err);
     });

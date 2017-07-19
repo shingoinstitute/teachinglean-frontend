@@ -10,6 +10,8 @@ import { AdminPanelComponent } from '../admin-panel/admin-panel.component'
 import { ModeratorComponent } from '../moderator/moderator.component';
 import { User } from "../user/user";
 import { Entry } from '../entry/entry';
+import { Observable } from "rxjs/Observable";
+import { Router } from "@angular/router";
 
 @Component({
   selector: 'app-dashboard',
@@ -28,18 +30,44 @@ export class DashboardComponent implements OnInit {
   answers: Entry[] = [];
   comments: Entry[] = [];
 
-  constructor(private userService: UserService, private forum: ForumService, private cookies: CookieService) {}
+  constructor(
+    private userService: UserService, 
+    private forum: ForumService, 
+    private cookies: CookieService,
+    private router: Router) {}
 
   ngOnInit() {
-    // Set dashboard tab from cookies
-    this.selectedDashboardTab = +this.cookies.get('selectedDashboardTab') || 0;
-    
-    this.user = this.userService.user;
-    this.userService.onDeliverableUser$.subscribe(user => {
+    this.findUser().subscribe(user => {
+      // Set user variable
       this.user = user;
+
+      // Load recent activity
       this.loadRecentActivity();
-    }, err => console.error(err));
-    this.user && this.loadRecentActivity();
+
+      // Get last selected dashboard tab from cookies
+      this.selectedDashboardTab = +this.cookies.get('selectedDashboardTab') || 0;
+    }, err => {
+      // Ignore error
+      this.router.navigateByUrl('/login');
+    });
+  }
+
+  findUser(): Observable<User> {
+    const observables = [
+      Observable.create(observer => {
+        observer.next(this.userService.user);
+      }),
+      this.userService.getAuthenticatedUser()
+    ];
+
+    return Observable.merge(...observables)
+    .filter(user => {
+      return user instanceof User;
+    })
+    .take(1)
+    .catch(err => {
+      return Observable.throw(err);
+    });
   }
 
   loadRecentActivity() {
