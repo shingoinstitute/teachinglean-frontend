@@ -12,8 +12,8 @@ import { UserService } from '../../services/user.service';
 export class AdminUserCardComponent {
 
    @Input('user') user: User = new User();
-   @Output('onBack') backEventEmitter = new EventEmitter<void>();
-   @Output('onBlock') blockEventEmitter = new EventEmitter<User>();
+   @Output('onClose') backEventEmitter = new EventEmitter<void>();
+   @Output('onBlockUser') blockEventEmitter = new EventEmitter<User>();
 
    constructor(private userService: UserService, private snackbar: MdSnackBar) {}
 

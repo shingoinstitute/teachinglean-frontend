@@ -1,46 +1,51 @@
 <div class="admin-panel container"> 
   <h5 md-margin="bottom">User Management</h5>
-  <admin-user-card [user]="selectedUser" (onBack)="deselectUser()" (onBlock)="onBlockHandler($event)" *ngIf="selectedUser"></admin-user-card>
-  <div fxLayout="row" class="pagination-container">
-    <p class="md-margin-right md-margin-top" *ngIf="stats.size > 10">Records per page</p>
-    <md-select md-margin="top" [(ngModel)]="this.limit" selected="this.limit" *ngIf="stats.size > 10">
-      <md-option [value]="10">10</md-option>
-      <md-option [value]="25">25</md-option>
-      <md-option [value]="50">50</md-option>
-    </md-select>
-    <span fxFlex></span>
-    <div class="pagination-buttons" *ngIf="maxPage > 1">
-      <button class="pagination-button" (click)="page = page - 1">&#8592; Previous</button>
-      <button class="pagination-button" (click)="page = btn1" [class.active-page-btn]="page === btn1">{{ btn1 }}</button>
-      <button class="pagination-button" (click)="page = btn2" [class.active-page-btn]="page === btn2" *ngIf="maxPage > 2">{{ btn2 }}</button>
-      <button class="pagination-button" (click)="page = btn3" [class.active-page-btn]="page === btn3" *ngIf="maxPage > 3">{{ btn3 }}</button>
-      <button class="pagination-button" (click)="page = btn4" [class.active-page-btn]="page === btn4" *ngIf="maxPage > 4">{{ btn4 }}</button>
-      <button class="pagination-button" (click)="page = btn5" [class.active-page-btn]="page === btn5" *ngIf="maxPage > 5">{{ btn5 }}</button>
-      <button class="pagination-button" (click)="page = page + 1">Next &#8594;</button>
-    </div>
+  <admin-user-card [user]="selectedUser" (onClose)="selectedUser = null" (onBlockUser)="onBlockUserHandler($event)" *ngIf="selectedUser"></admin-user-card>
+
+   <div class="">
+
+    <md-table #table [dataSource]="dataSource" [trackBy]="reference" mdSort>
+
+      <!-- Name Column -->
+      <ng-container cdkColumnDef="name">
+        <md-header-cell *cdkHeaderCellDef md-sort-header> Name </md-header-cell>
+        <md-cell *cdkCellDef="let user"> {{ user.name }} </md-cell>
+      </ng-container>
+
+      <!-- Email Column -->
+      <ng-container cdkColumnDef="email">
+        <md-header-cell *cdkHeaderCellDef md-sort-header> Email </md-header-cell>
+        <md-cell *cdkCellDef="let user"> {{ user.email }} </md-cell>
+      </ng-container>
+
+      <!-- Username Column -->
+      <ng-container cdkColumnDef="username">
+        <md-header-cell *cdkHeaderCellDef md-sort-header> Username </md-header-cell>
+        <md-cell *cdkCellDef="let user"> {{ user.username }} </md-cell>
+      </ng-container>
+
+      <!-- Role Column -->
+      <ng-container cdkColumnDef="role">
+        <md-header-cell *cdkHeaderCellDef md-sort-header> User Type </md-header-cell>
+        <md-cell *cdkCellDef="let user"> {{ roles[user.role] }} </md-cell>
+      </ng-container>
+
+      <ng-container cdkColumnDef="actions">
+        <md-header-cell *cdkHeaderCellDef> Actions </md-header-cell>
+        <md-cell *cdkCellDef="let user">
+          <div fxLayout="row" admin-user-list-item [user]="user" (onBlock)="onBlockUserHandler($event)" (onChange)="updateUser($event)" (onSelect)="selectedUser = $event"></div>
+        </md-cell>
+      </ng-container>
+
+      <md-header-row *cdkHeaderRowDef="displayedColumns"></md-header-row>
+      <md-row *cdkRowDef="let user; columns: displayedColumns;"></md-row>
+    </md-table>
+
+    <md-paginator #paginator
+                  [length]="udp.data.length"
+                  [pageIndex]="0"
+                  [pageSize]="10"
+                  [pageSizeOptions]="[10, 25, 50]">
+    </md-paginator>
   </div>
-  <table class="user-list-container">
-    <thead>
-      <tr class="user-list-header-row">
-        <th [style.text-align]="'center'">#</th>
-        <th>Full Name</th>
-        <th>Email</th>
-        <th>Username</th>
-        <th>User Type</th>
-        <th>Actions</th> 
-      </tr>
-    </thead>
-    <tbody>
-      <tr class="user-list-row" 
-          admin-user-list-item 
-          *ngFor="let user of users; let i = index" 
-          [user]="user" 
-          [id]="i+1+((currPage-1)*limit)"
-          (onBlock)="onBlockHandler($event)"
-          (onChange)="updateUser($event)"
-          (onSelect)="selectUserHandler($event)"></tr>
-    </tbody>
-  </table>
-  <p md-margin *ngIf="maxPage > 1">Page {{ currPage }} of {{ maxPage }}</p>
-  <p md-margin>Showing <span *ngIf="maxPage > 1">{{ 1+((currPage-1)*currLimit) }}-{{ ((currPage-1)*currLimit)+currLimit }} of </span>{{ stats.size }} users</p>
 </div>

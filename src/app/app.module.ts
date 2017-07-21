@@ -14,6 +14,7 @@ import 'rxjs/add/operator/distinctUntilChanged';
 import { MaterialModule }          from '@angular/material';
 import { MaterialDesignImports }   from './config/material-design.module';
 import { FlexLayoutModule }        from '@angular/flex-layout';
+import { CdkTableModule }          from '@angular/cdk';
 
 // App Components
 import { AppRoutingModule }        from './config/app-routing.module';
@@ -62,6 +63,7 @@ import { ResetPasswordComponent } from './reset-password/reset-password.componen
     ReactiveFormsModule,
     MaterialModule,
     MaterialDesignImports,
+    CdkTableModule,
     CookieModule.forRoot(),
     HttpModule,
     JsonpModule,

@@ -25,6 +25,9 @@ $app-theme: mat-light-theme($app-primary, $app-accent, $app-warn);
    .mat-accent.mat-raised-button {
       font-weight: 400;
    }
+   .mat-select-trigger {
+      background-color: white !important;
+   }
 }
 
 // Include theme styles for core and each component used in your app.

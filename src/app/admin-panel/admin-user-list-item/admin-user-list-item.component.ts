@@ -1,4 +1,4 @@
-import { Component, OnInit, EventEmitter, Input, Output } from '@angular/core';
+import { Component, EventEmitter, Input, Output } from '@angular/core';
 import { User } from '../../user/user';
 
 @Component({
@@ -6,17 +6,12 @@ import { User } from '../../user/user';
    templateUrl: './admin-user-list-item.component.html',
    styleUrls: ['./admin-user-list-item.component.css']
 })
-export class AdminUserListItemComponent implements OnInit {
+export class AdminUserListItemComponent {
 
    @Input('user') user: User;
-   @Input('id') id: any;
    @Output('onSelect') selectUserEventEmitter = new EventEmitter<User>();
    @Output('onChange') onUpdateUserEventEmitter = new EventEmitter<User>();
    @Output('onBlock') onSelectBlockEventEmitter = new EventEmitter<User>();
-
-   constructor() {}
-
-   ngOnInit() {}
 
    onSelectBlock() {
       this.onSelectBlockEventEmitter.emit(this.user);
@@ -25,15 +20,6 @@ export class AdminUserListItemComponent implements OnInit {
    onSelectUnblock() {
       this.user.accountIsActive = true;
       this.onUpdateUserEventEmitter.emit(this.user);
-   }
-
-   roles = {
-      systemAdmin: "System Admin",
-      admin: "Admin",
-      editor: "Editor",
-      author: "Author",
-      moderator: "Moderator",
-      user: "Member"
    }
 
 }

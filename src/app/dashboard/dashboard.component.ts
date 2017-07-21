@@ -104,8 +104,8 @@ export class DashboardComponent implements OnInit {
     // selected tab from main tab group
     this.cookies.put('selectedDashboardTab', `${index}`);
     if (this.adminPanel && index === 2) {
-      console.log('loading admin data.');
-      this.adminPanel.loadData();
+      // console.log('loading admin data.');
+      // this.adminPanel.loadData();
     } else if (this.moderatorPanel && index == 3) {
       this.moderatorPanel.loadData()
     }

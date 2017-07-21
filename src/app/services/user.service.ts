@@ -83,14 +83,14 @@ export class UserService {
    * @param limit :: the max number of users to retrieve
    * @param page :: the number of records to skip, calculated by `page * limit`
    */
-  getUsers(limit?: number, page?: number, dev?: boolean): Observable<any> {
+  getUsers(limit?: number, page?: number): Observable<any> {
     let size = 300;
     let skip = (page - 1) * limit;
-    let url = dev ? `http://localhost:3000/backend/user/randUsers?limit=${limit}&skip=${skip}&size=${size}` : `${this.baseApiUrl}/user?where={sort:'lastname'}` + (limit && page ? `&limit=${limit}&skip=${page*limit}` : '');
+    let url = `${this.baseApiUrl}/user?where={sort:'lastname'}` + (limit && page ? `&limit=${limit}&skip=${page*limit}` : '');
     return this.http.get(url)
     .map(res => {
       let data = res.json();
-      return dev ? data.users : data;
+      return data;
     })
     .catch(this.handleError);
   }
@@ -238,8 +238,8 @@ export class UserService {
    * of admins, moderators, authors, editors, members, and
    * number of users with verified emails.
    */
-  getStats(dev?: boolean): Observable<any> {
-    let url = dev ? `${this.baseApiUrl}/dev/user/stats` : `${this.baseApiUrl}/user/stats`;
+  getStats(): Observable<any> {
+    let url = `${this.baseApiUrl}/user/stats`;
     return this.http.get(url)
     .map(res => {
       return res.json();

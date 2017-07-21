@@ -1,43 +1,14 @@
-<td class="admin-user-list-item" id="index">
-   {{ id }}
-</td>
-<td class="admin-user-list-item" id="fullname">
-   <p>{{ user.name }}</p>
-   <div fxLayout="column">
-      <p [style.font-size]="'9px'" [style.color]="'grey'">Account Status: 
-         <span *ngIf="user.accountIsActive" class="green lighten-1"
-               [style.font-weight]="'200'"
-               [style.color]="'white'"
-               [style.padding]="'2px'">Enabled</span>
-         <span *ngIf="!user.accountIsActive" class="red lighten-1"
-               [style.font-weight]="'200'"
-               [style.color]="'white'"
-               [style.padding]="'2px'">Blocked</span>
-      </p>
-   </div>
-</td>
-<td class="admin-user-list-item" id="email">
-   {{user.email}}
-</td>
-<td class="admin-user-list-item" id="username">
-   {{user.username}}
-</td>
-<td class="admin-user-list-item" id="usertype">
-   <p>{{roles[user.role] || "Member"}}</p>
-</td>
-<td class="admin-user-list-item" id="actions">
-      <!--View Button-->
-      <button md-button class="mat-primary" (click)="selectUserEventEmitter.emit(user)">
-            <md-icon  [style.width]="'20px'" svgIcon="eye_black"></md-icon><span [style.margin-left]="'4px'">View</span>
-      </button>
+<!--View Button-->
+<button md-button class="mat-primary" (click)="selectUserEventEmitter.emit(user)">
+      <md-icon  [style.width]="'20px'" svgIcon="eye_black"></md-icon><span [style.margin-left]="'4px'" [style.font-weight]="'300'">View</span>
+</button>
 
-      <!--Block button-->
-      <button md-button class="mat-warn" (click)="onSelectBlock()" *ngIf="user.accountIsActive && !user.isAdmin">
-            <md-icon [style.width]="'20px'" svgIcon="lock_black"></md-icon><span [style.margin-left]="'4px'">Block</span>
-      </button>
+<!--Block button-->
+<button md-button class="mat-warn" (click)="onSelectBlock()" *ngIf="user.accountIsActive && !user.isAdmin">
+      <md-icon [style.width]="'20px'" svgIcon="lock_black"></md-icon><span [style.margin-left]="'4px'" [style.font-weight]="'300'">Block</span>
+</button>
 
-      <!--Unblock button-->
-      <button md-button class="mat-warn" (click)="onSelectUnblock()" *ngIf="!user.accountIsActive && !user.isAdmin">
-            <md-icon [style.width]="'20px'" svgIcon="unlock_black"></md-icon><span [style.margin-left]="'4px'">Unblock</span>
-      </button>
-</td>
+<!--Unblock button-->
+<button md-button class="mat-warn" (click)="onSelectUnblock()" *ngIf="!user.accountIsActive && !user.isAdmin">
+      <md-icon [style.width]="'20px'" svgIcon="unlock_black"></md-icon><span [style.margin-left]="'4px'" [style.font-weight]="'300'">Unblock</span>
+</button>
