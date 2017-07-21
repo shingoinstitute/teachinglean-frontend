@@ -37,7 +37,7 @@ export class UserDataSource extends DataSource<any> {
 
       return Observable.merge(...dataChanges).map(() => {
          const data = this.getSortedData();
-         console.log(data);
+         
          // Get slice of sorted data
          const startIndex = this._paginator.pageIndex * this._paginator.pageSize;
          return data.splice(startIndex, this._paginator.pageSize);

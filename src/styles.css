@@ -1,21 +1,31 @@
 html {
   position: relative;
   font-family: 'Roboto', sans-serif;
-  min-height: 100vh;
+  /* min-height: 100vh; */
 }
 
 * {
   margin: 0;
 }
 
-html,
+body {
+  display: flex;
+  flex-direction: column;
+}
+
+app-root {
+  flex: 1;
+}
+
+/* html,
 body,
 md-sidenav-container {
-  min-height: 100vh !important;
+    min-height: 100vh !important;  
 }
 
 md-sidenav-container {
-  margin-bottom: 142px;
+   margin-bottom: 142px; 
+
 }
 
 app-root, 
@@ -28,16 +38,19 @@ app-root,
 footer {
   height: 142px;
   width: 100%;
-  padding: 24px 48px;
   position: absolute;
   bottom: 0;
   left: 0;
+} */
+
+footer {
+  padding-top: 16px;
 }
 
 footer * {
-  font-weight: 200;
+  font-weight: 300;
   font-size: 10pt;
-}
+}  
 
 /* Lists */
 

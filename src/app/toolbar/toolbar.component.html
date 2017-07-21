@@ -1,6 +1,11 @@
 <md-toolbar class="mat-primary darken-3">
   
-  <span fxFlex *ngIf="windowWidth >= 960"></span>
+  <!--sidenav toggle (only visible on smaller screen sizes)-->
+  <button md-button class="md-icon-button" aria-label="Menu" (click)="toggleSidenav()" *ngIf="windowWidth < 960">
+    <md-icon svgIcon="menu"></md-icon>
+  </button>
+
+  <span fxFlex *ngIf="windowWidth < 960"></span>
 
   <a md-button
   color="accent" 
@@ -15,7 +20,6 @@
   routerLink="/login" 
   *ngIf="!userDoesExist">LOGIN</a>
 
-  <span fxFlex *ngIf="windowWidth < 960"></span>
 
   <div *ngIf="userDoesExist">
 
@@ -45,10 +49,5 @@
     </md-menu>
 
   </div>
-
-  <!--sidenav toggle (only visible on smaller sized screen)-->
-  <button md-button class="md-icon-button" aria-label="Menu" (click)="toggleSidenav()" *ngIf="windowWidth < 960">
-    <md-icon svgIcon="menu"></md-icon>
-  </button>
 
 </md-toolbar>

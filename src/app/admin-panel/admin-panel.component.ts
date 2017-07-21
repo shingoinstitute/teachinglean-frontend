@@ -1,6 +1,7 @@
-import { Component, ViewChild } from '@angular/core';
+import { Component, ViewChild, HostListener } from '@angular/core';
 import { CookieService } from 'ngx-cookie';
-import { MdSnackBar, MdDialog, MdSort, MdPaginator } from '@angular/material';
+import { MdSnackBar, MdDialog } from '@angular/material';
+import { MdSort, MdPaginator } from '@angular/material';
 import { DisableUserDialog } from './disable-user.dialog';
 import { UserService } from '../services/user.service';
 import { Subject } from 'rxjs/Subject';
@@ -17,8 +18,9 @@ import { UserDataSource, UserDataProvider } from "app/services/user-data-provide
 })
 export class AdminPanelComponent {
 
+  public displayedColumns: string[] = [];
+
   public dataSource: UserDataSource | null;
-  public displayedColumns = ["name", "email", "username", "role", "actions"];
   public selectedUser: User;
 
   public roles = {
@@ -35,6 +37,8 @@ export class AdminPanelComponent {
   @ViewChild(MdSort) sort: MdSort;
   @ViewChild(MdPaginator) paginator: MdPaginator;
 
+  trackByIndex = (index: number, item: any) => { return index; }
+  
   constructor(private userService: UserService,
               private snackbar: MdSnackBar,
               public dialog: MdDialog,
@@ -46,6 +50,10 @@ export class AdminPanelComponent {
 
   ngOnInit() {
     this.dataSource = new UserDataSource(this.udp, this.paginator, this.sort);
+    if (window.innerWidth > 960)
+      this.displayedColumns = ["name", "email", "username", "role", "actions"];
+    else
+      this.displayedColumns = ["name", "role", "actions"];
   }
 
   updateUser(user: User) {
@@ -65,6 +73,14 @@ export class AdminPanelComponent {
         this.updateUser(user);
       }
     });
+  }
+
+  @HostListener('window:resize', ['$event'])
+  onResize() {
+    if (window.innerWidth > 960)
+      this.displayedColumns = ["name", "email", "username", "role", "actions"];
+    else
+      this.displayedColumns = ["name", "role", "actions"];
   }
 
 }

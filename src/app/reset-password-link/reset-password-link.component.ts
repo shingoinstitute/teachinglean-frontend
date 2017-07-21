@@ -31,6 +31,7 @@ import { Subject } from 'rxjs';
 export class ResetPasswordLinkComponent implements AfterViewInit { 
   
   private emailChangeObserver: Subject<string> = new Subject<string>();
+  private emailChanged$ = this.emailChangeObserver.asObservable();
 
   private _email: string;
   get email(): string {
@@ -79,7 +80,7 @@ export class ResetPasswordLinkComponent implements AfterViewInit {
 
   ngAfterViewInit() {
     this.zone.runOutsideAngular( () => {
-      this.emailChangeObserver.debounceTime(750)
+      this.emailChanged$.debounceTime(750)
       .distinctUntilChanged()
       .subscribe(email => {
         this.checkEmailCollisions(email);

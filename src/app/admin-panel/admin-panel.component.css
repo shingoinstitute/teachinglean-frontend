@@ -1,5 +1,24 @@
-md-select {
-	background-color: transparent !important;
+.admin-panel-container {
+	margin: 16px;
+	display: flex;
+	flex-direction: column;
+	max-width: 1280px; 
+}
+
+@media only screen and (max-width: 480px) {
+	.admin-panel-container {
+		margin: 8px 4px 8px 4px;
+	}
+}
+
+.admin-user-table {
+	margin-top: 24px; 
+	box-shadow: 0 3px 1px -2px rgba(0,0,0,.2), 0 2px 2px 0 rgba(0,0,0,.14), 0 1px 5px 0 rgba(0,0,0,.12);
+}
+
+admin-user-card {
+	margin-top: 24px;
+	max-width: 712px;
 }
 
 div.pagination-container {

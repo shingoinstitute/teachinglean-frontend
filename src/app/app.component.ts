@@ -93,7 +93,14 @@ export class AppComponent implements OnInit {
     this.userService.onDeliverableUser$.subscribe(user => {
       this.user = user;
     }, err => {
-      console.log(err);
+      console.error(err);
+    });
+
+    this.userService.onUserLogout$.subscribe(() => {
+      this.user = null;
+    }, err => {
+      this.user = null;
+      console.error(err);
     });
 
     this.windowWidth = window.innerWidth;
@@ -101,7 +108,6 @@ export class AppComponent implements OnInit {
   }
 
   @HostListener('window:resize', ['$event'])
-  // onResize(event) {
   onResize() {
     this.onWindowResizeEventSource.next(window.innerWidth);
   }

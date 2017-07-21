@@ -2,6 +2,8 @@ import { Component, AfterViewInit, NgZone, ChangeDetectorRef, ViewChild, Element
 import { ActivatedRoute } from '@angular/router';
 import { UserService } from '../services/user.service';
 import { Subject } from 'rxjs/Subject';
+import 'rxjs/add/operator/debounceTime';
+import 'rxjs/add/operator/distinctUntilChanged';
 
 const MIN_LENGTH = 8;
 const MAX_LENGTH = 32;
@@ -16,6 +18,7 @@ const SPECIAL_CHAR_REGEX = /[!@#$%^&*]{1}/;
 export class ResetPasswordComponent implements AfterViewInit {
 
   private onPasswordConfirmChange = new Subject<string>();
+  private onPasswordConfirm$ = this.onPasswordConfirmChange.asObservable();
   
   private _password: string = "";
   get password(): string {
@@ -61,7 +64,7 @@ export class ResetPasswordComponent implements AfterViewInit {
      * within angular.
      */
     this.zone.runOutsideAngular(() => {
-      this.onPasswordConfirmChange
+      this.onPasswordConfirm$
       .debounceTime(500)
       .distinctUntilChanged()
       .subscribe(password => {

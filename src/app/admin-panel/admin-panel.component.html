@@ -1,10 +1,14 @@
-<div class="admin-panel container"> 
-  <h5 md-margin="bottom">User Management</h5>
-  <admin-user-card [user]="selectedUser" (onClose)="selectedUser = null" (onBlockUser)="onBlockUserHandler($event)" *ngIf="selectedUser"></admin-user-card>
+<div class="admin-panel-container">
+  <h1 class="mat-headline" md-margin>User Management</h1>
 
-   <div class="">
+  <admin-user-card [user]="selectedUser" 
+                   (onClose)="selectedUser = null" 
+                   (onBlockUser)="onBlockUserHandler($event)" 
+                   *ngIf="selectedUser"></admin-user-card>
 
-    <md-table #table [dataSource]="dataSource" [trackBy]="reference" mdSort>
+   <div class="admin-user-table">
+
+    <md-table #table [dataSource]="dataSource" [trackBy]="trackByIndex" mdSort>
 
       <!-- Name Column -->
       <ng-container cdkColumnDef="name">
