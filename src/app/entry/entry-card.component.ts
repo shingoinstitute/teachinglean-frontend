@@ -35,7 +35,6 @@ export class EntryCardComponent implements OnInit, OnDestroy {
   }
 
   ngOnInit() {
-    console.log('CanAcceptAnswer? ' + this.canAcceptAnswer);
     setTimeout(() => {
       this.canAcceptAnswer = this.canAcceptAnswer;
     });

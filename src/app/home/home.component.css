@@ -10,6 +10,13 @@ h3.header-title {
 }
 
 @media only screen and (min-width: 1280px) {
+    .--home-container {
+        margin-left: 48px;
+        margin-right: 48px;
+    }
+}
+
+@media only screen and (min-width: 1280px) {
    h3.header-title {
       font-size: 3.56rem;
       font-weight: 700;
