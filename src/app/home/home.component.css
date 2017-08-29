@@ -34,6 +34,14 @@
 }
 
 /* TEMP STYLES */
+.keynote-section {
+    max-width: 908px;
+    margin: 0 auto;
+    margin-top: 16px;
+}
+.keynote-section p {
+    font-size: 18px;
+}
 ul.keynote-speaker-list {
     font-size: 18px;
 }

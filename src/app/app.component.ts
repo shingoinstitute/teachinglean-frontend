@@ -68,6 +68,7 @@ export class AppComponent implements OnInit {
     iconRegistry.addSvgIcon('lock_black', sanitizer.bypassSecurityTrustResourceUrl('assets/images/icons/ic_lock_outline_black_18px.svg'));
     iconRegistry.addSvgIcon('unlock_black', sanitizer.bypassSecurityTrustResourceUrl('assets/images/icons/ic_lock_open_black_18px.svg'));
     iconRegistry.addSvgIcon('eye_black', sanitizer.bypassSecurityTrustResourceUrl('assets/images/icons/ic_remove_red_eye_black_18px.svg'));
+    iconRegistry.addSvgIcon('pdf_grey', sanitizer.bypassSecurityTrustResourceUrl('assets/images/icons/ic_file_download_grey_24px.svg'));
 
     sidenavService
     .toggleSidenavNotification$
