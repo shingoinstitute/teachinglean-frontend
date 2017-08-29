@@ -1,14 +1,16 @@
+
 <div class="container --home-container" fxLayout="column">
-  <header fxHide.sm fxHide.xs>
-    <h3 class='orange-text text-darken-2 header-title'>LEAN EDUCATORS ACADEMIC NETWORK</h3>
-  </header>
+  <!-- Header -->
+  <div class="home-header">
+    <h3 fxHide.sm fxHide.xs class="orange-text text-darken-2">LEAN EDUCATORS ACADEMIC NETWORK</h3>
 
-  <div fxLayoutAlign="center" fxHide.gt-sm class="md-margin">
-    <img src="assets/images/logos/LEAN-logo-lg.png" class="responsive-img" />
-  </div>
-
+    <div class="home-logo-container" fxLayoutAlign="center" fxHide.gt-sm>
+      <img src="assets/images/logos/LEAN-logo-lg.png" class="responsive-img" />
+    </div>
+  </div><!-- END Header -->
+  
+  <!-- Home Page Cards -->
   <div class="page-section" fxLayout.gt-sm="row" fxLayout="column" fxLayoutGap="16px">
-
     <md-card fxFlex class="mat-primary darken-1">
       <h4 class="white-text">Community Forum</h4>
       <p class="flow-text white-text">Ask questions and receive feedback from experts in our<a routerLink="/forum" class="orange-text"> Q&amp;A Forum</a>.</p>
@@ -26,60 +28,114 @@
       <h4 class="white-text">Are you an educator?</h4>
       <p class="flow-text white-text">Use our online <a href="/teachingCurriculum" class="orange-text">teaching resources</a> to put together a presentation
         using current, up-to-date teaching material.</p>
-    </md-card>
-
+    </md-card><!-- END Home Page Cards -->
   </div>
 
   <md-divider></md-divider>
 
-  <div fxLayout="column" class="page-section">
+  <div fxLayout="column" class="page-section keynote-section">
+    <div class="img-container">
+      <img src="/assets/images/LEAN-conf-17/LEAN-conf-17-banner.png" class="responsive-img">
+    </div>
+
     <div>
-      <h4 class="bold-text"><a href="https://pomsmeetings.org/conf-2017">ANNUAL POMS 2017 CONFERENCE</a></h4>
-
-      <p>May 5th - 8th, 2017 | Seattle, Washington</p>
+      <a md-raised-button href="https://teachinglean.org/download/public/Flyer-ELEC-2017WIP-versie-4-7-2017.pdf" target="_self" download>
+        <span>Download Flyer</span>
+        <md-icon svgIcon="pdf_grey"></md-icon>
+      </a>
     </div>
 
-    <div fxLayout="column" fxLayout.gt-md md-margin="bottom" class="page-section">
+    <h4>Learning Lean / Lean Learning</h4>
+
+    <p class="grey-text-darken-1 md-margin-bottom">
+        We are delighted to invite you to the fourth European Lean Educator Conference (ELEC 2017),
+        8-9 November 2017 at HAN University of Applied Sciences, Nijmegen, the Netherlands.
+    </p>
+
+    <p class="grey-text-darken-1">
+        The theme of the conference is Learning Lean / Lean Learning, based on the perspective that the main focus of the lean educator should be on the learning process of his/her customer (student, employee, team or organization).
+    </p>
+    
+    <md-divider></md-divider>
+
+    <h5>Conference Theme</h5>
+
+    <div fxLayout.gt-xs="row" fxLayout="column">
+      <p fxFlex>
+          How to enhance the effect of educating lean? This is the key question which will be addressed by a number of keynote speakers and presenters in parallel sessions, workshops and panel discussions. A careful choice of the content and the way of teaching is needed in order to maximize customer value and to minimize the learning waste.
+      </p>
+
+      <div fxFlex class="img-container">
+        <img src="/assets/images/LEAN-conf-17/Flyer-ELEC-2017WIP-versie-4-7-2017.jpg" class="responsive-img">
+      </div>
+    </div>
+
+    <md-divider></md-divider>
+
+    <div fxLayout.gt-xs="row" fxLayout="column">
       <div fxFlex>
-        <img src="assets/images/Space_Needle002.png" [style.max-width]="'100%'" />
+        <h5>Keynote Speakers and Themes</h5>
+        <ul class="keynote-speaker-list">
+          <li>
+            <p>Kees Boele</p>
+            <p>The Role of the Educator</p>
+          </li>
+          <li>
+            <p>Vincent Wiegel / Pieter van den Hoogenband</p>
+            <p>Is Sport a Good Metaphor of Lean?</p>
+          </li>
+
+          <li>
+            <p>John Bicheno</p>
+            <p>Lean: the Forgotten, the Ignored, the Possible</p>
+          </li>
+
+          <li>
+            <p>Kees Luttink</p>
+            <p>Lean Learning / Learning Lean at Scania</p>
+          </li>
+          <li>
+            <p>Ralph Kriechbaum</p>
+            <p>Informal Learning Environments</p>
+          </li>
+
+          <li>
+            <p>Jan Riezebos</p>
+            <p>Going Inside the Black Box of Learning</p>
+          </li>
+
+          <li>
+            <p>Isao Yoshino</p>
+            <p>Manager’s Role & Responsibility at Toyota</p>
+          </li>
+
+          <li>
+            <p>Karyn Ross</p>
+            <p>Teaching and Learning Lean in Services</p>
+          </li>
+
+          <li>
+            <p>Carin Hendriksen</p>
+            <p>Lean Learning: a Manager’s Perspective</p>
+          </li>
+        </ul>
+
+        <h5>Parallel Sessions, Round Tables and Workshops</h5>
+        <p>The conference provides a substantial number of elective elements to support the specific interests of attendees.</p>
+
       </div>
 
-      <div md-margin="left" fxFlex>
-        <h5 class="bold-text mt-0">OUR NEXT MEETING</h5>
+      <div fxFlex>
+        <h5>About the European Lean Educator Conference</h5>
+        <p>The European Lean Educator Conference provides a platform for lean managers, trainers, coaches, researchers and teachers from industry, higher education and service organizations to share their knowledge and experiences on educating lean. The practical know-how of all participants allows for lively discussions, sharing experience and expertise.</p>
 
-        <p class="text-md">
-          A spirited group of researchers, teachers, and practitioners are getting together to start up the <em>College of Operational Excellence (COE)</em> as a sub-group of the <em>Production and Operations Management Society (POMS)</em>. This meeting will also serve as a restart
-          for <b><a href="https://teachinglean.org/about">Lean Education Academic Network (LEAN)</a> </b> as we envision
-          the way forward for teaching and research in higher education.
-        </p>
+        <h5>The Venue</h5>
+        <p>The Venue The conference will be held at Van der Valk Hotel in Nijmegen, The Netherlands. See <a href="https://www.valknijmegen.nl/english">https://www.valknijmegen.nl/english</a>. A block of rooms at a special conference rate has been reserved. You can book your room using a discount code which you will receive after registering for the conference.</p>
 
-        <p class="flow-text"> Join us May 4th, 2017 from 1:00 pm - 7:30 pm at this Mini-Conference and Reception that serves as a prelude to the
-          annual <a href="https://pomsmeetings.org/conf-2017/">POMS Conference</a>.</p>
+        <h5>Information</h5>
+        <p>You can find the latest and detailed information about the ELEC2017 programme on our website
+            <a href="www.han.nl/elec2017">www.han.nl/elec2017</a>.</p>
       </div>
-
     </div>
   </div>
-
-  <div fxLayout="column" fxLayout.gt-sm="row" class="page-section">
-
-    <div fxLayout="column" class="page-section-child">
-      <p class="flow-text center-align orange-text text-darken-3"><strong>GET IN ON THE GROUND FLOOR</strong></p>
-      <a md-raised-button class="mat-accent" href="https://pomsmeetings.org/conf-2017/">REGISTER FOR CONFERENCE</a>
-      <p class="flow-text">If you are interested in getting in on the ground floor and providing input and direction, we would like to see you there. Just register at the POMS website.</p>
-    </div>
-
-    <div class="beige md-padding page-section-child">
-      <p class="text-lg">The primary objective of the <strong>COE</strong> is to build a community focused on operational excellence to</p>
-      <ul class="disc aside blue-grey-text text-darken-2">
-        <li class="text-md bold-text">Foster creation and dissemination of scholarly knowledge.</li>
-        <li class="text-md bold-text">Share teaching and pedagogical material.</li>
-        <li class="text-md bold-text">Exchange information about undergraduate, graduate and other specialized educational programs.</li>
-        <li class="text-md bold-text">Interact with leading practitioners to enrich research and teaching.</li>
-      </ul>
-    </div>
-
-  </div>
-
-  <md-divider></md-divider>
-
 </div>

@@ -1,34 +1,53 @@
-header {
+.home-header {
    margin: 12px 8px 24px 0;
+   display: flex;
+   flex-direction: column;
 }
-
-h3.header-title {
+.home-header > h3 {
    font-size: 2.92rem;
    line-height: 110%;
    font-weight: 400;
    -webkit-font-smoothing: antialiased;
 }
-
+.home-logo-container {
+    margin: 0 auto !important;
+}
 @media only screen and (min-width: 1280px) {
     .--home-container {
         margin-left: 48px;
         margin-right: 48px;
     }
 }
-
 @media only screen and (min-width: 1280px) {
-   h3.header-title {
+   .home-header > h3 {
       font-size: 3.56rem;
       font-weight: 700;
    }
 }
-
-.page-section-child {
+.section-child {
    margin: 8px;
 }
-
 @media only screen and (min-width: 960px) {
-   .page-section-child {
+   .section-child {
       width: 50%;
    }
+}
+
+/* TEMP STYLES */
+.keynote-section {
+    max-width: 908px;
+    margin: 0 auto;
+    margin-top: 16px;
+}
+.keynote-section p {
+    font-size: 18px;
+}
+ul.keynote-speaker-list {
+    font-size: 18px;
+}
+ul.keynote-speaker-list > li > p:first-child {
+    font-weight: 600;
+}
+ul.keynote-speaker-list > li > p:last-child {
+    font-weight: 300;
 }
