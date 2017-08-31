@@ -8,7 +8,7 @@
 
    <div class="admin-user-table">
 
-    <md-table #table [dataSource]="dataSource" [trackBy]="trackByIndex" mdSort>
+    <md-table #table [dataSource]="dataSource" mdSort>
 
       <!-- Name Column -->
       <ng-container cdkColumnDef="name">
@@ -46,10 +46,10 @@
     </md-table>
 
     <md-paginator #paginator
-                  [length]="udp.data.length"
+                  [length]="_udp.data.length"
                   [pageIndex]="0"
-                  [pageSize]="10"
-                  [pageSizeOptions]="[10, 25, 50]">
+                  [pageSize]="5"
+                  [pageSizeOptions]="[5, 10, 25, 50]">
     </md-paginator>
   </div>
 </div>
