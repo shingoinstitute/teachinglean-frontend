@@ -20,8 +20,12 @@ export class AdminUserCardComponent {
    saveChanges() {
       this.userService.updateUser(this.user).subscribe(user => {
          this.snackbar.open(`Successfully updated ${user.name}`, null, { duration: 2500 });
+         this.backEventEmitter.emit();
       }, err => {
          console.error(err);
+         this.snackbar.open('An error occurred and the operation could not be completed. If this problem persists, please contact shingo.it@usu.edu', 'Okay', {
+            extraClasses: ['snackbar-err']
+          });
       });
    }
 

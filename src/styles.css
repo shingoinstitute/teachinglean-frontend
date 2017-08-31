@@ -359,3 +359,12 @@ md-progress-spinner.mat-primary {
 /* Rules for using icons as white on a dark background. */
 .material-icons.md-light { color: rgba(255, 255, 255, 1); }
 .material-icons.md-light.md-inactive { color: rgba(255, 255, 255, 0.3); }
+
+/* Snackbar styles */
+snack-bar-container.snackbar-err {
+	background-color: #EF5350;
+	color: white;
+}
+.snackbar-err .mat-simple-snackbar {
+  color: white;
+}
