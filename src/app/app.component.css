@@ -3,24 +3,25 @@ $break-medium: 1280px;
 $break-small: 960px;
 $break-xsmall: 600px;*/
 
-md-sidenav-container {
-  height: 100vh;
-}
-
-.mat-sidenav-content {
+/* .mat-drawer-content {
+    display: flex !important;
+    flex-direction: column !important;
+} */
+.content {
     display: flex;
     flex-direction: column;
+    min-height: 100vh;
 }
-
+md-sidenav-container {
+  min-height: 100vh;
+}
 md-sidenav {
     box-shadow: 1px 0 3px rgba(0,0,0,.24);
 }
-
 md-nav-list, img {
     width: 100%;
     padding: 4px;
 }
-
 .sidenav-link {
     font-size: 15px !important;
     font-weight: 500 !important;
@@ -28,11 +29,9 @@ md-nav-list, img {
     letter-spacing: .010em;
     color: #3a3a3a;
 }
-
 button.mat-icon-button {
     color: #5a5a5a;
 }
-
 button.sidenav-link {
     width: 0;
     margin-right: 40px;

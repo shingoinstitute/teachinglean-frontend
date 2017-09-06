@@ -1,9 +1,4 @@
-
-
 <md-sidenav-container>
-
-    <app-toolbar></app-toolbar>
-
     <md-sidenav #sidenav mode="{{sidenavMode}}" [opened]="windowWidth > 959">
         <md-nav-list>
             <img src="/assets/images/logos/LEAN-logo-sm.png" alt="Teaching LEAN">
@@ -30,18 +25,22 @@
         </md-nav-list>
     </md-sidenav>
 
-    <router-outlet class="main-content"></router-outlet>
-
-    <footer class="mat-primary darken-2">
-        <div class="container">
-            <ul>
-                <li style="text-decoration: underline;"><a class="white-text" href="/about">About Us</a></li>
-                <li style="color: #455A64;">...</li>
-                <li class="white-text">For Technical Support, e-mail <a href="mailto:shingo.it@usu.edu">shingo.it@usu.edu</a></li>
-                <li class="white-text">This website was produced and developed at the <span class="md-body-2"><a href="shingo.org">Shingo Institute, Utah State University</a></span>.</li>
-                <li style="color: #455A64;">...</li>
-            </ul>
-        </div>
-    </footer>
+    <div class="content">
+        <app-toolbar></app-toolbar>
+    
+        <router-outlet class="main-content"></router-outlet>
+    
+        <footer class="mat-primary darken-2">
+            <div class="container">
+                <ul>
+                    <li style="text-decoration: underline;"><a class="white-text" href="/about">About Us</a></li>
+                    <li style="color: #455A64;">...</li>
+                    <li class="white-text">For Technical Support, e-mail <a href="mailto:shingo.it@usu.edu">shingo.it@usu.edu</a></li>
+                    <li class="white-text">This website was produced and developed at the <span class="md-body-2"><a href="shingo.org">Shingo Institute, Utah State University</a></span>.</li>
+                    <li style="color: #455A64;">...</li>
+                </ul>
+            </div>
+        </footer>
+    </div>
 
 </md-sidenav-container>
