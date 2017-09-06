@@ -1,4 +1,4 @@
-import { DataSource } from "@angular/cdk";
+import { DataSource } from '@angular/cdk/collections';
 import { MdPaginator, MdSort } from "@angular/material";
 
 import { UserDataProvider } from "app/services/user-data-provider.service";

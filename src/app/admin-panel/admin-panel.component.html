@@ -11,38 +11,38 @@
     <md-table #table [dataSource]="dataSource" mdSort>
 
       <!-- Name Column -->
-      <ng-container cdkColumnDef="name">
-        <md-header-cell *cdkHeaderCellDef md-sort-header> Name </md-header-cell>
-        <md-cell *cdkCellDef="let user"> {{ user.name }} </md-cell>
+      <ng-container mdColumnDef="name">
+        <md-header-cell *mdHeaderCellDef md-sort-header> Name </md-header-cell>
+        <md-cell *mdCellDef="let user"> {{ user.name }} </md-cell>
       </ng-container>
 
       <!-- Email Column -->
-      <ng-container cdkColumnDef="email">
-        <md-header-cell *cdkHeaderCellDef md-sort-header> Email </md-header-cell>
-        <md-cell *cdkCellDef="let user"> {{ user.email }} </md-cell>
+      <ng-container mdColumnDef="email">
+        <md-header-cell *mdHeaderCellDef md-sort-header> Email </md-header-cell>
+        <md-cell *mdCellDef="let user"> {{ user.email }} </md-cell>
       </ng-container>
 
       <!-- Username Column -->
-      <ng-container cdkColumnDef="username">
-        <md-header-cell *cdkHeaderCellDef md-sort-header> Username </md-header-cell>
-        <md-cell *cdkCellDef="let user"> {{ user.username }} </md-cell>
+      <ng-container mdColumnDef="username">
+        <md-header-cell *mdHeaderCellDef md-sort-header> Username </md-header-cell>
+        <md-cell *mdCellDef="let user"> {{ user.username }} </md-cell>
       </ng-container>
 
       <!-- Role Column -->
-      <ng-container cdkColumnDef="role">
-        <md-header-cell *cdkHeaderCellDef md-sort-header> User Type </md-header-cell>
-        <md-cell *cdkCellDef="let user"> {{ roles[user.role] }} </md-cell>
+      <ng-container mdColumnDef="role">
+        <md-header-cell *mdHeaderCellDef md-sort-header> User Type </md-header-cell>
+        <md-cell *mdCellDef="let user"> {{ roles[user.role] }} </md-cell>
       </ng-container>
 
-      <ng-container cdkColumnDef="actions">
-        <md-header-cell *cdkHeaderCellDef> Actions </md-header-cell>
-        <md-cell *cdkCellDef="let user">
+      <ng-container mdColumnDef="actions">
+        <md-header-cell *mdHeaderCellDef> Actions </md-header-cell>
+        <md-cell *mdCellDef="let user">
           <div fxLayout="row" admin-user-list-item [user]="user" (onBlock)="onBlockUserHandler($event)" (onChange)="updateUser($event)" (onSelect)="selectedUser = $event"></div>
         </md-cell>
       </ng-container>
 
-      <md-header-row *cdkHeaderRowDef="displayedColumns"></md-header-row>
-      <md-row *cdkRowDef="let user; columns: displayedColumns;"></md-row>
+      <md-header-row *mdHeaderRowDef="displayedColumns"></md-header-row>
+      <md-row *mdRowDef="let user; columns: displayedColumns;"></md-row>
     </md-table>
 
     <md-paginator #paginator
