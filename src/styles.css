@@ -207,31 +207,35 @@ button.btn-show-hide:hover {
 
 /* color stylings for backgrounds and text */
 .black-text {
-  color: #000000 !important;
+  color: #000000;
 }
 .white:not(button) {
-  background-color: #FFFFFF !important;
+  background-color: #FFFFFF;
 }
 .white-text {
-  color: #FFFFFF !important;
+  color: #FFFFFF;
 }
 .transparent {
-  background-color: transparent !important;
+  background-color: transparent;
 }
 .transparent-text {
-  color: transparent !important;
+  color: transparent;
 }
-.mat-primary.darken-3:not(button) {
-  background-color: #37474f !important;
+.mat-primary.darken-3 {
+  background-color: #37474f;
 }
-.mat-primary:not(button) {
+/* .mat-primary {
   background-color: #607d8b !important;
+} */
+.mat-warn {
+  background-color: #f44336;
 }
-.mat-warn:not(button) {
-  background-color: #f44336 !important;
+button.mat-warn {
+  color: #f44336;
+  background-color: white;
 }
 .mat-warn-text {
-  color: #f44336 !important;
+  color: #f44336;
 }
 .mat-success {
   background-color: #66bb6a;
