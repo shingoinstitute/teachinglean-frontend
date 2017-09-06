@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { DataSource } from '@angular/cdk';
+import { DataSource } from '@angular/cdk/collections';
 import { MdPaginator, MdSort } from '@angular/material';
 import { BehaviorSubject } from "rxjs/BehaviorSubject";
 import { User } from "app/user/user";
