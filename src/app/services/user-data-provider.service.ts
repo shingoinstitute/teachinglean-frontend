@@ -1,10 +1,9 @@
 import { Injectable } from '@angular/core';
 import { DataSource } from '@angular/cdk/collections';
-import { MdPaginator, MdSort } from '@angular/material';
-import { BehaviorSubject } from "rxjs/BehaviorSubject";
+import { MatPaginator, MatSort } from '@angular/material';
+import { BehaviorSubject ,  Observable } from "rxjs";
 import { User } from "app/user/user";
 import { UserService } from "app/services/user.service";
-import { Observable } from "rxjs/Observable";
 
 @Injectable()
 export class UserDataProvider {

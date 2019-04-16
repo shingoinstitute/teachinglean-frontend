@@ -1,10 +1,10 @@
-import { 
+import {
   Component,
-  Input, 
+  Input,
   ViewChild,
   ElementRef
 } from '@angular/core';
-import { MdSnackBar } from '@angular/material';
+import { MatSnackBar } from '@angular/material';
 
 import { TinyMceDirective } from '../tinymce.directive';
 import { UserService } from '../services/user.service';
@@ -19,20 +19,20 @@ export class UserProfileComponent {
 
   @Input() user: User;
   @ViewChild('fileUpload') photoUpload: ElementRef;
-  @ViewChild(TinyMceDirective) 
+  @ViewChild(TinyMceDirective)
   set tinymce(view: TinyMceDirective) {
     view && view.initTinyMce();
   }
   didClickSave = false;
 
-  constructor(private userService: UserService, private snackbar: MdSnackBar) {}
+  constructor(private userService: UserService, private snackbar: MatSnackBar) {}
 
   shouldShowTinyEditor = false;
-  
+
   /**
-   * @desc :: When the `Edit Profile` tab is selected, TinyMceDirective loads a 
-   * wyziwig that is performance intensive. Using setTimeout() allows tab 
-   * transition animations to complete before loading extra stuff into the view, 
+   * @desc :: When the `Edit Profile` tab is selected, TinyMceDirective loads a
+   * wyziwig that is performance intensive. Using setTimeout() allows tab
+   * transition animations to complete before loading extra stuff into the view,
    * thus improving the UX.
    */
   onclickTab(event) {
@@ -44,22 +44,22 @@ export class UserProfileComponent {
       this.shouldShowTinyEditor = false;
     }
   }
-  
+
   /**
    * @desc :: Saves/updates all fields with their current values
-   * including firstname, lastname, username, organization name, 
+   * including firstname, lastname, username, organization name,
    * email, and biography.
    */
   onclickSave() {
     this.userService.updateUser(this.user).subscribe(user => {
       this.user = User.initFromObject(user);
       this.snackbar.open('Profile saved.', null, { duration: 2000 });
-    }, err => { 
+    }, err => {
       this.snackbar.open('Error, Profile Failed to Save.', 'Okay');
-      console.error(err); 
+      console.error(err);
     });
   }
-  
+
   /**
    * @desc :: Uploads profile picture to api
    */
@@ -80,7 +80,7 @@ export class UserProfileComponent {
   }
 
   /**
-   * @desc :: sends a password reset link to the 
+   * @desc :: sends a password reset link to the
    * currently authenticated user's email
    */
   onclickReset() {

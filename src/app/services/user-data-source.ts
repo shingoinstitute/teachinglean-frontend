@@ -1,16 +1,16 @@
 import { DataSource } from '@angular/cdk/collections';
-import { MdPaginator, MdSort } from "@angular/material";
+import { MatPaginator, MatSort } from "@angular/material";
 
 import { UserDataProvider } from "app/services/user-data-provider.service";
-import { Observable } from "rxjs/Observable";
+import { Observable } from "rxjs";
 import { User } from "app/user/user";
 
 export class UserDataSource extends DataSource<any> {
 
    constructor(
       private _udp: UserDataProvider,
-      private _paginator: MdPaginator,
-      private _sort: MdSort
+      private _paginator: MatPaginator,
+      private _sort: MatSort
    ) {
       super();
    }
@@ -19,7 +19,7 @@ export class UserDataSource extends DataSource<any> {
       const dataChanges = [
          this._udp.dataChange,
          this._paginator.page,
-         this._sort.mdSortChange
+         this._sort.sortChange
       ];
 
       return Observable.merge(...dataChanges).map(() => {
@@ -35,9 +35,9 @@ export class UserDataSource extends DataSource<any> {
    /** Returns a sorted copy of the database data. */
    getSortedData(): User[] {
       const data = this._udp.data.slice();
-      
+
       if (!this._sort.active || this._sort.direction == '') { return data; }
-      
+
       return data.sort((a, b) => {
          let propertyA: number | string = '';
          let propertyB: number | string = '';

@@ -1,3 +1,5 @@
+
+import {throwError as observableThrowError,  Observable } from 'rxjs';
 import { 
   Component, 
   ViewChild,
@@ -10,7 +12,6 @@ import { AdminPanelComponent } from '../admin-panel/admin-panel.component'
 import { ModeratorComponent } from '../moderator/moderator.component';
 import { User } from "../user/user";
 import { Entry } from '../entry/entry';
-import { Observable } from "rxjs/Observable";
 import { Router } from "@angular/router";
 
 @Component({
@@ -66,7 +67,7 @@ export class DashboardComponent implements OnInit {
     })
     .take(1)
     .catch(err => {
-      return Observable.throw(err);
+      return observableThrowError(err);
     });
   }
 

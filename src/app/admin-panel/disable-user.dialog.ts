@@ -1,5 +1,5 @@
 import { Component, NgZone } from '@angular/core';
-import { MdDialogRef } from '@angular/material';
+import { MatDialogRef } from '@angular/material';
 
 @Component({
   selector: 'disable-user-dialog',
@@ -14,7 +14,7 @@ import { MdDialogRef } from '@angular/material';
   `
 })
 export class DisableUserDialog {
-  constructor(public dialogRef: MdDialogRef<DisableUserDialog>, private zone: NgZone) {}
+  constructor(public dialogRef: MatDialogRef<DisableUserDialog>, private zone: NgZone) {}
   continue() { this.zone.run(() => { this.dialogRef.close(false); }) }
   cancel() { this.zone.run(() => { this.dialogRef.close(true); }) }
 }

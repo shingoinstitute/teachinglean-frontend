@@ -1,3 +1,5 @@
+
+import {throwError as observableThrowError,  Observable } from 'rxjs';
 import {
   Component,
   OnInit,
@@ -12,7 +14,6 @@ import { UserService } from '../services/user.service';
 import { Entry } from '../entry/entry';
 
 import { TinyMceDirective } from '../tinymce.directive';
-import { Observable } from "rxjs/Observable";
 
 @Component({
   selector: 'forum-list-item',
@@ -137,7 +138,7 @@ export class ForumListItemComponent implements OnInit {
     .first()
     .onErrorResumeNext()
     .catch(err => {
-      return Observable.throw(err);
+      return observableThrowError(err);
     });
   }
 

@@ -397,39 +397,39 @@
 .mat-icon.mat-warn {
   color: #f44336; }
 
-.mat-input-placeholder {
+.mat-form-field-label {
   color: rgba(0, 0, 0, 0.38); }
-  .mat-focused .mat-input-placeholder {
+  .mat-focused .mat-form-field-label {
     color: #607d8b; }
-    .mat-focused .mat-input-placeholder.mat-accent {
+    .mat-focused .mat-form-field-label.mat-accent {
       color: #ffab40; }
-    .mat-focused .mat-input-placeholder.mat-warn {
+    .mat-focused .mat-form-field-label.mat-warn {
       color: #f44336; }
 
 .mat-input-element:disabled {
   color: rgba(0, 0, 0, 0.38); }
 
-input.mat-input-element:-webkit-autofill + .mat-input-placeholder .mat-placeholder-required,
-.mat-focused .mat-input-placeholder.mat-float .mat-placeholder-required {
+input.mat-input-element:-webkit-autofill + .mat-form-field-label .mat-placeholder-required,
+.mat-focused .mat-form-field-label.mat-float .mat-placeholder-required {
   color: #ffab40; }
 
-.mat-input-underline {
+.mat-form-field-underline {
   border-color: rgba(0, 0, 0, 0.12); }
-  .mat-input-underline .mat-input-ripple {
+  .mat-form-field-underline .mat-form-field-ripple {
     background-color: #607d8b; }
-    .mat-input-underline .mat-input-ripple.mat-accent {
+    .mat-form-field-underline .mat-form-field-ripple.mat-accent {
       background-color: #ffab40; }
-    .mat-input-underline .mat-input-ripple.mat-warn {
+    .mat-form-field-underline .mat-form-field-ripple.mat-warn {
       background-color: #f44336; }
 
-.mat-input-invalid .mat-input-placeholder,
-.mat-input-invalid .mat-placeholder-required {
+.mat-form-field-invalid .mat-form-field-label,
+.mat-form-field-invalid .mat-placeholder-required {
   color: #f44336; }
 
-.mat-input-invalid .mat-input-underline {
+.mat-form-field-invalid .mat-form-field-underline {
   border-color: #f44336; }
 
-.mat-input-invalid .mat-input-ripple {
+.mat-form-field-invalid .mat-form-field-ripple {
   background-color: #f44336; }
 
 .mat-input-error {

@@ -3,7 +3,7 @@ import {
   HostListener
 } from '@angular/core';
 import { Router } from '@angular/router';
-import { Subscription } from 'rxjs/Subscription';
+import { Subscription } from 'rxjs';
 
 import { UserService } from '../services/user.service';
 import { SidenavService } from '../services/sidenav.service';

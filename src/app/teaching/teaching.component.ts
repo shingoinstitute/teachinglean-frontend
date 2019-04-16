@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import {MdIconRegistry} from '@angular/material';
+import {MatIconRegistry} from '@angular/material';
 import {DomSanitizer} from '@angular/platform-browser';
 
 @Component({
@@ -9,7 +9,7 @@ import {DomSanitizer} from '@angular/platform-browser';
 })
 export class TeachingComponent implements OnInit {
 
-  constructor(iconRegistry: MdIconRegistry, sanitizer: DomSanitizer) {
+  constructor(iconRegistry: MatIconRegistry, sanitizer: DomSanitizer) {
     iconRegistry.addSvgIcon('file-pdf', sanitizer.bypassSecurityTrustResourceUrl('assets/images/icons/file-pdf.svg'));
     iconRegistry.addSvgIcon('file-word', sanitizer.bypassSecurityTrustResourceUrl('assets/images/icons/file-word.svg'));
     iconRegistry.addSvgIcon('file-powerpoint', sanitizer.bypassSecurityTrustResourceUrl('assets/images/icons/file-powerpoint.svg'));

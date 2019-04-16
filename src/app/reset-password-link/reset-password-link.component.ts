@@ -1,3 +1,5 @@
+
+import {distinctUntilChanged, debounceTime} from 'rxjs/operators';
 import { Component, AfterViewInit, NgZone, ChangeDetectorRef } from '@angular/core';
 import {
   trigger,
@@ -80,8 +82,8 @@ export class ResetPasswordLinkComponent implements AfterViewInit {
 
   ngAfterViewInit() {
     this.zone.runOutsideAngular( () => {
-      this.emailChanged$.debounceTime(750)
-      .distinctUntilChanged()
+      this.emailChanged$.pipe(debounceTime(750),
+      distinctUntilChanged(),)
       .subscribe(email => {
         this.checkEmailCollisions(email);
       });

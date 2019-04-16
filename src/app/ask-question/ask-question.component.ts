@@ -16,7 +16,7 @@ import {
   transition
 } from '@angular/animations';
 
-import { MdSnackBar } from '@angular/material';
+import { MatSnackBar } from '@angular/material';
 
 import { UserService } from '../services/user.service';
 import { ForumService } from '../services/forum.service';
@@ -53,9 +53,9 @@ export class AskQuestionComponent implements OnInit, AfterViewInit, OnDestroy {
   submittedQuestion: Entry;
   questionState = 'active';
   constructor(
-    private userService: UserService, 
+    private userService: UserService,
     private zone: NgZone,
-    private snackbar: MdSnackBar,
+    private snackbar: MatSnackBar,
     private forumService: ForumService) {
     // TODO :: Implement appRouter to redirect user to login page then back to Q&A Forum after sign in
     this.user = userService.user;
@@ -78,7 +78,7 @@ export class AskQuestionComponent implements OnInit, AfterViewInit, OnDestroy {
         'table paste code'
       ],
       menubar: false,
-      height: "300px",
+      height: '300px',
       toolbar: 'undo redo | bold italic | alignleft aligncenter alignright alignjustify | bullist numlist outdent indent | link',
       skin_url: '../assets/skins/lightgray',
       setup: editor => {
@@ -115,6 +115,6 @@ export class AskQuestionComponent implements OnInit, AfterViewInit, OnDestroy {
       });
     }
   }
-  
+
 
 }

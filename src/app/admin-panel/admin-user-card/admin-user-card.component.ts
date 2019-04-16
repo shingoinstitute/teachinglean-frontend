@@ -1,5 +1,5 @@
 import { Component, Input, Output, EventEmitter } from '@angular/core';
-import { MdSnackBar } from '@angular/material';
+import { MatSnackBar } from '@angular/material';
 import { User } from '../../user/user';
 
 import { UserService } from '../../services/user.service';
@@ -15,7 +15,7 @@ export class AdminUserCardComponent {
    @Output('onClose') backEventEmitter = new EventEmitter<void>();
    @Output('onBlockUser') blockEventEmitter = new EventEmitter<User>();
 
-   constructor(private userService: UserService, private snackbar: MdSnackBar) {}
+   constructor(private userService: UserService, private snackbar: MatSnackBar) {}
 
    saveChanges() {
       this.userService.updateUser(this.user).subscribe(user => {

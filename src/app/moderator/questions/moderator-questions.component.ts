@@ -1,3 +1,5 @@
+
+import {throwError as observableThrowError,  Observable } from 'rxjs';
 import {
    Component,
    OnInit,
@@ -5,10 +7,8 @@ import {
 } from '@angular/core';
 
 import { ForumService } from '../../services/forum.service';
-import { MdSnackBar } from '@angular/material';
+import { MatSnackBar } from '@angular/material';
 import { Entry } from '../../entry/entry';
-
-import { Observable } from 'rxjs/Observable';
 
 @Component({
   selector: 'moderator-question-tab',
@@ -16,11 +16,11 @@ import { Observable } from 'rxjs/Observable';
   styleUrls: ['../moderator.component.css']
 })
 export class ModeratorQuestionTab implements OnInit {
-  
+
   @Input() questions: Entry[];
   private selectedQuestions = {};
 
-  constructor(private service: ForumService, private snackbar: MdSnackBar) {}
+  constructor(private service: ForumService, private snackbar: MatSnackBar) {}
 
   ngOnInit() {
     // TODO: Sort questions
@@ -75,7 +75,7 @@ export class ModeratorQuestionTab implements OnInit {
     this.service.destroyEntry(id).subscribe(entry => {
       return entry;
     }, err => {
-      return Observable.throw(err);
+      return observableThrowError(err);
     });
   }
 

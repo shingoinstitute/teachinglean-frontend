@@ -1,9 +1,12 @@
+
+import {throwError as observableThrowError,  Observable } from 'rxjs';
+
+import {catchError, map} from 'rxjs/operators';
 import { Injectable } from '@angular/core';
 import { Http, Response, ResponseContentType } from '@angular/http';
-import { Observable } from "rxjs/Observable";
-import 'rxjs/add/operator/catch';
-import 'rxjs/add/operator/map';
-import 'rxjs/add/operator/toPromise';
+
+
+
 
 import { Globals } from '../globals';
 import { Entry } from '../entry/entry';
@@ -80,78 +83,78 @@ export class ForumService {
   }
 
   getEntry(id: string) {
-    return this.http.get(this.baseUrl + '/entry/' + id + '?populate=answers,owner,comments,parent,users_did_upvote,users_did_downvote')
-      .map(res => res.json())
-      .catch(this.handleError);
+    return this.http.get(this.baseUrl + '/entry/' + id + '?populate=answers,owner,comments,parent,users_did_upvote,users_did_downvote').pipe(
+      map(res => res.json()),
+      catchError(this.handleError),);
   }
 
   getEntryParent(id: string): Observable<Entry> {
-    return this.http.get(this.baseUrl + '/entry/' + id + '?populate=parent')
-    .map(res => {
+    return this.http.get(this.baseUrl + '/entry/' + id + '?populate=parent').pipe(
+    map(res => {
       let data = res.json();
       return Entry.initFromObject(data);
-    })
-    .catch(this.handleError);
+    }),
+    catchError(this.handleError),);
   }
 
   updateEntry(entry: Entry) {
     return this.http.put(this.baseUrl + '/entry/' + entry.id, {
       content: entry.content,
       title: entry.title
-    })
-    .map(res => res.json())
-    .catch(this.handleError);
+    }).pipe(
+    map(res => res.json()),
+    catchError(this.handleError),);
   }
 
   createEntry(entry: {content: any, owner: any, parent: any, title: any}) {
     return this.http.post(this.baseUrl + '/entry', entry, {
       responseType: ResponseContentType.Json
-    })
-    .map(response => {
+    }).pipe(
+    map(response => {
       return response.json();
-    })
-    .catch(this.handleError);
+    }),
+    catchError(this.handleError),);
   }
 
   destroyEntry(entryId: string) {
     return this.http.delete(this.baseUrl + '/entry/' + entryId, {
       responseType: ResponseContentType.Json
-    })
-    .map(res => {
+    }).pipe(
+    map(res => {
       return res.json();
-    })
-    .catch(this.handleError);
+    }),
+    catchError(this.handleError),);
   }
 
   destroyComment(commId: string) {
     return this.http.delete(this.baseUrl + '/comment/' + commId, {
       responseType: ResponseContentType.Json
-    })
-    .map(res => {
+    }).pipe(
+    map(res => {
       return res.json();
-    })
-    .catch(this.handleError);
+    }),
+    catchError(this.handleError),);
   }
 
   createComment(comment: { parent: string, owner: string, content: string }) {
-    return this.http.post(this.baseUrl + '/comment', comment)
-    .map(res => {
+    return this.http.post(this.baseUrl + '/comment', comment).pipe(
+    map(res => {
       return res.json();
-    })
-    .catch(this.handleError);
+    }),
+    catchError(this.handleError),);
   }
     
   setIsCorrect(entry: Entry): Observable<Entry> {
-    return this.http.put(`${this.baseUrl}/entry/${entry.id}/accept`, { accepted: entry.markedCorrect }, { responseType: ResponseContentType.Json })
-      .map(res => {
+    return this.http.put(`${this.baseUrl}/entry/${entry.id}/accept`, { accepted: entry.markedCorrect }, { responseType: ResponseContentType.Json }).pipe(
+      map(res => {
         return Entry.initFromObject(res.json());
-      }).catch(this.handleError);
+      }),catchError(this.handleError),);
   }
 
   private getRequestHandler(url) {
-    return this.http.get(url, { responseType: ResponseContentType.Json })
-    .map(this.handleResponse)
-    .catch(this.handleError);
+    return this.http.get(url, { responseType: ResponseContentType.Json }).pipe(
+    map(this.handleResponse),
+    catchError(this.handleError),);
   }
 
   private handleResponse(response: Response): Object {
@@ -162,14 +165,14 @@ export class ForumService {
   private handleError(err: Response | any) {
     let errMsg: string;
     if (!err) 
-      return Observable.throw("The request could not be complete, and unkown error occured.");
+      return observableThrowError("The request could not be complete, and unkown error occured.");
 
     if (err instanceof Response) {
       const body = err.json();
       if (body)
-        return Observable.throw(body.error || JSON.stringify(body));
+        return observableThrowError(body.error || JSON.stringify(body));
       else
-        return Observable.throw(`Status ${err.status} ${err.statusText}`);
+        return observableThrowError(`Status ${err.status} ${err.statusText}`);
     }  
 
     if (err && err.message)
@@ -179,7 +182,7 @@ export class ForumService {
     else
       errMsg = "Unknown error occured..."; 
 
-    return Observable.throw(errMsg);
+    return observableThrowError(errMsg);
   }
 
 }

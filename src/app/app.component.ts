@@ -1,13 +1,13 @@
 import {
-  Component, 
-  OnInit, 
-  ViewChild, 
+  Component,
+  OnInit,
+  ViewChild,
   HostListener
 } from '@angular/core';
-import { MdIconRegistry } from '@angular/material';
+import { MatIconRegistry } from '@angular/material';
 import { DomSanitizer } from '@angular/platform-browser';
-import { MdSidenav } from '@angular/material';
-import { Subject } from 'rxjs/Subject';
+import { MatSidenav } from '@angular/material';
+import { Subject } from 'rxjs';
 
 import { UserService } from './services/user.service';
 import { SidenavService } from './services/sidenav.service';
@@ -20,7 +20,7 @@ import { User } from './user/user';
 })
 export class AppComponent implements OnInit {
 
-  @ViewChild('sidenav') sideNav: MdSidenav;
+  @ViewChild('sidenav') sideNav: MatSidenav;
 
   links = [
     {name: "Home", path: "/"},
@@ -41,7 +41,7 @@ export class AppComponent implements OnInit {
   windowWidth;
 
   constructor(private userService: UserService,
-  iconRegistry: MdIconRegistry,
+  iconRegistry: MatIconRegistry,
   sanitizer: DomSanitizer,
   sidenavService: SidenavService) {
     iconRegistry.addSvgIcon('login', sanitizer.bypassSecurityTrustResourceUrl('assets/images/icons/login.svg'));

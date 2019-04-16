@@ -6,12 +6,12 @@ import { ReactiveFormsModule }        from '@angular/forms';
 import { HttpModule, JsonpModule }    from '@angular/http';
 import { CookieModule }               from 'ngx-cookie';
 import 'hammerjs';
-import 'rxjs/add/observable/of';
-import 'rxjs/add/operator/distinct';
-import 'rxjs/add/operator/distinctUntilChanged';
+
+
+
 
 // Material Design
-import { MaterialModule, MdTableModule } from '@angular/material';
+import { MatRippleModule, MatTableModule } from '@angular/material';
 import { MaterialDesignImports }      from './config/material-design.module';
 import { FlexLayoutModule }           from '@angular/flex-layout';
 
@@ -34,7 +34,7 @@ import { DisableUserDialog }          from './admin-panel/disable-user.dialog';
 import { ModeratorComponent  }        from './moderator/moderator.component';
 import { ModeratorQuestionTab }       from './moderator/questions/moderator-questions.component';
 import { ModeratorAnswerTab }         from './moderator/answers/moderator-answers.component';
-import { ModeratorCommentTab }        from './moderator/comments/moderator-comments.component'; 
+import { ModeratorCommentTab }        from './moderator/comments/moderator-comments.component';
 import { CommentComponent }           from './comment/comment.component';
 import { EntryCardComponent }         from './entry/entry-card.component';
 import { UserInfoCardComponent }      from './entry/user-info-card.component';
@@ -60,8 +60,8 @@ import { ResetPasswordComponent }     from './reset-password/reset-password.comp
     BrowserAnimationsModule,
     FormsModule,
     ReactiveFormsModule,
-    MaterialModule,
-    MdTableModule,
+    MatRippleModule,
+    MatTableModule,
     MaterialDesignImports,
     CookieModule.forRoot(),
     HttpModule,
@@ -86,8 +86,8 @@ import { ResetPasswordComponent }     from './reset-password/reset-password.comp
     AdminPanelComponent,
     ModeratorComponent,
     DisableUserDialog,
-    ModeratorQuestionTab, 
-    ModeratorAnswerTab, 
+    ModeratorQuestionTab,
+    ModeratorAnswerTab,
     ModeratorCommentTab,
     CommentComponent,
     EntryCardComponent,

@@ -1,20 +1,20 @@
+
+import {throwError as observableThrowError,  Observable ,  Subject ,  Subscription ,  Observer } from 'rxjs';
+
+import {catchError, map, debounceTime} from 'rxjs/operators';
 import { Injectable }     from '@angular/core';
 import {
   Http, 
   Response, 
   ResponseContentType
 } from '@angular/http';
-import { Observable }     from 'rxjs/Observable';
-import { Subject }        from 'rxjs/Subject';
-import { Subscription }   from 'rxjs/Subscription';
-import { Observer }       from 'rxjs/Observer';
 import { CookieService }  from 'ngx-cookie';
 import { User }           from '../user/user';
 import { Globals }        from '../globals';
 import { environment }    from '../../environments/environment';
 
-import 'rxjs/add/operator/map';
-import 'rxjs/add/operator/catch';
+
+
 
 @Injectable()
 export class UserService {
@@ -59,23 +59,23 @@ export class UserService {
    */
   getAuthenticatedUser(): Observable<User> {
     const token = this.csrfToken || "";
-    return this.http.get(`${this.baseApiUrl}/me?xsrf-token=${token}`)
-    .debounceTime(500)
-    .map((res: Response) => {
+    return this.http.get(`${this.baseApiUrl}/me?xsrf-token=${token}`).pipe(
+    debounceTime(500),
+    map((res: Response) => {
       const data = res.json();
       this.user = User.initFromObject(data);
       return this.user;
-    })
-    .catch(this.handleError)
+    }),
+    catchError(this.handleError),)
   }
 
   // Gets a single user given the requesting user is authenticated
   getUser(uuid: string): Observable<any> {
-    return this.http.get(`${this.baseApiUrl}/user/${uuid}`)
-    .map(res => {
+    return this.http.get(`${this.baseApiUrl}/user/${uuid}`).pipe(
+    map(res => {
       return User.initFromObject(res.json());
-    })
-    .catch(this.handleError);
+    }),
+    catchError(this.handleError),);
   }
 
   /**
@@ -87,29 +87,29 @@ export class UserService {
     let size = 300;
     let skip = (page - 1) * limit;
     let url = `${this.baseApiUrl}/user?where={sort:'lastname'}` + (limit && page ? `&limit=${limit}&skip=${page*limit}` : '');
-    return this.http.get(url)
-    .map(res => {
+    return this.http.get(url).pipe(
+    map(res => {
       let data = res.json();
       return data;
-    })
-    .catch(this.handleError);
+    }),
+    catchError(this.handleError),);
   }
 
   updateUser(user: User) {
     let params = user.toObject();
     delete params.uuid;
     if (user.role != 'systemAdmin' || user.role != 'admin') delete params.role;
-    return this.http.put(`${this.baseApiUrl}/user/${user.uuid}`, params)
-    .map(res => {
+    return this.http.put(`${this.baseApiUrl}/user/${user.uuid}`, params).pipe(
+    map(res => {
       let data = res.json();
       return User.initFromObject(data);
-    })
-    .catch(this.handleError);
+    }),
+    catchError(this.handleError),);
   }
 
   uploadPhotoAsync(file): Observable<any> {
     if (!this.user) {
-      return Observable.throw('user must be logged in to upload profile picture.');
+      return observableThrowError('user must be logged in to upload profile picture.');
     }
     return Observable.create(observer => {
       let data = new FormData();
@@ -136,14 +136,14 @@ export class UserService {
     return this.http.post(`${this.baseApiUrl}/auth/local`, {
       username: username,
       password: password
-    })
-    .map(res => {
+    }).pipe(
+    map(res => {
       let data = res.json();
       this.csrfToken = data['xsrf-token'];
       this.user = User.initFromObject(data);
       return data;
-    })
-    .catch(err => {
+    }),
+    catchError(err => {
       let errMsg;
       if (err instanceof Response) {
         let body = err.json();
@@ -151,8 +151,8 @@ export class UserService {
       } else {
         errMsg = err.error;
       }
-      return Observable.throw(errMsg);
-    });
+      return observableThrowError(errMsg);
+    }),);
   }
   
   authenticateLinkedin() {
@@ -163,16 +163,16 @@ export class UserService {
     delete this.user;
     this.onUserLogoutSource.next(null);
 
-    return this.http.get(`${this.baseApiUrl}/auth/logout`)
-    .map((res) => {
+    return this.http.get(`${this.baseApiUrl}/auth/logout`).pipe(
+    map((res) => {
       console.log("Removing COOKIE!");
       this.cookieService.remove("XSRF-TOKEN", {
         domain: this.cookieDomain
       });
       console.log(res.json());
       return;
-    })
-    .catch(this.handleError);
+    }),
+    catchError(this.handleError),);
   }
   
   create(user: {firstname: string, lastname: string, email: string, username: string}, password: string): Observable<any> {
@@ -187,49 +187,49 @@ export class UserService {
       username: user.username
     }, {
       responseType: ResponseContentType.Json
-    })
-    .map(res => {
+    }).pipe(
+    map(res => {
       let data = res.json();
       return User.initFromObject(data.user);
-    })
-    .catch(this.handleError);
+    }),
+    catchError(this.handleError),);
   }
 
   checkEmailCollisions(email: string): Observable<any> {
-    return this.http.get(`${this.baseApiUrl}/emailDoesExist?email=${email}`)
-    .map(res => {
+    return this.http.get(`${this.baseApiUrl}/emailDoesExist?email=${email}`).pipe(
+    map(res => {
       return res.json();
-    })
-    .catch(this.handleError);
+    }),
+    catchError(this.handleError),);
   }
 
   checkUsernameCollisions(username: string): Observable<any> {
-    return this.http.get(`${this.baseApiUrl}/usernameDoesExist?username=${username}`)
-    .map(res => {
+    return this.http.get(`${this.baseApiUrl}/usernameDoesExist?username=${username}`).pipe(
+    map(res => {
       return res.json();
-    })
-    .catch(this.handleError);
+    }),
+    catchError(this.handleError),);
   }
 
   sendPasswordResetLink(email: string) {
     return this.http.post(`${this.baseApiUrl}/reset`, {
       email: email
-    })
-    .map(res => {
+    }).pipe(
+    map(res => {
       return res.json();
-    })
-    .catch(this.handleError);
+    }),
+    catchError(this.handleError),);
   }
 
   updatePassword(password: string, id: string, token: string): Observable<any> {
     return this.http.put(`${this.baseApiUrl}/reset/${id}`, {
       password: password,
       token: token
-    })
-    .map(res => {
+    }).pipe(
+    map(res => {
       return res.json();
-    })
-    .catch(this.handleError)
+    }),
+    catchError(this.handleError),)
   }
 
   /**
@@ -240,11 +240,11 @@ export class UserService {
    */
   getStats(): Observable<any> {
     let url = `${this.baseApiUrl}/user/stats`;
-    return this.http.get(url)
-    .map(res => {
+    return this.http.get(url).pipe(
+    map(res => {
       return res.json();
-    })
-    .catch(this.handleError);
+    }),
+    catchError(this.handleError),);
   }
   
   private handleError(error: Response | any) {
@@ -255,7 +255,7 @@ export class UserService {
     } else {
       err = error.message ? error.message : error.toString();
     }
-    return Observable.throw(err);
+    return observableThrowError(err);
   }
   
 }

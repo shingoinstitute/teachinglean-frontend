@@ -1,45 +1,45 @@
 import { NgModule } from '@angular/core';
-import { 
-    MdCardModule, 
-    MdButtonModule, 
-    MdInputModule,
-    MdSnackBarModule ,
-    MdTabsModule,
-    MdMenuModule,
-    MdDialogModule,
-    MdListModule,
-    MdIconModule,
-    MdSidenavModule,
-    MdProgressSpinnerModule,
-    MdToolbarModule
+import {
+    MatCardModule,
+    MatButtonModule,
+    MatInputModule,
+    MatSnackBarModule ,
+    MatTabsModule,
+    MatMenuModule,
+    MatDialogModule,
+    MatListModule,
+    MatIconModule,
+    MatSidenavModule,
+    MatProgressSpinnerModule,
+    MatToolbarModule
 } from '@angular/material';
 
 @NgModule({
     imports: [
-        MdCardModule, 
-        MdButtonModule,
-        MdSnackBarModule,
-        MdTabsModule,
-        MdMenuModule,
-        MdDialogModule,
-        MdInputModule,
-        MdListModule,
-        MdIconModule,
-        MdSidenavModule,
-        MdProgressSpinnerModule,
-        MdToolbarModule
+        MatCardModule,
+        MatButtonModule,
+        MatSnackBarModule,
+        MatTabsModule,
+        MatMenuModule,
+        MatDialogModule,
+        MatInputModule,
+        MatListModule,
+        MatIconModule,
+        MatSidenavModule,
+        MatProgressSpinnerModule,
+        MatToolbarModule
     ],
     exports: [
-        MdButtonModule,
-        MdSnackBarModule,
-        MdTabsModule,
-        MdMenuModule,
-        MdDialogModule,
-        MdListModule,
-        MdIconModule,
-        MdSidenavModule,
-        MdProgressSpinnerModule,
-        MdToolbarModule
+        MatButtonModule,
+        MatSnackBarModule,
+        MatTabsModule,
+        MatMenuModule,
+        MatDialogModule,
+        MatListModule,
+        MatIconModule,
+        MatSidenavModule,
+        MatProgressSpinnerModule,
+        MatToolbarModule
     ],
     providers: []
 })

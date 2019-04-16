@@ -1,12 +1,12 @@
 import { Component, OnInit, ViewChild, HostListener } from '@angular/core';
 
 import { CookieService } from 'ngx-cookie';
-import { MdSnackBar, MdDialog } from '@angular/material';
-import { MdSort, MdPaginator } from '@angular/material';
+import { MatSnackBar, MatDialog } from '@angular/material';
+import { MatSort, MatPaginator } from '@angular/material';
 
-import { Subject } from 'rxjs/Subject';
-import 'rxjs/add/operator/toPromise';
-import 'rxjs/add/operator/debounce';
+import { Subject } from 'rxjs';
+
+
 
 import { User } from '../user/user';
 import { UserService } from '../services/user.service';
@@ -22,10 +22,10 @@ import { UserDataSource } from 'app/services/user-data-source';
 })
 export class AdminPanelComponent implements OnInit {
 
-  @ViewChild(MdSort) public sort: MdSort;
-  @ViewChild(MdPaginator) public paginator: MdPaginator;
+  @ViewChild(MatSort) public sort: MatSort;
+  @ViewChild(MatPaginator) public paginator: MatPaginator;
 
-  public displayedColumns: string[] = ["name", "role", "actions"];
+  public displayedColumns: string[] = ['name', 'role', 'actions'];
   public dataSource: UserDataSource | null;
   public selectedUser: User;
   public roles = {
@@ -38,18 +38,18 @@ export class AdminPanelComponent implements OnInit {
   };
 
   private _shouldLoadData: boolean;
-  
+
   constructor(
-    public dialog: MdDialog,
+    public dialog: MatDialog,
     public _udp: UserDataProvider,
     private userService: UserService,
-    private snackbar: MdSnackBar,
+    private snackbar: MatSnackBar,
     private cookieService: CookieService
   ) {
     let index = +cookieService.get('selectedDashboardTab');
     this._shouldLoadData = index && index === 2;
   }
-  
+
   ngOnInit() {
     this.dataSource = new UserDataSource(this._udp, this.paginator, this.sort);
     this.setDisplayedColumns();
@@ -57,7 +57,7 @@ export class AdminPanelComponent implements OnInit {
       console.log('updated data:', data);
     });
   }
-  
+
   updateUser(user: User) {
     this.userService.updateUser(user).subscribe(user => {
       user = User.initFromObject(user);
@@ -88,9 +88,9 @@ export class AdminPanelComponent implements OnInit {
   }
 
   private setDisplayedColumns() {
-    this.displayedColumns = window.innerWidth > 960 ? ["name", "email", "username", "role", "actions"] : ["name", "role", "actions"];
+    this.displayedColumns = window.innerWidth > 960 ? ['name', 'email', 'username', 'role', 'actions'] : ['name', 'role', 'actions'];
   }
- 
+
 }
 
 

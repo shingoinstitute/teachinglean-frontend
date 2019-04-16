@@ -1,9 +1,11 @@
+
+import {distinctUntilChanged, debounceTime} from 'rxjs/operators';
 import { Component, AfterViewInit, NgZone, ChangeDetectorRef, ViewChild, ElementRef } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { UserService } from '../services/user.service';
-import { Subject } from 'rxjs/Subject';
-import 'rxjs/add/operator/debounceTime';
-import 'rxjs/add/operator/distinctUntilChanged';
+import { Subject } from 'rxjs';
+
+
 
 const MIN_LENGTH = 8;
 const MAX_LENGTH = 32;
@@ -64,9 +66,9 @@ export class ResetPasswordComponent implements AfterViewInit {
      * within angular.
      */
     this.zone.runOutsideAngular(() => {
-      this.onPasswordConfirm$
-      .debounceTime(500)
-      .distinctUntilChanged()
+      this.onPasswordConfirm$.pipe(
+      debounceTime(500),
+      distinctUntilChanged(),)
       .subscribe(password => {
         this.validate(password);
         this.isChecking = false;
